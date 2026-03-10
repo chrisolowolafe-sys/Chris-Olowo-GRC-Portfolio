@@ -1,0 +1,26 @@
+[
+  {
+    "vendor": "Amazon Web Services (AWS)",
+    "service": "Cloud Hosting",
+    "riskRating": "Medium",
+    "status": "Compliant"
+  },
+  {
+    "vendor": "Microsoft",
+    "service": "Identity & Email Services",
+    "riskRating": "Low",
+    "status": "Compliant"
+  },
+  {
+    "vendor": "TechServe MSP",
+    "service": "Managed IT Support",
+    "riskRating": "High",
+    "status": "Under Review"
+  },
+  {
+    "vendor": "DataAnalytics Inc.",
+    "service": "Marketing Analytics",
+    "riskRating": "Medium",
+    "status": "Remediation Required"
+  }
+]

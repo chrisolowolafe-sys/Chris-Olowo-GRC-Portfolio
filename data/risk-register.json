@@ -1,0 +1,42 @@
+[
+  {
+    "id": "R-001",
+    "description": "Unpatched Web Servers",
+    "likelihood": "High",
+    "impact": "High",
+    "level": "Critical",
+    "mitigation": "Implement automated patch management process"
+  },
+  {
+    "id": "R-002",
+    "description": "Phishing attacks targeting employees",
+    "likelihood": "High",
+    "impact": "Medium",
+    "level": "High",
+    "mitigation": "Conduct monthly security awareness training"
+  },
+  {
+    "id": "R-003",
+    "description": "Third-party vendor data breach",
+    "likelihood": "Medium",
+    "impact": "High",
+    "level": "High",
+    "mitigation": "Enforce strict vendor risk assessments"
+  },
+  {
+    "id": "R-004",
+    "description": "Misconfigured Cloud Storage",
+    "likelihood": "Low",
+    "impact": "High",
+    "level": "Medium",
+    "mitigation": "Deploy Cloud Security Posture Management (CSPM)"
+  },
+  {
+    "id": "R-005",
+    "description": "Loss of physical devices",
+    "likelihood": "Medium",
+    "impact": "Low",
+    "level": "Low",
+    "mitigation": "Enforce Full Disk Encryption (FDE) and MDM"
+  }
+]

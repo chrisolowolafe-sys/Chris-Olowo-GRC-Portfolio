@@ -1,0 +1,37 @@
+[
+  {
+    "id": "A-001",
+    "name": "Customer Database",
+    "owner": "IT Team",
+    "classification": "Confidential",
+    "status": "Active"
+  },
+  {
+    "id": "A-002",
+    "name": "Cloud Infrastructure (AWS)",
+    "owner": "DevOps",
+    "classification": "Critical",
+    "status": "Active"
+  },
+  {
+    "id": "A-003",
+    "name": "HR Records System",
+    "owner": "HR Department",
+    "classification": "Restricted",
+    "status": "Active"
+  },
+  {
+    "id": "A-004",
+    "name": "Public Website",
+    "owner": "Marketing",
+    "classification": "Public",
+    "status": "Active"
+  },
+  {
+    "id": "A-005",
+    "name": "Legacy Financial App",
+    "owner": "Finance",
+    "classification": "Confidential",
+    "status": "Decommissioning"
+  }
+]

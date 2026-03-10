@@ -1,0 +1,30 @@
+[
+  {
+    "id": "INC-001",
+    "type": "Phishing Attempt",
+    "severity": "Medium",
+    "status": "Resolved",
+    "date": "2026-03-01"
+  },
+  {
+    "id": "INC-002",
+    "type": "Unauthorized Access",
+    "severity": "High",
+    "status": "Investigating",
+    "date": "2026-03-08"
+  },
+  {
+    "id": "INC-003",
+    "type": "Malware Detection",
+    "severity": "Low",
+    "status": "Resolved",
+    "date": "2026-03-09"
+  },
+  {
+    "id": "INC-004",
+    "type": "DDoS Attack",
+    "severity": "Critical",
+    "status": "Mitigated",
+    "date": "2026-03-10"
+  }
+]

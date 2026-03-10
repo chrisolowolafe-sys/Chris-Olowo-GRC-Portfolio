@@ -1,0 +1,32 @@
+[
+  {
+    "id": "A.5.1",
+    "description": "Information Security Policy",
+    "applicable": "Yes",
+    "justification": "Required for governance framework"
+  },
+  {
+    "id": "A.6.1",
+    "description": "Internal Organization",
+    "applicable": "Yes",
+    "justification": "Defines security roles and responsibilities"
+  },
+  {
+    "id": "A.11.1",
+    "description": "Secure Areas",
+    "applicable": "No",
+    "justification": "Organization is 100% remote, no physical offices"
+  },
+  {
+    "id": "A.12.1",
+    "description": "Operational Procedures",
+    "applicable": "Yes",
+    "justification": "Required for IT operations management"
+  },
+  {
+    "id": "A.14.2",
+    "description": "Security in Development",
+    "applicable": "Yes",
+    "justification": "In-house software development requires SDLC controls"
+  }
+]

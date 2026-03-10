@@ -1,0 +1,32 @@
+[
+  {
+    "id": "AC-01",
+    "name": "Access Control Policy",
+    "framework": "ISO 27001",
+    "status": "Implemented"
+  },
+  {
+    "id": "PR.AC-1",
+    "name": "Identity Management",
+    "framework": "NIST CSF",
+    "status": "Implemented"
+  },
+  {
+    "id": "CIS-03",
+    "name": "Data Protection",
+    "framework": "CIS Controls",
+    "status": "In Progress"
+  },
+  {
+    "id": "A.12.2",
+    "name": "Protection from Malware",
+    "framework": "ISO 27001",
+    "status": "Implemented"
+  },
+  {
+    "id": "ID.RM-1",
+    "name": "Risk Management Strategy",
+    "framework": "NIST CSF",
+    "status": "Not Implemented"
+  }
+]
