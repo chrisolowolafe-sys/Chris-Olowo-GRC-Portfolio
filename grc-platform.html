@@ -1068,49 +1068,89 @@
 const RISK_THRESHOLDS = { low:[1,4], medium:[5,9], high:[10,16], critical:[17,25] };
 
 const FRAMEWORKS_LIBRARY = [
-  // ISO 27001 — Annex A subset
-  ...Array.from({length:8},(_,i)=>{
-    const controls=[
-      {id:'ISO-5.1',name:'Security policies',cat:'Policy & Governance',desc:'Define, approve, communicate, and periodically review security policy to guide information security.'},
-      {id:'ISO-5.2',name:'Info security roles',cat:'Policy & Governance',desc:'Implement and maintain measures for information security roles to protect confidentiality, integrity, and availability.'},
-      {id:'ISO-5.3',name:'Segregation of duties',cat:'Policy & Governance',desc:'Implement and maintain measures for segregation of duties to protect confidentiality, integrity, and availability.'},
-      {id:'ISO-5.4',name:'Management responsibilities',cat:'Policy & Governance',desc:'Implement and maintain measures for management responsibilities to protect confidentiality, integrity, and availability.'},
-      {id:'ISO-5.5',name:'Authority contacts',cat:'Compliance',desc:'Implement and maintain measures for authority contacts to protect confidentiality, integrity, and availability.'},
-      {id:'ISO-5.6',name:'Special interest contacts',cat:'Compliance',desc:'Maintain contacts with special interest groups and security forums.'},
-      {id:'ISO-5.7',name:'Threat intel',cat:'Risk Management',desc:'Implement and maintain measures for threat intel to protect confidentiality, integrity, and availability.'},
-      {id:'ISO-6.1',name:'Screening',cat:'Asset Management',desc:'Background verification checks on all candidates for employment.'},
-    ];
-    return controls[i];
-  }).map(c=>({...c,framework:'ISO 27001'})),
-  // NIST CSF
-  {id:'CSF-ID.AM-1',name:'Asset Inventory',cat:'Asset Management',desc:'Physical devices and systems within the organization are inventoried.',framework:'NIST CSF'},
-  {id:'CSF-ID.AM-2',name:'Software Inventory',cat:'Asset Management',desc:'Software platforms and applications within the organization are inventoried.',framework:'NIST CSF'},
-  {id:'CSF-ID.RA-1',name:'Asset vulnerabilities',cat:'Risk Management',desc:'Asset vulnerabilities are identified and documented.',framework:'NIST CSF'},
-  {id:'CSF-PR.AC-1',name:'Identity Management',cat:'Access Control',desc:'Identities and credentials are issued, managed, verified, revoked, and audited.',framework:'NIST CSF'},
-  {id:'CSF-PR.AC-3',name:'Remote access',cat:'Access Control',desc:'Remote access is managed.',framework:'NIST CSF'},
-  {id:'CSF-PR.DS-1',name:'Data-at-rest protection',cat:'Data Protection',desc:'Data-at-rest is protected.',framework:'NIST CSF'},
-  {id:'CSF-PR.DS-2',name:'Data-in-transit protection',cat:'Data Protection',desc:'Data-in-transit is protected.',framework:'NIST CSF'},
-  {id:'CSF-DE.CM-1',name:'Network monitoring',cat:'Network Security',desc:'The network is monitored to detect potential cybersecurity events.',framework:'NIST CSF'},
-  {id:'CSF-RS.RP-1',name:'Response plan',cat:'Incident Mgmt',desc:'Response plan is executed during or after an incident.',framework:'NIST CSF'},
-  // SOC 2
-  {id:'SOC2-CC6.1',name:'Logical access controls',cat:'Access Control',desc:'The entity implements logical access security software, infrastructure, and architectures.',framework:'SOC 2'},
-  {id:'SOC2-CC6.2',name:'Access provisioning',cat:'Access Control',desc:'Prior to issuing system credentials, the entity registers and authorizes new internal users.',framework:'SOC 2'},
-  {id:'SOC2-CC7.1',name:'System boundaries',cat:'Network Security',desc:'To meet its objectives, the entity uses detection and monitoring procedures to identify changes.',framework:'SOC 2'},
-  {id:'SOC2-CC7.2',name:'Anomaly monitoring',cat:'Logging',desc:'The entity monitors system components and the operation of those controls on an ongoing basis.',framework:'SOC 2'},
-  {id:'SOC2-CC8.1',name:'Change management',cat:'Compliance',desc:'The entity authorizes, designs, develops or acquires, configures, documents, tests, approves, and implements changes.',framework:'SOC 2'},
-  // GDPR
-  {id:'GDPR-Art.5',name:'Data processing principles',cat:'Data Protection',desc:'Principles relating to processing of personal data: lawfulness, fairness, transparency.',framework:'GDPR'},
-  {id:'GDPR-Art.25',name:'Privacy by design',cat:'Data Protection',desc:'Data protection by design and by default.',framework:'GDPR'},
-  {id:'GDPR-Art.32',name:'Security of processing',cat:'Data Protection',desc:'Implement appropriate technical and organisational measures to ensure appropriate level of security.',framework:'GDPR'},
-  {id:'GDPR-Art.33',name:'Breach notification',cat:'Incident Mgmt',desc:'Notification of a personal data breach to the supervisory authority within 72 hours.',framework:'GDPR'},
-  // CIS
-  {id:'CIS-1',name:'Inventory of Enterprise Assets',cat:'Asset Management',desc:'Actively manage (inventory, track, and correct) all enterprise assets.',framework:'CIS'},
-  {id:'CIS-3',name:'Data Protection',cat:'Data Protection',desc:'Develop processes and technical controls to identify, classify, securely handle, retain, and dispose of data.',framework:'CIS'},
-  {id:'CIS-5',name:'Account Management',cat:'Access Control',desc:'Use processes and tools to assign and manage authorization to credentials for user accounts.',framework:'CIS'},
-  {id:'CIS-6',name:'Access Control Management',cat:'Access Control',desc:'Use processes and tools to create, assign, manage, and revoke access credentials and privileges.',framework:'CIS'},
-  // HIPAA
-  {id:'HIPAA-164.308',name:'Administrative safeguards',cat:'Compliance',desc:'Implement policies and procedures to prevent, detect, contain, and correct security violations.',framework:'HIPAA'},
-  {id:'HIPAA-164.312',name:'Technical safeguards',cat:'Data Protection',desc:'Implement technical security measures to guard against unauthorized access to ePHI.',framework:'HIPAA'},
+  // ── ISO 27001:2022 — Annex A ──────────────────────────────────────────────
+  {id:'ISO-5.1', name:'Information security policies',       cat:'Policy & Governance', framework:'ISO 27001',
+   desc:'Information security policy and topic-specific policies shall be defined, approved by management, published, communicated to and acknowledged by relevant personnel and relevant interested parties, and reviewed at planned intervals or when significant changes occur.'},
+  {id:'ISO-5.2', name:'Information security roles & responsibilities', cat:'Policy & Governance', framework:'ISO 27001',
+   desc:'Information security roles and responsibilities shall be defined and allocated according to the organisation\'s needs. Responsibilities for the protection of specific assets and for carrying out specific information security processes shall be defined, documented, and communicated to all staff.'},
+  {id:'ISO-5.3', name:'Segregation of duties',               cat:'Policy & Governance', framework:'ISO 27001',
+   desc:'Conflicting duties and conflicting areas of responsibility shall be segregated to reduce opportunities for unauthorised or unintentional modification or misuse of the organisation\'s assets.'},
+  {id:'ISO-5.4', name:'Management responsibilities',         cat:'Policy & Governance', framework:'ISO 27001',
+   desc:'Management shall require all personnel to apply information security in accordance with the established information security policy, topic-specific policies and procedures of the organisation.'},
+  {id:'ISO-5.5', name:'Contact with authorities',            cat:'Compliance',           framework:'ISO 27001',
+   desc:'The organisation shall establish and maintain contact with relevant authorities such as law enforcement, regulatory bodies, supervisory authorities. Contacts should include those relevant to information security incidents and shall be activated as appropriate.'},
+  {id:'ISO-5.6', name:'Contact with special interest groups',cat:'Compliance',           framework:'ISO 27001',
+   desc:'The organisation shall establish and maintain contact with special interest groups, security forums, professional associations, and other relevant communities to stay informed about emerging threats, vulnerabilities, and security best practices.'},
+  {id:'ISO-5.7', name:'Threat intelligence',                 cat:'Risk Management',      framework:'ISO 27001',
+   desc:'Information relating to information security threats shall be collected, analysed, and produced to generate threat intelligence. Threat intelligence shall be used to inform risk assessments, security measures, and to help the organisation proactively address emerging threats to its information assets.'},
+  {id:'ISO-6.1', name:'Screening',                           cat:'Human Resources',      framework:'ISO 27001',
+   desc:'Background verification checks on all candidates for employment shall be carried out prior to joining the organisation, on a continuous basis, and taking into account applicable laws, regulations and ethics, and proportional to the business requirements, the classification of the information to be accessed and the perceived risks.'},
+  {id:'ISO-6.3', name:'Information security awareness & training', cat:'Human Resources',framework:'ISO 27001',
+   desc:'Personnel of the organisation and, where relevant, interested parties shall receive appropriate information security awareness, education and training, and regular updates of the organisation\'s information security policy, topic-specific policies and procedures, as relevant for their job function.'},
+  {id:'ISO-8.1', name:'User endpoint devices',               cat:'Asset Management',     framework:'ISO 27001',
+   desc:'Information stored on, processed by or accessible via user endpoint devices shall be protected. The organisation shall establish a topic-specific policy on secure configuration and handling of user endpoint devices and shall communicate it to all relevant personnel.'},
+  {id:'ISO-8.8', name:'Management of technical vulnerabilities', cat:'Risk Management',  framework:'ISO 27001',
+   desc:'Information about technical vulnerabilities of information systems in use shall be obtained in a timely fashion; the organisation\'s exposure to such vulnerabilities shall be evaluated and appropriate measures taken to address the associated risk.'},
+  {id:'ISO-8.15',name:'Logging',                             cat:'Logging',              framework:'ISO 27001',
+   desc:'Logs that record activities, exceptions, faults and other relevant events shall be produced, stored, protected and analysed. Logs shall include user activities, exceptions, faults and information security events. Logs shall be retained for an agreed period and protected against tampering and unauthorised access.'},
+
+  // ── NIST CSF 2.0 ─────────────────────────────────────────────────────────
+  {id:'CSF-ID.AM-1', name:'Asset Inventory',             cat:'Asset Management', framework:'NIST CSF',
+   desc:'GV.OC-05 / ID.AM-01: Assets (e.g., data, hardware, software, systems, facilities, services, people) that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization\'s risk strategy.'},
+  {id:'CSF-ID.AM-2', name:'Software Inventory',          cat:'Asset Management', framework:'NIST CSF',
+   desc:'ID.AM-02: Inventories of software, services, and systems managed by the organization are maintained with sufficient granularity to enable tracking of ownership, location, connectivity, and other attributes relevant to risk management.'},
+  {id:'CSF-ID.RA-1', name:'Asset vulnerabilities',       cat:'Risk Management',  framework:'NIST CSF',
+   desc:'ID.RA-01: Vulnerabilities in assets are identified, validated, and recorded. This includes using automated scanning tools, threat intelligence feeds, vendor bulletins, and manual assessments to identify known and potential vulnerabilities in all in-scope assets.'},
+  {id:'CSF-PR.AC-1', name:'Identity Management',         cat:'Access Control',   framework:'NIST CSF',
+   desc:'PR.AA-01 / PR.AC-1: Identities and credentials for authorised users, services, and hardware are managed by the organisation. This encompasses issuance, management, verification, revocation, and auditing of identities, including multi-factor authentication enforcement.'},
+  {id:'CSF-PR.AC-3', name:'Remote access management',    cat:'Access Control',   framework:'NIST CSF',
+   desc:'PR.AA-05 / PR.AC-3: Access to assets is managed commensurate with the risk of unauthorised access, including use of the principles of least privilege and separation of duties. Remote access sessions are authenticated, encrypted, monitored, and terminated after a defined period of inactivity.'},
+  {id:'CSF-PR.DS-1', name:'Data-at-rest protection',     cat:'Data Protection',  framework:'NIST CSF',
+   desc:'PR.DS-01: The confidentiality, integrity, and availability of data-at-rest are protected. This includes using encryption, access controls, integrity monitoring, and secure storage practices for all sensitive and classified information stored on systems, databases, and backup media.'},
+  {id:'CSF-PR.DS-2', name:'Data-in-transit protection',  cat:'Data Protection',  framework:'NIST CSF',
+   desc:'PR.DS-02: The confidentiality, integrity, and availability of data-in-transit are protected. This includes applying encryption (e.g., TLS 1.2+), certificate management, secure protocols, and network segmentation to prevent interception, tampering, or unauthorised access to data in transit.'},
+  {id:'CSF-DE.CM-1', name:'Network monitoring',          cat:'Network Security', framework:'NIST CSF',
+   desc:'DE.CM-01: Networks and network services are monitored to detect potential adverse events. Continuous monitoring capabilities shall detect anomalous activity, unauthorised connections, malicious code, and policy violations in near-real-time, with alerts routed to a responsible team.'},
+  {id:'CSF-RS.RP-1', name:'Incident response plan',      cat:'Incident Mgmt',    framework:'NIST CSF',
+   desc:'RS.MA-01 / RS.RP-1: A documented incident response plan exists that defines roles and responsibilities, communication procedures, escalation paths, containment strategies, and criteria for declaring and closing an incident. The plan is executed during or after a cybersecurity incident.'},
+
+  // ── SOC 2 (AICPA Trust Services Criteria) ────────────────────────────────
+  {id:'SOC2-CC6.1', name:'Logical access controls',  cat:'Access Control',   framework:'SOC 2',
+   desc:'CC6.1: The entity implements logical access security software, infrastructure, and architectures over protected information assets to protect them from security events to meet the entity\'s objectives. This includes identification and authentication mechanisms, access provisioning controls, and restriction of access to authorised users only.'},
+  {id:'SOC2-CC6.2', name:'Access provisioning',      cat:'Access Control',   framework:'SOC 2',
+   desc:'CC6.2: Prior to issuing system credentials and granting system access, the entity registers and authorises new internal and external users. User access rights are reviewed and adjusted at defined intervals, and access is promptly revoked upon termination or role change.'},
+  {id:'SOC2-CC7.1', name:'System boundary monitoring',cat:'Network Security', framework:'SOC 2',
+   desc:'CC7.1: To meet its objectives, the entity uses detection and monitoring procedures to identify (1) changes to configurations that result in the introduction of new vulnerabilities, and (2) susceptibilities to newly discovered vulnerabilities. The entity monitors network boundaries and performs periodic configuration assessments.'},
+  {id:'SOC2-CC7.2', name:'Anomaly & threat monitoring',cat:'Logging',         framework:'SOC 2',
+   desc:'CC7.2: The entity monitors system components and the operation of those controls on an ongoing basis to detect anomalies that are indicative of malicious acts, natural disasters, and errors affecting the entity\'s ability to meet its objectives. Monitoring includes SIEM alerting, log review, and defined escalation procedures.'},
+  {id:'SOC2-CC8.1', name:'Change management',        cat:'Compliance',        framework:'SOC 2',
+   desc:'CC8.1: The entity authorises, designs, develops or acquires, configures, documents, tests, approves, and implements changes to infrastructure, data, software, and procedures to meet its change management objectives. Emergency changes follow an expedited but documented process including post-change review.'},
+
+  // ── GDPR ─────────────────────────────────────────────────────────────────
+  {id:'GDPR-Art.5',  name:'Principles of data processing', cat:'Data Protection', framework:'GDPR',
+   desc:'Article 5(1): Personal data shall be: (a) processed lawfully, fairly and in a transparent manner (lawfulness, fairness and transparency); (b) collected for specified, explicit and legitimate purposes and not further processed in a manner incompatible with those purposes (purpose limitation); (c) adequate, relevant and limited to what is necessary (data minimisation); (d) accurate and, where necessary, kept up to date (accuracy); (e) kept in a form which permits identification no longer than necessary (storage limitation); (f) processed in a manner that ensures appropriate security (integrity and confidentiality).'},
+  {id:'GDPR-Art.25', name:'Data protection by design',     cat:'Data Protection', framework:'GDPR',
+   desc:'Article 25(1): Taking into account the state of the art, the cost of implementation and the nature, scope, context and purposes of processing as well as the risks, the controller shall implement appropriate technical and organisational measures — both at the time of the determination of the means for processing and at the time of the processing itself — to implement data-protection principles in an effective manner and to integrate the necessary safeguards into the processing.'},
+  {id:'GDPR-Art.32', name:'Security of processing',        cat:'Data Protection', framework:'GDPR',
+   desc:'Article 32(1): Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, the controller and processor shall implement appropriate technical and organisational measures to ensure a level of security appropriate to the risk, including: (a) the pseudonymisation and encryption of personal data; (b) the ability to ensure ongoing confidentiality, integrity, availability and resilience of processing systems; (c) the ability to restore availability and access to personal data in a timely manner in the event of a physical or technical incident; (d) a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures.'},
+  {id:'GDPR-Art.33', name:'Breach notification (72h)',     cat:'Incident Mgmt',   framework:'GDPR',
+   desc:'Article 33(1): In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons. The notification shall include: nature of the breach, categories of data subjects affected, likely consequences, and measures taken or proposed to address it.'},
+
+  // ── CIS Controls v8 ──────────────────────────────────────────────────────
+  {id:'CIS-1', name:'Inventory of Enterprise Assets', cat:'Asset Management', framework:'CIS',
+   desc:'CIS Control 1: Actively manage (inventory, track, and correct) all enterprise assets connected to the infrastructure physically, virtually, remotely, and those within cloud environments, to accurately know the totality of assets that need to be monitored and protected within the enterprise.'},
+  {id:'CIS-3', name:'Data Protection',                cat:'Data Protection',  framework:'CIS',
+   desc:'CIS Control 3: Develop processes and technical controls to identify, classify, securely handle, retain, and dispose of data. This includes establishing a data classification scheme, applying encryption, enforcing data loss prevention (DLP) controls, and defining retention and disposal schedules aligned to legal and regulatory requirements.'},
+  {id:'CIS-5', name:'Account Management',             cat:'Access Control',   framework:'CIS',
+   desc:'CIS Control 5: Use processes and tools to assign and manage authorisation to credentials for user accounts, including administrator accounts, as well as service accounts, to enterprise assets and software. This includes establishing, managing, deprovisioning, and auditing all user credentials, and enforcing multi-factor authentication for privileged access.'},
+  {id:'CIS-6', name:'Access Control Management',      cat:'Access Control',   framework:'CIS',
+   desc:'CIS Control 6: Use processes and tools to create, assign, manage, and revoke access credentials and privileges for user, administrator, and service accounts for enterprise assets and software. Implement the principle of least privilege, ensuring accounts only have the minimum permissions necessary to perform their required functions.'},
+
+  // ── HIPAA Security Rule ───────────────────────────────────────────────────
+  {id:'HIPAA-164.308', name:'Administrative safeguards', cat:'Compliance',      framework:'HIPAA',
+   desc:'45 CFR §164.308(a): A covered entity or business associate must implement policies and procedures to prevent, detect, contain, and correct security violations. Required implementation specifications include: (1) Security management process — risk analysis, risk management, sanction policy, and information system activity review; (2) Assigned security responsibility; (3) Workforce security — authorisation and supervision, workforce clearance procedure, and termination procedures; (4) Information access management; (5) Security awareness and training.'},
+  {id:'HIPAA-164.312', name:'Technical safeguards',      cat:'Data Protection', framework:'HIPAA',
+   desc:'45 CFR §164.312(a): A covered entity or business associate must implement technical security measures to guard against unauthorised access to electronic protected health information (ePHI) that is being transmitted over an electronic communications network. Required controls include: (1) Access control — unique user identification, emergency access procedure, automatic logoff, and encryption/decryption; (2) Audit controls — hardware, software, and procedural mechanisms to record and examine activity; (3) Integrity controls — mechanisms to authenticate ePHI and protect it from improper alteration or destruction; (4) Transmission security — encryption of ePHI in transit.'},
 ];
 
 const SEED_DATA = {
@@ -2249,7 +2289,7 @@ function renderFrameworks() {
               <td class="td-primary">${c.name}</td>
               <td><span class="badge badge-gray">${c.cat}</span></td>
               <td><span class="badge ${fwColors[c.framework]||'badge-gray'}">${c.framework}</span></td>
-              <td style="font-size:12px;color:var(--text-muted);max-width:300px">${c.desc.length>80?c.desc.slice(0,80)+'…':c.desc}</td>
+              <td style="font-size:12px;color:var(--text-muted);max-width:420px;line-height:1.6;white-space:normal">${c.desc}</td>
               <td><button class="btn btn-secondary btn-xs" onclick="addControlFromLibrary('${c.id}','${c.name}','${c.framework}')">+ Add</button></td>
             </tr>`).join('')}
           </tbody>
