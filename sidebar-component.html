@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC — Collapsible Sidebar</title>
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — change values here to retheme everything
+       ============================================================ */
+    :root {
+      /* Sidebar dimensions
+         ─────────────────────────────────────────────────────────
+         CHANGE WIDTHS HERE                                       */
+      --sidebar-expanded:  280px;   /* expanded desktop width     */
+      --sidebar-collapsed:  88px;   /* collapsed (icon-only) width*/
+
+      /* Transition timing
+         ─────────────────────────────────────────────────────────
+         CHANGE TRANSITION SPEEDS HERE                           */
+      --t-open:  200ms ease-out;
+      --t-close: 200ms ease-in;
+
+      /* Sidebar colours */
+      --sb-bg:           #0F172A;   /* sidebar background         */
+      --sb-border:       #1E293B;   /* right border               */
+      --sb-text:         #E2E8F0;   /* default nav text           */
+      --sb-text-muted:   #94A3B8;   /* secondary / label text     */
+      --sb-active-text:  #FFFFFF;   /* active item text           */
+      --sb-active-bg:    rgba(56,189,248,0.12);
+      --sb-active-bar:   #38BDF8;   /* left accent bar on active  */
+      --sb-hover-bg:     rgba(255,255,255,0.05);
+      --sb-icon-color:   #64748B;   /* default icon fill          */
+      --sb-active-icon:  #38BDF8;
+
+      /* Scrollbar colours
+         ─────────────────────────────────────────────────────────
+         CHANGE SCROLLBAR COLOURS HERE                           */
+      --scroll-track:    #0B1220;
+      --scroll-thumb:    #334155;
+      --scroll-thumb-h:  #475569;   /* hover state                */
+
+      /* Scrollbar width
+         ─────────────────────────────────────────────────────────
+         CHANGE SCROLLBAR WIDTH HERE                             */
+      --scroll-width:    14px;
+
+      /* App chrome */
+      --header-h:        56px;
+      --app-bg:          #020817;
+      --header-bg:       #0F172A;
+      --header-border:   #1E293B;
+      --content-text:    #CBD5E1;
+      --scrim-bg:        rgba(0,0,0,0.55);
+    }
+
+    /* ============================================================
+       REDUCED MOTION — disables ALL transitions / animations
+       ─────────────────────────────────────────────────────────
+       REDUCED MOTION OVERRIDE IS HERE                          */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0ms !important;
+        animation-duration:  0ms !important;
+      }
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--app-bg);
+      color: var(--sb-text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Prevent body scroll when mobile drawer is open
+       CLASS APPLIED BY JS: body.drawer-open                     */
+    body.drawer-open { overflow: hidden; }
+
+    /* ============================================================
+       APP SHELL
+       ============================================================ */
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .app-header {
+      height: var(--header-h);
+      min-height: var(--header-h);
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      z-index: 200;
+      flex-shrink: 0;
+    }
+
+    .app-header__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--sb-active-text);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .app-header__brand-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #38BDF8, #2563EB);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .app-header__brand-icon svg { width: 16px; height: 16px; fill: #fff; }
+
+    /* ============================================================
+       SIDEBAR TOGGLE BUTTON
+       ============================================================ */
+    /* The toggle lives in the header top-left.
+       See "ALT TOGGLE (FAB)" at the bottom for an alternative
+       placement if the page already has a fixed header.          */
+    .sidebar-toggle {
+      width: 36px; height: 36px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: var(--sb-text-muted);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background var(--t-open), color var(--t-open);
+    }
+
+    .sidebar-toggle:hover  { background: var(--sb-hover-bg); color: var(--sb-text); }
+    .sidebar-toggle:focus-visible {
+      outline: 2px solid var(--sb-active-bar);
+      outline-offset: 2px;
+    }
+
+    .sidebar-toggle svg { width: 20px; height: 20px; pointer-events: none; }
+
+    /* ============================================================
+       BODY ROW (sidebar + main)
+       ============================================================ */
+    .body-row {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ============================================================
+       SIDEBAR — desktop default (expanded)
+       ─────────────────────────────────────────────────────────
+       CLASSES:
+         #primarySidebar              — base element
+         #primarySidebar.is-collapsed — desktop collapsed state
+         #primarySidebar.is-open      — mobile drawer open state
+       ============================================================ */
+    #primarySidebar {
+      width: var(--sidebar-expanded);  /* EXPANDED WIDTH HERE      */
+      flex-shrink: 0;
+      background: var(--sb-bg);
+      border-right: 1px solid var(--sb-border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: width var(--t-open);
+      /* Individual property transition: open uses ease-out        */
+      z-index: 100;
+    }
+
+    /* Desktop collapsed state
+       WIDTH IS SET VIA CSS VARIABLE AT TOP                        */
+    #primarySidebar.is-collapsed {
+      width: var(--sidebar-collapsed);   /* COLLAPSED WIDTH HERE   */
+      transition: width var(--t-close);  /* close uses ease-in     */
+    }
+
+    /* ============================================================
+       SIDEBAR SCROLLABLE AREA
+       The custom scrollbar is ONLY applied to .sidebar-scroller,
+       never to the global page scrollbar.
+       ============================================================ */
+    .sidebar-scroller {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      /* Firefox scrollbar — CHANGE COLOURS IN :root above        */
+      scrollbar-width: auto;
+      scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+    }
+
+    /* WebKit / Chromium scrollbar — ONLY inside sidebar          */
+    .sidebar-scroller::-webkit-scrollbar {
+      width: var(--scroll-width);       /* SCROLLBAR WIDTH HERE   */
+    }
+
+    .sidebar-scroller::-webkit-scrollbar-track {
+      background: var(--scroll-track);  /* TRACK COLOUR HERE      */
+    }
+
+    .sidebar-scroller::-webkit-scrollbar-thumb {
+      background: var(--scroll-thumb);  /* THUMB COLOUR HERE      */
+      border-radius: 999px;
+      /* 3px border of track colour creates visual spacing         */
+      border: 3px solid var(--scroll-track);
+    }
+
+    .sidebar-scroller::-webkit-scrollbar-thumb:hover {
+      background: var(--scroll-thumb-h); /* THUMB HOVER COLOUR HERE */
+    }
+
+    /* ============================================================
+       SIDEBAR HEADER (logo area inside sidebar)
+       ============================================================ */
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      height: var(--header-h);
+      min-height: var(--header-h);
+      border-bottom: 1px solid var(--sb-border);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand__icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #38BDF8, #2563EB);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand__icon svg { width: 18px; height: 18px; fill: #fff; }
+
+    .sidebar-brand__label {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: opacity var(--t-open), width var(--t-open);
+      white-space: nowrap;
+    }
+
+    .sidebar-brand__label strong {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--sb-active-text);
+      text-transform: uppercase;
+    }
+
+    .sidebar-brand__label span {
+      font-size: 11px;
+      color: var(--sb-text-muted);
+    }
+
+    /* Hide labels when collapsed */
+    #primarySidebar.is-collapsed .sidebar-brand__label,
+    #primarySidebar.is-collapsed .nav-label,
+    #primarySidebar.is-collapsed .nav-section-title {
+      opacity: 0;
+      width: 0;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       NAV SECTIONS & ITEMS
+       ============================================================ */
+    .nav-section {
+      padding: 12px 0 4px;
+    }
+
+    .nav-section-title {
+      padding: 0 20px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sb-text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      transition: opacity var(--t-open);
+    }
+
+    /* When collapsed, show a thin divider line instead of section title */
+    #primarySidebar.is-collapsed .nav-section-title {
+      padding: 0 12px 6px;
+    }
+
+    .nav-section-title::before {
+      content: '';
+      display: none;
+    }
+
+    #primarySidebar.is-collapsed .nav-section:not(:first-child)::before {
+      content: '';
+      display: block;
+      height: 1px;
+      background: var(--sb-border);
+      margin: 4px 12px 8px;
+    }
+
+    /* NAV LIST */
+    .nav-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    /* NAV ITEM LINK */
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      height: 44px;
+      text-decoration: none;
+      color: var(--sb-text);
+      border-left: 3px solid transparent;
+      transition:
+        background var(--t-open),
+        color var(--t-open),
+        border-color var(--t-open);
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .nav-item a:hover {
+      background: var(--sb-hover-bg);
+      color: var(--sb-active-text);
+    }
+
+    .nav-item a:focus-visible {
+      outline: 2px solid var(--sb-active-bar);
+      outline-offset: -2px;
+    }
+
+    /* ACTIVE state
+       CLASS CONTROLLED BY JS: .nav-item.is-active                */
+    .nav-item.is-active a {
+      background: var(--sb-active-bg);
+      color:  var(--sb-active-text);
+      border-left-color: var(--sb-active-bar);
+    }
+
+    /* NAV ICON */
+    .nav-icon {
+      width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--sb-icon-color);
+      transition: color var(--t-open);
+    }
+
+    .nav-item.is-active .nav-icon { color: var(--sb-active-icon); }
+    .nav-item a:hover .nav-icon   { color: var(--sb-active-text); }
+
+    .nav-icon svg { width: 18px; height: 18px; }
+
+    /* NAV LABEL */
+    .nav-label {
+      font-size: 13.5px;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: opacity var(--t-open), width var(--t-open);
+      flex: 1;
+    }
+
+    /* NAV BADGE */
+    .nav-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: rgba(239,68,68,0.2);
+      color: #F87171;
+      flex-shrink: 0;
+      transition: opacity var(--t-open);
+    }
+
+    #primarySidebar.is-collapsed .nav-badge { opacity: 0; width: 0; overflow: hidden; }
+
+    /* Collapsed nav item — centre icon, tooltip on hover */
+    #primarySidebar.is-collapsed .nav-item a {
+      padding: 0;
+      justify-content: center;
+      border-left-color: transparent;
+    }
+
+    #primarySidebar.is-collapsed .nav-item.is-active a {
+      border-left-color: transparent;
+      /* Show a dot below the icon instead */
+    }
+
+    /* Tooltip shown when collapsed */
+    #primarySidebar.is-collapsed .nav-item a::after {
+      content: attr(data-label);
+      position: absolute;
+      left: calc(var(--sidebar-collapsed) - 4px);
+      background: #1E293B;
+      color: var(--sb-active-text);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 120ms, transform 120ms;
+      z-index: 300;
+      border: 1px solid var(--sb-border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    #primarySidebar.is-collapsed .nav-item a:hover::after,
+    #primarySidebar.is-collapsed .nav-item a:focus-visible::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ============================================================
+       SIDEBAR FOOTER (user info strip)
+       ============================================================ */
+    .sidebar-footer {
+      border-top: 1px solid var(--sb-border);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer__avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38BDF8 0%, #2563EB 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer__info {
+      overflow: hidden;
+      transition: opacity var(--t-open), width var(--t-open);
+      white-space: nowrap;
+    }
+
+    .sidebar-footer__info strong {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--sb-active-text);
+    }
+
+    .sidebar-footer__info span {
+      font-size: 11px;
+      color: var(--sb-text-muted);
+    }
+
+    #primarySidebar.is-collapsed .sidebar-footer__info { opacity: 0; width: 0; }
+    #primarySidebar.is-collapsed .sidebar-footer { justify-content: center; padding: 12px 0; }
+
+    /* ============================================================
+       SCRIM (mobile overlay backdrop)
+       ─────────────────────────────────────────────────────────
+       CLASS APPLIED BY JS: #sidebarScrim.is-visible             */
+    #sidebarScrim {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--scrim-bg);
+      z-index: 90;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity var(--t-open);
+    }
+
+    #sidebarScrim.is-visible {
+      display: block;
+      opacity: 1;
+    }
+
+    /* ============================================================
+       MAIN CONTENT AREA
+       ============================================================ */
+    main#mainContent {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 40px;
+      color: var(--content-text);
+      scrollbar-width: thin;
+      scrollbar-color: #1E293B #020817;
+    }
+
+    main#mainContent::-webkit-scrollbar { width: 8px; }
+    main#mainContent::-webkit-scrollbar-track { background: #020817; }
+    main#mainContent::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+
+    .content-card {
+      background: #0F172A;
+      border: 1px solid #1E293B;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .content-card h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #F8FAFC;
+      margin-bottom: 10px;
+    }
+
+    .content-card p {
+      font-size: 14px;
+      color: #94A3B8;
+      line-height: 1.7;
+      max-width: 65ch;
+    }
+
+    .content-card p + p { margin-top: 10px; }
+
+    .content-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin: 6px 4px 0 0;
+    }
+
+    .tag-blue   { background: rgba(56,189,248,0.12); color: #38BDF8; }
+    .tag-green  { background: rgba(34,197,94,0.12);  color: #22C55E; }
+    .tag-orange { background: rgba(249,115,22,0.12); color: #F97316; }
+    .tag-red    { background: rgba(239,68,68,0.12);  color: #EF4444; }
+
+    /* ============================================================
+       MOBILE — sidebar becomes an overlay drawer
+       Below 768px the sidebar is position:fixed, slides in from left
+       ─────────────────────────────────────────────────────────
+       MOBILE BREAKPOINT IS HERE                                 */
+    @media (max-width: 767px) {
+      /* Hide the in-header toggle on mobile; show the hamburger only */
+      .app-header__brand { flex: 1; }
+
+      /* Sidebar off-screen by default */
+      #primarySidebar {
+        position: fixed;
+        top: 0; left: 0; bottom: 0;
+        width: var(--sidebar-expanded) !important;
+        transform: translateX(-100%);
+        transition: transform var(--t-close);
+        z-index: 110;
+        /* reset desktop collapse state on mobile */
+      }
+
+      /* Mobile open state
+         CLASS APPLIED BY JS: #primarySidebar.is-open            */
+      #primarySidebar.is-open {
+        transform: translateX(0);
+        transition: transform var(--t-open);
+      }
+
+      /* Collapsed class has no effect on mobile */
+      #primarySidebar.is-collapsed {
+        width: var(--sidebar-expanded) !important;
+        transform: translateX(-100%);
+      }
+
+      #primarySidebar.is-collapsed.is-open {
+        transform: translateX(0);
+      }
+
+      /* Main fills full width */
+      main#mainContent {
+        padding: 24px 20px;
+      }
+    }
+
+    /* Extra small — 320px */
+    @media (max-width: 359px) {
+      :root { --sidebar-expanded: 260px; }
+      main#mainContent { padding: 16px 14px; }
+    }
+
+    /* ============================================================
+       SKIP LINK (accessibility)
+       ============================================================ */
+    .skip-link {
+      position: absolute;
+      top: -40px; left: 0;
+      background: var(--sb-active-bar);
+      color: #000;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 0 0 6px 0;
+      z-index: 9999;
+      transition: top 150ms;
+    }
+
+    .skip-link:focus { top: 0; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Accessibility: skip to main content -->
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+
+  <!-- ============================================================
+       MOBILE SCRIM — semi-transparent backdrop
+       Clicking it closes the drawer (wired in JS below)
+       ============================================================ -->
+  <div id="sidebarScrim" aria-hidden="true"></div>
+
+  <div class="app-shell">
+
+    <!-- ==========================================================
+         HEADER
+         Contains the sidebar toggle button (top-left).
+         ========================================================== -->
+    <header class="app-header" role="banner">
+
+      <!--
+        SIDEBAR TOGGLE BUTTON
+        ─────────────────────────────────────────────────────────
+        UNIQUE ID: #sidebarToggle  (referenced by JS + aria)
+        aria-controls  → must match the sidebar's id="primarySidebar"
+        aria-expanded  → toggled by JS
+        aria-label     → updated by JS ("Expand sidebar" / "Collapse sidebar")
+      -->
+      <button
+        id="sidebarToggle"
+        class="sidebar-toggle"
+        type="button"
+        aria-controls="primarySidebar"
+        aria-expanded="true"
+        aria-label="Collapse sidebar"
+      >
+        <!-- Hamburger / menu icon (inline SVG — no CDN) -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true" focusable="false">
+          <line x1="3" y1="6"  x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="app-header__brand" aria-hidden="true">
+        <div class="app-header__brand-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        GRC Command Centre
+      </div>
+
+    </header>
+
+    <!-- ==========================================================
+         BODY ROW — sidebar + main side by side
+         ========================================================== -->
+    <div class="body-row">
+
+      <!-- ========================================================
+           SIDEBAR
+           ─────────────────────────────────────────────────────
+           UNIQUE ID: #primarySidebar
+           role="navigation"  — landmark for screen readers
+           aria-label="Primary" — identifies this nav region
+
+           STATE CLASSES (applied by JS):
+             .is-collapsed  → desktop icon-only mode
+             .is-open       → mobile drawer open
+           ======================================================== -->
+      <aside
+        id="primarySidebar"
+        role="navigation"
+        aria-label="Primary"
+      >
+
+        <!-- Brand strip inside sidebar (hidden on mobile when drawer slides in) -->
+        <div class="sidebar-brand" aria-hidden="true">
+          <div class="sidebar-brand__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="sidebar-brand__label">
+            <strong>GRC Platform</strong>
+            <span>v2.0 · Chris Olowo</span>
+          </div>
+        </div>
+
+        <!-- Scrollable nav area — CUSTOM SCROLLBAR LIVES HERE -->
+        <div class="sidebar-scroller" role="presentation">
+
+          <!-- ── SECTION: OVERVIEW ─────────────────────────── -->
+          <nav class="nav-section">
+            <div class="nav-section-title" aria-hidden="true">Overview</div>
+            <ul class="nav-list" role="list">
+
+              <li class="nav-item is-active" role="listitem">
+                <a href="#dashboard" data-view="dashboard" data-label="Dashboard">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="7" height="7"/>
+                      <rect x="14" y="3" width="7" height="7"/>
+                      <rect x="14" y="14" width="7" height="7"/>
+                      <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Dashboard</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+          <!-- ── SECTION: INVENTORY ────────────────────────── -->
+          <nav class="nav-section">
+            <div class="nav-section-title" aria-hidden="true">Inventory</div>
+            <ul class="nav-list" role="list">
+
+              <li class="nav-item" role="listitem">
+                <a href="#assets" data-view="assets" data-label="Assets">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2"/>
+                      <path d="M8 21h8M12 17v4"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Assets</span>
+                </a>
+              </li>
+
+              <li class="nav-item" role="listitem">
+                <a href="#vendors" data-view="vendors" data-label="Vendors">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                      <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Vendors</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+          <!-- ── SECTION: RISK & CONTROLS ──────────────────── -->
+          <nav class="nav-section">
+            <div class="nav-section-title" aria-hidden="true">Risk & Controls</div>
+            <ul class="nav-list" role="list">
+
+              <li class="nav-item" role="listitem">
+                <a href="#risks" data-view="risks" data-label="Risk Register">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                      <line x1="12" y1="9" x2="12" y2="13"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Risk Register</span>
+                  <span class="nav-badge" aria-label="4 critical risks">4</span>
+                </a>
+              </li>
+
+              <li class="nav-item" role="listitem">
+                <a href="#matrix" data-view="matrix" data-label="Risk Matrix">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/>
+                      <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Risk Matrix</span>
+                </a>
+              </li>
+
+              <li class="nav-item" role="listitem">
+                <a href="#frameworks" data-view="frameworks" data-label="Framework Library">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Framework Library</span>
+                </a>
+              </li>
+
+              <li class="nav-item" role="listitem">
+                <a href="#controls" data-view="controls" data-label="Controls">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                      <path d="M7 11V7a5 5 0 0110 0v4"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Controls</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+          <!-- ── SECTION: AUDIT & EVIDENCE ─────────────────── -->
+          <nav class="nav-section">
+            <div class="nav-section-title" aria-hidden="true">Audit & Evidence</div>
+            <ul class="nav-list" role="list">
+
+              <li class="nav-item" role="listitem">
+                <a href="#audits" data-view="audits" data-label="Audits">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 11l3 3L22 4"/>
+                      <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Audits</span>
+                </a>
+              </li>
+
+              <li class="nav-item" role="listitem">
+                <a href="#evidence" data-view="evidence" data-label="Evidence">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Evidence</span>
+                </a>
+              </li>
+
+              <li class="nav-item" role="listitem">
+                <a href="#soa" data-view="soa" data-label="Statement of Applicability">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="8" y1="6"  x2="21" y2="6"/>
+                      <line x1="8" y1="12" x2="21" y2="12"/>
+                      <line x1="8" y1="18" x2="21" y2="18"/>
+                      <line x1="3" y1="6"  x2="3.01" y2="6"/>
+                      <line x1="3" y1="12" x2="3.01" y2="12"/>
+                      <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Statement of Applicability</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+          <!-- ── SECTION: RESILIENCE ────────────────────────── -->
+          <nav class="nav-section">
+            <div class="nav-section-title" aria-hidden="true">Resilience</div>
+            <ul class="nav-list" role="list">
+
+              <li class="nav-item" role="listitem">
+                <a href="#incidents" data-view="incidents" data-label="Incidents">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Incidents</span>
+                </a>
+              </li>
+
+              <li class="nav-item" role="listitem">
+                <a href="#bia" data-view="bia" data-label="Business Continuity">
+                  <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                  </span>
+                  <span class="nav-label">Business Continuity</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div><!-- /.sidebar-scroller -->
+
+        <!-- User footer strip -->
+        <div class="sidebar-footer" aria-hidden="true">
+          <div class="sidebar-footer__avatar">CO</div>
+          <div class="sidebar-footer__info">
+            <strong>Chris Olowo</strong>
+            <span>PMP® · Admin</span>
+          </div>
+        </div>
+
+      </aside><!-- /#primarySidebar -->
+
+      <!-- ========================================================
+           MAIN CONTENT
+           tabindex="-1" allows JS focus management (skip links etc.)
+           ======================================================== -->
+      <main id="mainContent" tabindex="-1">
+
+        <div class="content-card">
+          <h2>🛡️ GRC Command Centre</h2>
+          <p>Welcome back, Chris. Your security posture is being actively monitored. Use the sidebar to navigate between risk registers, control frameworks, audit trails, and business continuity plans.</p>
+          <p>
+            <span class="content-tag tag-red">4 Critical Risks</span>
+            <span class="content-tag tag-orange">2 Audits In Progress</span>
+            <span class="content-tag tag-green">10 Controls Implemented</span>
+            <span class="content-tag tag-blue">ISO 27001 · SOC 2 · NIST CSF</span>
+          </p>
+        </div>
+
+        <div class="content-card">
+          <h2>Sidebar behaviour</h2>
+          <p><strong>Desktop:</strong> Click the ☰ button top-left to collapse the sidebar to icon-only mode (88px). Click again to expand to 280px. State is saved in <code>localStorage</code> and persists across page refreshes.</p>
+          <p><strong>Mobile (&lt;768px):</strong> The sidebar becomes an overlay drawer. Tap the toggle to open; tap the scrim or press <kbd>Esc</kbd> to close. Body scroll is locked while the drawer is open. Focus is trapped inside the drawer and restored to the toggle on close.</p>
+        </div>
+
+        <div class="content-card">
+          <h2>Accessibility features</h2>
+          <p>The toggle has <code>aria-expanded</code> and <code>aria-controls</code> wired to the sidebar. The sidebar carries <code>role="navigation" aria-label="Primary"</code>. All transitions are disabled when <code>prefers-reduced-motion: reduce</code> is set. A visible skip link appears on first Tab keypress.</p>
+        </div>
+
+        <div class="content-card">
+          <h2>Scrollbar</h2>
+          <p>The custom wide scrollbar (14px, high-contrast track/thumb) is scoped exclusively to the <code>.sidebar-scroller</code> element via <code>::-webkit-scrollbar</code> selectors. No global scrollbar styles are modified. Firefox uses <code>scrollbar-color</code> and <code>scrollbar-width</code> on the same element only.</p>
+        </div>
+
+      </main>
+
+    </div><!-- /.body-row -->
+  </div><!-- /.app-shell -->
+
+
+  <script>
+    /**
+     * ============================================================
+     * SIDEBAR CONTROLLER
+     * ============================================================
+     * Handles:
+     *   1. Desktop collapse / expand with localStorage persistence
+     *   2. Mobile overlay drawer with scrim, Esc, focus trap
+     *   3. Active nav item highlighting
+     *   4. aria-* attribute synchronisation
+     * ============================================================
+     */
+
+    /* ── Element references ──────────────────────────────────── */
+    const sidebar  = document.getElementById('primarySidebar');
+    const toggle   = document.getElementById('sidebarToggle');
+    const scrim    = document.getElementById('sidebarScrim');
+    const mainEl   = document.getElementById('mainContent');
+
+    /* ── Storage key for collapse preference ─────────────────── */
+    const STORAGE_KEY = 'grcSidebarCollapsed';  /* change if needed */
+
+    /* ── Mobile breakpoint (must match CSS) ──────────────────── */
+    const MOBILE_BP = 767;
+
+    /* ── State ───────────────────────────────────────────────── */
+    let isMobile    = window.innerWidth <= MOBILE_BP;
+    let isCollapsed = localStorage.getItem(STORAGE_KEY) === 'true';
+    let mobileOpen  = false;
+
+    /* ── Focusable selector for focus-trap ───────────────────── */
+    const FOCUSABLE = [
+      'a[href]', 'button:not([disabled])',
+      'input:not([disabled])', 'select:not([disabled])',
+      'textarea:not([disabled])', '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    /* ----------------------------------------------------------
+       applyState()
+       Synchronises DOM classes and aria attributes to current state.
+       Call after any state change.
+    ---------------------------------------------------------- */
+    function applyState() {
+      if (isMobile) {
+        /* Mobile: drawer logic */
+        sidebar.classList.toggle('is-open', mobileOpen);
+        scrim.classList.toggle('is-visible', mobileOpen);
+        document.body.classList.toggle('drawer-open', mobileOpen);
+        toggle.setAttribute('aria-expanded', String(mobileOpen));
+        toggle.setAttribute('aria-label',
+          mobileOpen ? 'Close navigation' : 'Open navigation');
+        scrim.setAttribute('aria-hidden', String(!mobileOpen));
+      } else {
+        /* Desktop: collapse logic */
+        sidebar.classList.toggle('is-collapsed', isCollapsed);
+        sidebar.classList.remove('is-open');
+        scrim.classList.remove('is-visible');
+        document.body.classList.remove('drawer-open');
+        toggle.setAttribute('aria-expanded', String(!isCollapsed));
+        toggle.setAttribute('aria-label',
+          isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      }
+    }
+
+    /* ----------------------------------------------------------
+       toggleSidebar()
+       Called when the toggle button is clicked.
+    ---------------------------------------------------------- */
+    function toggleSidebar() {
+      if (isMobile) {
+        mobileOpen = !mobileOpen;
+        applyState();
+        if (mobileOpen) {
+          /* Trap focus inside drawer after transition */
+          setTimeout(trapFocus, 210);
+        } else {
+          toggle.focus();
+        }
+      } else {
+        isCollapsed = !isCollapsed;
+        localStorage.setItem(STORAGE_KEY, isCollapsed);
+        applyState();
+      }
+    }
+
+    /* ----------------------------------------------------------
+       closeDrawer()
+       Closes the mobile drawer and restores focus to toggle.
+    ---------------------------------------------------------- */
+    function closeDrawer() {
+      if (!mobileOpen) return;
+      mobileOpen = false;
+      applyState();
+      toggle.focus();
+    }
+
+    /* ----------------------------------------------------------
+       trapFocus()
+       Keeps Tab / Shift+Tab cycling within the open sidebar.
+    ---------------------------------------------------------- */
+    function trapFocus() {
+      const focusable = Array.from(sidebar.querySelectorAll(FOCUSABLE))
+        .filter(el => !el.closest('[aria-hidden="true"]'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      first.focus();
+
+      function handler(e) {
+        if (e.key !== 'Tab') return;
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault(); last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault(); first.focus();
+          }
+        }
+        /* Remove trap once drawer closes */
+        if (!mobileOpen) sidebar.removeEventListener('keydown', handler);
+      }
+
+      sidebar.addEventListener('keydown', handler);
+    }
+
+    /* ----------------------------------------------------------
+       handleResize()
+       Re-evaluates mobile vs desktop on window resize.
+    ---------------------------------------------------------- */
+    function handleResize() {
+      const wasMobile = isMobile;
+      isMobile = window.innerWidth <= MOBILE_BP;
+      if (wasMobile !== isMobile) {
+        /* Reset transient mobile state when crossing breakpoint */
+        mobileOpen = false;
+        applyState();
+      }
+    }
+
+    /* ----------------------------------------------------------
+       setActiveItem()
+       Marks the clicked nav item as active (simple SPA-style).
+       In a real app this would be driven by the router.
+    ---------------------------------------------------------- */
+    function setActiveItem(clickedAnchor) {
+      document.querySelectorAll('.nav-item').forEach(li =>
+        li.classList.remove('is-active'));
+      clickedAnchor.closest('.nav-item')?.classList.add('is-active');
+    }
+
+    /* ── Event listeners ─────────────────────────────────────── */
+
+    /* Toggle button */
+    toggle.addEventListener('click', toggleSidebar);
+
+    /* Scrim click closes mobile drawer */
+    scrim.addEventListener('click', closeDrawer);
+
+    /* Esc closes mobile drawer */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileOpen) closeDrawer();
+    });
+
+    /* Nav item clicks */
+    sidebar.querySelectorAll('.nav-item a').forEach(a => {
+      a.addEventListener('click', e => {
+        setActiveItem(a);
+        /* On mobile, close drawer after navigation */
+        if (isMobile && mobileOpen) {
+          setTimeout(closeDrawer, 150);
+        }
+      });
+    });
+
+    /* Resize handler (debounced) */
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleResize, 100);
+    });
+
+    /* ── Initial state on page load ──────────────────────────── */
+    applyState();
+
+  </script>
+
+</body>
+</html>
