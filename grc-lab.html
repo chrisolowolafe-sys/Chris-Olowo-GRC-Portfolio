@@ -40,20 +40,20 @@
                     <h3>Risk & Controls</h3>
                     <a href="#" class="nav-link" data-target="view-risks"><i class="fas fa-triangle-exclamation"></i> Risk Register</a>
                     <a href="#" class="nav-link" data-target="view-controls"><i class="fas fa-lock"></i> Framework Library</a>
-                    <a href="#" class="nav-link"><i class="fas fa-border-all"></i> Risk Matrix</a>
+                    <a href="grc-platform.html#matrix" class="nav-link"><i class="fas fa-border-all"></i> Risk Matrix</a>
                 </div>
 
                 <div class="nav-section">
                     <h3>Audit & Compliance</h3>
-                    <a href="#" class="nav-link"><i class="fas fa-clipboard-check"></i> Audits</a>
-                    <a href="#" class="nav-link"><i class="fas fa-folder-open"></i> Evidence</a>
-                    <a href="#" class="nav-link"><i class="fas fa-file-signature"></i> Statement of Applicability</a>
+                    <a href="grc-platform.html" class="nav-link"><i class="fas fa-clipboard-check"></i> Audits</a>
+                    <a href="grc-platform.html" class="nav-link"><i class="fas fa-folder-open"></i> Evidence</a>
+                    <a href="grc-platform.html" class="nav-link"><i class="fas fa-file-signature"></i> Statement of Applicability</a>
                 </div>
 
                 <div class="nav-section">
                     <h3>Resilience & Continuity</h3>
                     <a href="#" class="nav-link" data-target="view-incidents"><i class="fas fa-fire"></i> Incidents</a>
-                    <a href="#" class="nav-link"><i class="fas fa-heart-pulse"></i> Business Impact</a>
+                    <a href="grc-platform.html" class="nav-link"><i class="fas fa-heart-pulse"></i> Business Impact</a>
                 </div>
             </nav>
         </aside>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="hero-actions">
                             <button class="btn btn-outline" onclick="resetLabData()"><i class="fas fa-bolt"></i> Load Demo Data</button>
-                            <button class="btn btn-primary"><i class="fas fa-play"></i> Start Project</button>
+                            <a href="grc-platform.html" class="btn btn-primary"><i class="fas fa-rocket"></i> Launch Full GRC Platform</a>
                         </div>
                     </div>
                     
@@ -254,7 +254,7 @@
                     <div class="library-header">
                         <div>
                             <h1><i class="fas fa-book-bookmark"></i> Framework Control Library</h1>
-                            <p>Security and compliance controls from major frameworks. Use these as reference when implementing your own controls.</p>
+                            <p>480+ security and AI controls from 10 major compliance frameworks. Use these as reference when implementing your own controls.</p>
                         </div>
                         <div class="library-actions">
                             <button class="btn btn-outline"><i class="fas fa-download"></i> Export</button>
@@ -262,33 +262,67 @@
                         </div>
                     </div>
 
-                    <div class="library-filters">
-                        <div class="filter-group">
-                            <label>Framework</label>
-                            <div class="filter-pills" id="filter-frameworks">
-                                <button class="pill active" data-filter="all">All</button>
-                                <button class="pill" data-filter="ISO 27001">ISO 27001</button>
-                                <button class="pill" data-filter="NIST CSF">NIST CSF</button>
-                                <button class="pill" data-filter="CIS Controls">CIS Controls</button>
-                                <button class="pill" data-filter="SOC 2">SOC 2</button>
+                    <div class="library-filters card-panel">
+                        <div class="filter-top-row">
+                            <div class="filter-group">
+                                <label>Framework</label>
+                                <div class="filter-pills" id="filter-frameworks">
+                                    <button class="pill active" data-filter="all">All</button>
+                                    <button class="pill" data-filter="ISO 27001">ISO 27001</button>
+                                    <button class="pill" data-filter="NIST CSF">NIST CSF</button>
+                                    <button class="pill" data-filter="SOC 2">SOC 2</button>
+                                    <button class="pill" data-filter="PCI DSS">PCI DSS</button>
+                                    <button class="pill" data-filter="HIPAA">HIPAA</button>
+                                    <button class="pill" data-filter="GDPR">GDPR</button>
+                                    <button class="pill" data-filter="CIS">CIS</button>
+                                    <button class="pill" data-filter="CMMC">CMMC</button>
+                                    <button class="pill" data-filter="COBIT">COBIT</button>
+                                    <button class="pill" data-filter="ISO 42001">ISO 42001</button>
+                                </div>
+                            </div>
+                            <div class="filter-group search-group">
+                                <label>Search</label>
+                                <div class="search-input-wrapper">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="search-controls" placeholder="Search controls...">
+                                </div>
                             </div>
                         </div>
-                        <div class="filter-group search-group">
-                            <label>Search</label>
-                            <div class="search-input-wrapper">
-                                <i class="fas fa-search"></i>
-                                <input type="text" id="search-controls" placeholder="Search controls...">
+                        <div class="filter-bottom-row">
+                            <div class="filter-group">
+                                <label>Category</label>
+                                <div class="filter-pills" id="filter-categories">
+                                    <button class="pill active" data-filter="all">All Categories</button>
+                                    <button class="pill" data-filter="Access Control">Access Control</button>
+                                    <button class="pill" data-filter="Asset Management">Asset Management</button>
+                                    <button class="pill" data-filter="Data Protection">Data Protection</button>
+                                    <button class="pill" data-filter="Network Security">Network Security</button>
+                                    <button class="pill" data-filter="Incident Mgmt">Incident Mgmt</button>
+                                    <button class="pill" data-filter="Risk Management">Risk Management</button>
+                                    <button class="pill" data-filter="Compliance">Compliance</button>
+                                    <button class="pill" data-filter="Logging">Logging</button>
+                                    <button class="pill" data-filter="Policy & Governance">Policy & Governance</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="table-container">
+                    <div class="table-container card-panel" style="padding: 0;">
                         <div class="table-header-bar">
-                            <h3>Controls</h3>
-                            <span class="badge badge-info" id="controls-table-count">0 controls</span>
+                            <h3 style="font-size: 1.1rem;">Controls</h3>
+                            <span class="badge badge-info" id="controls-table-count" style="font-size: 0.85rem; padding: 6px 12px;">536 controls</span>
                         </div>
-                        <table id="table-controls">
-                            <thead><tr><th>Control ID</th><th>Name</th><th>Linked Risk</th><th>Framework</th><th>Status</th><th>Action</th></tr></thead>
+                        <table id="table-controls" class="table-controls">
+                            <thead>
+                                <tr>
+                                    <th>CONTROL ID</th>
+                                    <th>NAME</th>
+                                    <th>CATEGORY</th>
+                                    <th>FRAMEWORK</th>
+                                    <th>DESCRIPTION</th>
+                                    <th style="text-align: right;">ACTION</th>
+                                </tr>
+                            </thead>
                             <tbody></tbody>
                         </table>
                     </div>
