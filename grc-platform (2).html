@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise GRC Platform | Chris Olowo, PMP®</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    /* =============================================
+       DESIGN SYSTEM — Dark Industrial Precision
+    ============================================= */
+    :root {
+      --bg-void: #080c14;
+      --bg-base: #0d1117;
+      --bg-elevated: #161b27;
+      --bg-surface: #1c2333;
+      --bg-hover: #212840;
+      --border: rgba(99,120,180,0.18);
+      --border-strong: rgba(99,120,180,0.35);
+      --text-primary: #e8edf5;
+      --text-secondary: #8b98b5;
+      --text-muted: #556080;
+      --accent: #4f8ef7;
+      --accent-dim: rgba(79,142,247,0.12);
+      --accent-hover: #6ba3ff;
+      --green: #2ecc8a;
+      --green-dim: rgba(46,204,138,0.12);
+      --red: #f05252;
+      --red-dim: rgba(240,82,82,0.12);
+      --orange: #f5a623;
+      --orange-dim: rgba(245,166,35,0.12);
+      --purple: #9b6cff;
+      --purple-dim: rgba(155,108,255,0.12);
+      --yellow: #f5d020;
+      --yellow-dim: rgba(245,208,32,0.12);
+      --cyan: #22d3ee;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 14px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-void);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow: hidden;
+      height: 100vh;
+    }
+    /* =============================================
+       LAYOUT
+    ============================================= */
+    #app { display: flex; height: 100vh; }
+    .sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--bg-base);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-logo {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--accent) 0%, #2563eb 100%);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 14px; color: white;
+      flex-shrink: 0;
+    }
+    .logo-text { overflow: hidden; }
+    .logo-text h1 {
+      font-family: var(--font-display);
+      font-size: 13px; font-weight: 700;
+      color: var(--text-primary); white-space: nowrap;
+    }
+    .logo-text p { font-size: 11px; color: var(--text-muted); }
+    .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+    .sidebar-nav::-webkit-scrollbar { width: 3px; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border); }
+    .nav-group { margin-bottom: 20px; }
+    .nav-group-label {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 0 20px 6px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 20px;
+      font-size: 13px; color: var(--text-secondary);
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .nav-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .nav-item.active {
+      background: var(--accent-dim);
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+    .nav-item .nav-icon { width: 16px; text-align: center; font-size: 13px; flex-shrink: 0; }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--red-dim); color: var(--red);
+      font-size: 10px; font-weight: 600;
+      padding: 1px 6px; border-radius: 10px;
+    }
+    .main-area {
+      flex: 1; display: flex; flex-direction: column;
+      overflow: hidden; background: var(--bg-void);
+    }
+    .topbar {
+      height: 56px; min-height: 56px;
+      background: var(--bg-base);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 24px; gap: 16px;
+    }
+    .topbar-title {
+      font-family: var(--font-display);
+      font-size: 16px; font-weight: 700;
+      color: var(--text-primary);
+    }
+    .topbar-subtitle { font-size: 12px; color: var(--text-muted); margin-left: 2px; }
+    .topbar-spacer { flex: 1; }
+    .search-box {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 6px 12px;
+      width: 240px;
+    }
+    .search-box input {
+      background: none; border: none; outline: none;
+      color: var(--text-primary); font-family: var(--font-body);
+      font-size: 13px; width: 100%;
+    }
+    .search-box input::placeholder { color: var(--text-muted); }
+    .topbar-actions { display: flex; align-items: center; gap: 8px; }
+    .avatar {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: white;
+      cursor: pointer;
+    }
+    .content-area { flex: 1; overflow-y: auto; padding: 24px; }
+    .content-area::-webkit-scrollbar { width: 4px; }
+    .content-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    /* =============================================
+       COMMON COMPONENTS
+    ============================================= */
+    .page-header { margin-bottom: 24px; }
+    .page-header h2 {
+      font-family: var(--font-display);
+      font-size: 22px; font-weight: 800;
+      color: var(--text-primary);
+    }
+    .page-header p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px;
+      font-family: var(--font-body); font-size: 13px; font-weight: 500;
+      border: none; border-radius: var(--radius);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-primary {
+      background: var(--accent); color: white;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .btn-danger { background: var(--red); color: white; }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+    .btn-xs { padding: 2px 8px; font-size: 11px; }
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 10px;
+      font-size: 11px; font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-critical { background: rgba(240,82,82,0.2); color: var(--red); }
+    .badge-high { background: rgba(245,166,35,0.2); color: var(--orange); }
+    .badge-medium { background: rgba(245,208,32,0.2); color: var(--yellow); }
+    .badge-low { background: rgba(46,204,138,0.2); color: var(--green); }
+    .badge-info { background: var(--accent-dim); color: var(--accent); }
+    .badge-purple { background: var(--purple-dim); color: var(--purple); }
+    .badge-success { background: var(--green-dim); color: var(--green); }
+    .badge-warning { background: var(--orange-dim); color: var(--orange); }
+    .badge-gray { background: rgba(139,152,181,0.15); color: var(--text-secondary); }
+    .card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 700;
+      color: var(--text-primary);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .grid { display: grid; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .grid-5 { grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    /* Tables */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--text-muted);
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left; white-space: nowrap;
+    }
+    td {
+      padding: 10px 12px;
+      font-size: 13px; color: var(--text-secondary);
+      border-bottom: 1px solid rgba(99,120,180,0.08);
+      vertical-align: middle;
+    }
+    tr:hover td { background: var(--bg-hover); }
+    tr:last-child td { border-bottom: none; }
+    .td-primary { color: var(--text-primary); font-weight: 500; }
+    .td-mono { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+    /* Filter bar */
+    .filter-bar {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .filter-chip {
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 500;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-chip.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    /* Metric cards */
+    .metric-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .metric-card .metric-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .metric-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .metric-icon.blue { background: var(--accent-dim); color: var(--accent); }
+    .metric-icon.red { background: var(--red-dim); color: var(--red); }
+    .metric-icon.green { background: var(--green-dim); color: var(--green); }
+    .metric-icon.orange { background: var(--orange-dim); color: var(--orange); }
+    .metric-icon.purple { background: var(--purple-dim); color: var(--purple); }
+    .metric-value {
+      font-family: var(--font-display);
+      font-size: 28px; font-weight: 800;
+      color: var(--text-primary); line-height: 1;
+    }
+    .metric-label { font-size: 12px; color: var(--text-secondary); }
+    .metric-trend { font-size: 11px; }
+    .metric-trend.up { color: var(--red); }
+    .metric-trend.down { color: var(--green); }
+    .metric-trend.flat { color: var(--text-muted); }
+    /* Section divider */
+    .section-divider {
+      height: 1px; background: var(--border);
+      margin: 24px 0;
+    }
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+    .empty-state h3 { font-size: 16px; color: var(--text-secondary); margin-bottom: 6px; }
+    .empty-state p { font-size: 13px; margin-bottom: 16px; }
+    /* Modal */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(8,12,20,0.85);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .modal {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      width: 560px; max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow);
+    }
+    .modal-lg { width: 780px; }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 800;
+    }
+    .modal-close {
+      background: none; border: none;
+      color: var(--text-muted); font-size: 18px;
+      cursor: pointer; line-height: 1;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--text-primary); }
+    .modal-footer {
+      display: flex; gap: 10px; justify-content: flex-end;
+      margin-top: 24px; padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    /* Forms */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 12px; font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .form-control {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 12px;
+      color: var(--text-primary);
+      font-family: var(--font-body); font-size: 13px;
+      transition: border-color 0.15s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    .form-control::placeholder { color: var(--text-muted); }
+    select.form-control { cursor: pointer; }
+    textarea.form-control { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    /* Progress */
+    .progress-bar {
+      height: 6px; background: var(--bg-surface);
+      border-radius: 3px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    /* Tabs */
+    .tab-bar {
+      display: flex; gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .tab-item {
+      padding: 8px 16px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+    }
+    .tab-item:hover { color: var(--text-primary); }
+    .tab-item.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    /* Severity dots */
+    .severity-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%; display: inline-block;
+      margin-right: 6px; flex-shrink: 0;
+    }
+    .dot-critical { background: var(--red); box-shadow: 0 0 6px var(--red); }
+    .dot-high { background: var(--orange); }
+    .dot-medium { background: var(--yellow); }
+    .dot-low { background: var(--green); }
+    /* =============================================
+       DASHBOARD
+    ============================================= */
+    .health-ring {
+      position: relative; width: 110px; height: 110px;
+      flex-shrink: 0;
+    }
+    .health-ring canvas { position: absolute; inset: 0; }
+    .health-ring-label {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .health-ring-label .score {
+      font-family: var(--font-display);
+      font-size: 24px; font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .health-ring-label .score-label {
+      font-size: 10px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .dashboard-bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+    }
+    .bento-wide { grid-column: span 2; }
+    .bento-tall { grid-row: span 2; }
+    .risk-row-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(99,120,180,0.08);
+    }
+    .risk-row-item:last-child { border-bottom: none; }
+    .risk-row-item .risk-name {
+      flex: 1; font-size: 13px; color: var(--text-secondary);
+    }
+    .score-pill {
+      font-family: var(--font-mono);
+      font-size: 12px; font-weight: 600;
+      padding: 2px 8px; border-radius: 4px;
+      min-width: 32px; text-align: center;
+    }
+    /* =============================================
+       RISK MATRIX
+    ============================================= */
+    .risk-matrix-wrap { overflow-x: auto; padding-bottom: 8px; }
+    .risk-matrix {
+      display: grid;
+      grid-template-columns: 40px repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr) 40px;
+      gap: 4px;
+      width: 100%; max-width: 640px;
+      aspect-ratio: 1;
+      margin: 0 auto;
+    }
+    .matrix-cell {
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600;
+      position: relative;
+      cursor: default;
+      transition: transform 0.1s;
+      min-height: 60px;
+    }
+    .matrix-cell:hover { transform: scale(1.02); z-index: 1; }
+    .cell-low { background: rgba(46,204,138,0.15); border: 1px solid rgba(46,204,138,0.3); }
+    .cell-medium { background: rgba(245,208,32,0.15); border: 1px solid rgba(245,208,32,0.3); }
+    .cell-high { background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.3); }
+    .cell-critical { background: rgba(240,82,82,0.15); border: 1px solid rgba(240,82,82,0.3); }
+    .cell-label { color: var(--text-muted); font-size: 10px; writing-mode: vertical-rl; text-orientation: mixed; }
+    .cell-label-h { color: var(--text-muted); font-size: 10px; }
+    .risk-dot {
+      position: absolute;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: white;
+      cursor: pointer;
+      transition: transform 0.15s;
+      z-index: 2;
+    }
+    .risk-dot:hover { transform: scale(1.3); z-index: 10; }
+    .risk-dot-tooltip {
+      display: none;
+      position: absolute;
+      bottom: 130%; left: 50%; transform: translateX(-50%);
+      background: var(--bg-void);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      padding: 6px 10px;
+      white-space: nowrap;
+      font-size: 11px; color: var(--text-primary);
+      z-index: 20;
+      pointer-events: none;
+    }
+    .risk-dot:hover .risk-dot-tooltip { display: block; }
+    .matrix-axis-label {
+      font-size: 11px; color: var(--text-muted);
+      text-align: center;
+    }
+    .axis-title {
+      font-size: 12px; font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center; margin-top: 8px;
+    }
+    /* =============================================
+       FRAMEWORK LIBRARY
+    ============================================= */
+    .framework-chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px; font-weight: 500;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .framework-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .framework-chip.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .control-row td:first-child { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+    /* =============================================
+       SCROLLBARS
+    ============================================= */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    /* =============================================
+       RESPONSIVE TWEAKS
+    ============================================= */
+    @media (max-width: 1100px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .dashboard-bento { grid-template-columns: 1fr 1fr; }
+      .bento-wide { grid-column: span 2; }
+    }
+    @media (max-width: 800px) {
+      .sidebar { display: none; }
+    }
+    /* =============================================
+       INCIDENTS
+    ============================================= */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 7px; top: 8px; bottom: 8px;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .timeline-dot {
+      position: absolute; left: -24px; top: 4px;
+      width: 15px; height: 15px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-elevated);
+    }
+    .timeline-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+    .timeline-title { font-weight: 600; color: var(--text-primary); font-size: 13px; }
+    .timeline-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    /* =============================================
+       RESILIENCE / BIA
+    ============================================= */
+    .bia-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+    .bia-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .bia-name { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+    .rto-rpo {
+      display: flex; gap: 12px; margin-top: 10px;
+    }
+    .rto-rpo-item {
+      flex: 1;
+      background: var(--bg-elevated);
+      border-radius: var(--radius);
+      padding: 10px;
+      text-align: center;
+    }
+    .rto-rpo-item .val {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 800;
+      color: var(--accent);
+    }
+    .rto-rpo-item .lbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    /* =============================================
+       SOA
+    ============================================= */
+    .soa-row-applicable td { background: rgba(46,204,138,0.04); }
+    .soa-row-excluded td { opacity: 0.6; }
+    /* =============================================
+       EVIDENCE
+    ============================================= */
+    .evidence-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 14px; }
+    .evidence-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      display: flex; flex-direction: column; gap: 8px;
+      transition: border-color 0.15s;
+    }
+    .evidence-card:hover { border-color: var(--border-strong); }
+    .evidence-icon { font-size: 28px; text-align: center; margin-bottom: 4px; }
+    .evidence-name { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+    .evidence-meta { font-size: 11px; color: var(--text-muted); }
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--text-muted);
+    }
+    .upload-zone:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .upload-zone .upload-icon { font-size: 32px; margin-bottom: 8px; }
+    /* notification toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--green);
+      border-radius: var(--radius);
+      padding: 12px 18px;
+      font-size: 13px; color: var(--green);
+      z-index: 9999;
+      animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.5s forwards;
+    }
+    @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeOut { to { opacity: 0; transform: translateY(10px); } }
+    .score-25 { background: rgba(240,82,82,0.25); color: var(--red); }
+    .score-20 { background: rgba(240,82,82,0.18); color: #f87171; }
+    .score-16 { background: rgba(245,166,35,0.25); color: var(--orange); }
+    .score-12 { background: rgba(245,166,35,0.18); color: #fbbf24; }
+    .score-9 { background: rgba(245,208,32,0.2); color: var(--yellow); }
+    .score-6 { background: rgba(245,208,32,0.15); color: #eab308; }
+    .score-4 { background: rgba(46,204,138,0.2); color: var(--green); }
+    .score-1 { background: rgba(46,204,138,0.15); color: #4ade80; }
+    /* action row */
+    .action-row { display: flex; gap: 6px; align-items: center; }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// =============================================
+// DATA STORE — localStorage-backed state
+// =============================================
+const RISK_THRESHOLDS = { low:[1,4], medium:[5,9], high:[10,16], critical:[17,25] };
+
+const FRAMEWORKS_LIBRARY = [
+  // ISO 27001 — Annex A subset
+  ...Array.from({length:8},(_,i)=>{
+    const controls=[
+      {id:'ISO-5.1',name:'Security policies',cat:'Policy & Governance',desc:'Define, approve, communicate, and periodically review security policy to guide information security.'},
+      {id:'ISO-5.2',name:'Info security roles',cat:'Policy & Governance',desc:'Implement and maintain measures for information security roles to protect confidentiality, integrity, and availability.'},
+      {id:'ISO-5.3',name:'Segregation of duties',cat:'Policy & Governance',desc:'Implement and maintain measures for segregation of duties to protect confidentiality, integrity, and availability.'},
+      {id:'ISO-5.4',name:'Management responsibilities',cat:'Policy & Governance',desc:'Implement and maintain measures for management responsibilities to protect confidentiality, integrity, and availability.'},
+      {id:'ISO-5.5',name:'Authority contacts',cat:'Compliance',desc:'Implement and maintain measures for authority contacts to protect confidentiality, integrity, and availability.'},
+      {id:'ISO-5.6',name:'Special interest contacts',cat:'Compliance',desc:'Maintain contacts with special interest groups and security forums.'},
+      {id:'ISO-5.7',name:'Threat intel',cat:'Risk Management',desc:'Implement and maintain measures for threat intel to protect confidentiality, integrity, and availability.'},
+      {id:'ISO-6.1',name:'Screening',cat:'Asset Management',desc:'Background verification checks on all candidates for employment.'},
+    ];
+    return controls[i];
+  }).map(c=>({...c,framework:'ISO 27001'})),
+  // NIST CSF
+  {id:'CSF-ID.AM-1',name:'Asset Inventory',cat:'Asset Management',desc:'Physical devices and systems within the organization are inventoried.',framework:'NIST CSF'},
+  {id:'CSF-ID.AM-2',name:'Software Inventory',cat:'Asset Management',desc:'Software platforms and applications within the organization are inventoried.',framework:'NIST CSF'},
+  {id:'CSF-ID.RA-1',name:'Asset vulnerabilities',cat:'Risk Management',desc:'Asset vulnerabilities are identified and documented.',framework:'NIST CSF'},
+  {id:'CSF-PR.AC-1',name:'Identity Management',cat:'Access Control',desc:'Identities and credentials are issued, managed, verified, revoked, and audited.',framework:'NIST CSF'},
+  {id:'CSF-PR.AC-3',name:'Remote access',cat:'Access Control',desc:'Remote access is managed.',framework:'NIST CSF'},
+  {id:'CSF-PR.DS-1',name:'Data-at-rest protection',cat:'Data Protection',desc:'Data-at-rest is protected.',framework:'NIST CSF'},
+  {id:'CSF-PR.DS-2',name:'Data-in-transit protection',cat:'Data Protection',desc:'Data-in-transit is protected.',framework:'NIST CSF'},
+  {id:'CSF-DE.CM-1',name:'Network monitoring',cat:'Network Security',desc:'The network is monitored to detect potential cybersecurity events.',framework:'NIST CSF'},
+  {id:'CSF-RS.RP-1',name:'Response plan',cat:'Incident Mgmt',desc:'Response plan is executed during or after an incident.',framework:'NIST CSF'},
+  // SOC 2
+  {id:'SOC2-CC6.1',name:'Logical access controls',cat:'Access Control',desc:'The entity implements logical access security software, infrastructure, and architectures.',framework:'SOC 2'},
+  {id:'SOC2-CC6.2',name:'Access provisioning',cat:'Access Control',desc:'Prior to issuing system credentials, the entity registers and authorizes new internal users.',framework:'SOC 2'},
+  {id:'SOC2-CC7.1',name:'System boundaries',cat:'Network Security',desc:'To meet its objectives, the entity uses detection and monitoring procedures to identify changes.',framework:'SOC 2'},
+  {id:'SOC2-CC7.2',name:'Anomaly monitoring',cat:'Logging',desc:'The entity monitors system components and the operation of those controls on an ongoing basis.',framework:'SOC 2'},
+  {id:'SOC2-CC8.1',name:'Change management',cat:'Compliance',desc:'The entity authorizes, designs, develops or acquires, configures, documents, tests, approves, and implements changes.',framework:'SOC 2'},
+  // GDPR
+  {id:'GDPR-Art.5',name:'Data processing principles',cat:'Data Protection',desc:'Principles relating to processing of personal data: lawfulness, fairness, transparency.',framework:'GDPR'},
+  {id:'GDPR-Art.25',name:'Privacy by design',cat:'Data Protection',desc:'Data protection by design and by default.',framework:'GDPR'},
+  {id:'GDPR-Art.32',name:'Security of processing',cat:'Data Protection',desc:'Implement appropriate technical and organisational measures to ensure appropriate level of security.',framework:'GDPR'},
+  {id:'GDPR-Art.33',name:'Breach notification',cat:'Incident Mgmt',desc:'Notification of a personal data breach to the supervisory authority within 72 hours.',framework:'GDPR'},
+  // CIS
+  {id:'CIS-1',name:'Inventory of Enterprise Assets',cat:'Asset Management',desc:'Actively manage (inventory, track, and correct) all enterprise assets.',framework:'CIS'},
+  {id:'CIS-3',name:'Data Protection',cat:'Data Protection',desc:'Develop processes and technical controls to identify, classify, securely handle, retain, and dispose of data.',framework:'CIS'},
+  {id:'CIS-5',name:'Account Management',cat:'Access Control',desc:'Use processes and tools to assign and manage authorization to credentials for user accounts.',framework:'CIS'},
+  {id:'CIS-6',name:'Access Control Management',cat:'Access Control',desc:'Use processes and tools to create, assign, manage, and revoke access credentials and privileges.',framework:'CIS'},
+  // HIPAA
+  {id:'HIPAA-164.308',name:'Administrative safeguards',cat:'Compliance',desc:'Implement policies and procedures to prevent, detect, contain, and correct security violations.',framework:'HIPAA'},
+  {id:'HIPAA-164.312',name:'Technical safeguards',cat:'Data Protection',desc:'Implement technical security measures to guard against unauthorized access to ePHI.',framework:'HIPAA'},
+];
+
+const SEED_DATA = {
+  assets: [
+    {id:'A-001',name:'Customer Database',owner:'IT Team',type:'Data Repository',classification:'Confidential',criticality:'Critical',description:'Primary PostgreSQL database storing all customer PII and transaction records.',status:'Active',risks:[],controls:[]},
+    {id:'A-002',name:'Cloud Infrastructure (AWS)',owner:'DevOps',type:'Infrastructure',classification:'Critical',criticality:'Critical',description:'Primary cloud environment hosting production workloads on AWS us-east-1.',status:'Active',risks:[],controls:[]},
+    {id:'A-003',name:'HR Records System',owner:'HR Department',type:'Application',classification:'Restricted',criticality:'High',description:'Workday HRIS storing employee data, payroll, and performance records.',status:'Active',risks:[],controls:[]},
+    {id:'A-004',name:'Public Website',owner:'Marketing',type:'Application',classification:'Public',criticality:'Medium',description:'Customer-facing marketing website and product landing pages hosted on CDN.',status:'Active',risks:[],controls:[]},
+    {id:'A-005',name:'Legacy Financial App',owner:'Finance',type:'Application',classification:'Confidential',criticality:'High',description:'End-of-life financial reporting application pending migration.',status:'Decommissioning',risks:[],controls:[]},
+    {id:'A-006',name:'VPN Gateway',owner:'IT Security',type:'Infrastructure',classification:'Restricted',criticality:'Critical',description:'Cisco AnyConnect VPN gateway for remote employee access.',status:'Active',risks:[],controls:[]},
+    {id:'A-007',name:'Email Platform (M365)',owner:'IT Team',type:'Application',classification:'Internal',criticality:'High',description:'Microsoft 365 tenant including Exchange Online, Teams, and SharePoint.',status:'Active',risks:[],controls:[]},
+    {id:'A-008',name:'Source Code Repository',owner:'Engineering',type:'Application',classification:'Restricted',criticality:'Critical',description:'GitHub Enterprise hosting all proprietary source code.',status:'Active',risks:[],controls:[]},
+    {id:'A-009',name:'Payment Processing System',owner:'Finance',type:'Application',classification:'Confidential',criticality:'Critical',description:'Stripe integration handling PCI-scoped cardholder data.',status:'Active',risks:[],controls:[]},
+    {id:'A-010',name:'Active Directory',owner:'IT Security',type:'Infrastructure',classification:'Restricted',criticality:'Critical',description:'On-premises AD for identity management and authentication.',status:'Active',risks:[],controls:[]},
+    {id:'A-011',name:'Backup & Recovery System',owner:'IT Team',type:'Infrastructure',classification:'Internal',criticality:'High',description:'Veeam-based backup solution replicating to off-site S3 storage.',status:'Active',risks:[],controls:[]},
+    {id:'A-012',name:'Firewall (FortiGate)',owner:'IT Security',type:'Infrastructure',classification:'Restricted',criticality:'Critical',description:'Perimeter firewall and next-gen threat prevention appliance.',status:'Active',risks:[],controls:[]},
+  ],
+  risks: [
+    {id:'R-001',description:'Unpatched Web Servers',assetId:'A-002',owner:'DevOps',likelihood:5,impact:5,score:25,category:'Critical',status:'Open',mitigationPlan:'Implement automated patch management process using AWS Systems Manager.',controlIds:['CSF-ID.RA-1'],createdAt:'2026-01-15'},
+    {id:'R-002',description:'Phishing attacks targeting employees',assetId:'A-007',owner:'IT Security',likelihood:5,impact:4,score:20,category:'Critical',status:'In Mitigation',mitigationPlan:'Conduct monthly security awareness training; deploy Proofpoint email gateway.',controlIds:['CSF-PR.AC-1'],createdAt:'2026-01-20'},
+    {id:'R-003',description:'Third-party vendor data breach',assetId:'A-001',owner:'IT Security',likelihood:3,impact:5,score:15,category:'High',status:'Open',mitigationPlan:'Enforce strict vendor risk assessments and contractual security obligations.',controlIds:['ISO-5.1'],createdAt:'2026-01-25'},
+    {id:'R-004',description:'Misconfigured Cloud Storage',assetId:'A-002',owner:'DevOps',likelihood:3,impact:4,score:12,category:'High',status:'In Mitigation',mitigationPlan:'Deploy Cloud Security Posture Management (CSPM) and enforce bucket policies.',controlIds:['CSF-PR.DS-1'],createdAt:'2026-02-01'},
+    {id:'R-005',description:'Loss of physical devices',assetId:'A-003',owner:'HR Department',likelihood:3,impact:2,score:6,category:'Medium',status:'Mitigated',mitigationPlan:'Enforce Full Disk Encryption (FDE) and Mobile Device Management (MDM).',controlIds:['CIS-3'],createdAt:'2026-02-05'},
+    {id:'R-006',description:'SQL Injection in legacy app',assetId:'A-005',owner:'Finance',likelihood:4,impact:5,score:20,category:'Critical',status:'Open',mitigationPlan:'Parameterize all queries; schedule emergency pen test; plan accelerated decommission.',controlIds:['CSF-PR.DS-2'],createdAt:'2026-02-10'},
+    {id:'R-007',description:'Privileged access abuse',assetId:'A-010',owner:'IT Security',likelihood:2,impact:5,score:10,category:'High',status:'Open',mitigationPlan:'Implement Privileged Access Management (PAM) solution and MFA for admin accounts.',controlIds:['CSF-PR.AC-1','SOC2-CC6.1'],createdAt:'2026-02-12'},
+    {id:'R-008',description:'Ransomware targeting backups',assetId:'A-011',owner:'IT Team',likelihood:3,impact:5,score:15,category:'High',status:'In Mitigation',mitigationPlan:'Implement immutable backup storage; test restoration quarterly.',controlIds:['CSF-PR.DS-1'],createdAt:'2026-02-15'},
+    {id:'R-009',description:'Payment card data exposure',assetId:'A-009',owner:'Finance',likelihood:2,impact:5,score:10,category:'High',status:'Open',mitigationPlan:'Engage QSA for PCI DSS assessment; tokenize card data.',controlIds:['HIPAA-164.312'],createdAt:'2026-02-18'},
+    {id:'R-010',description:'Insider threat — data exfiltration',assetId:'A-008',owner:'IT Security',likelihood:2,impact:4,score:8,category:'Medium',status:'Open',mitigationPlan:'Deploy DLP solution; enforce least-privilege access; monitor egress traffic.',controlIds:['ISO-5.3','CIS-6'],createdAt:'2026-02-20'},
+    {id:'R-011',description:'DDoS on public website',assetId:'A-004',owner:'DevOps',likelihood:4,impact:2,score:8,category:'Medium',status:'Mitigated',mitigationPlan:'CloudFlare WAF + DDoS protection enabled; capacity scaled.',controlIds:['CSF-DE.CM-1'],createdAt:'2026-02-22'},
+    {id:'R-012',description:'Expired TLS certificates',assetId:'A-004',owner:'DevOps',likelihood:2,impact:2,score:4,category:'Low',status:'Mitigated',mitigationPlan:'Automated cert rotation via Let\'s Encrypt/AWS ACM.',controlIds:[],createdAt:'2026-02-25'},
+    {id:'R-013',description:'Insufficient logging & monitoring',assetId:'A-002',owner:'IT Security',likelihood:3,impact:3,score:9,category:'Medium',status:'Open',mitigationPlan:'Deploy centralized SIEM (Splunk); define alert thresholds and escalation paths.',controlIds:['CSF-DE.CM-1','SOC2-CC7.2'],createdAt:'2026-03-01'},
+    {id:'R-014',description:'Unencrypted data at rest in HR system',assetId:'A-003',owner:'HR Department',likelihood:2,impact:5,score:10,category:'High',status:'In Mitigation',mitigationPlan:'Enable Workday native encryption; review field-level encryption for PII.',controlIds:['GDPR-Art.32'],createdAt:'2026-03-03'},
+  ],
+  controls: [
+    {id:'CTRL-001',name:'Patch Management Policy',framework:'ISO 27001',frameworkRef:'ISO-5.1',status:'Implemented',owner:'IT Team',description:'Formal policy mandating monthly patching cycles with emergency patch SLA of 48h.',risks:['R-001'],evidence:[]},
+    {id:'CTRL-002',name:'Security Awareness Training',framework:'NIST CSF',frameworkRef:'CSF-PR.AC-1',status:'Implemented',owner:'IT Security',description:'Monthly phishing simulations and annual security awareness training program.',risks:['R-002'],evidence:[]},
+    {id:'CTRL-003',name:'Vendor Risk Assessment',framework:'ISO 27001',frameworkRef:'ISO-5.1',status:'In Progress',owner:'IT Security',description:'Quarterly vendor security reviews using standardized questionnaire (SIG Lite).',risks:['R-003'],evidence:[]},
+    {id:'CTRL-004',name:'CSPM Tool Deployment',framework:'NIST CSF',frameworkRef:'CSF-PR.DS-1',status:'In Progress',owner:'DevOps',description:'Prisma Cloud CSPM monitoring all cloud resources for misconfigurations.',risks:['R-004'],evidence:[]},
+    {id:'CTRL-005',name:'Full Disk Encryption',framework:'CIS',frameworkRef:'CIS-3',status:'Implemented',owner:'IT Team',description:'All endpoints enforced with BitLocker (Windows) or FileVault (Mac) via Jamf MDM.',risks:['R-005'],evidence:[]},
+    {id:'CTRL-006',name:'Privileged Access Management',framework:'SOC 2',frameworkRef:'SOC2-CC6.1',status:'Planned',owner:'IT Security',description:'CyberArk PAM implementation scoped for all Tier-0 and Tier-1 privileged accounts.',risks:['R-007'],evidence:[]},
+    {id:'CTRL-007',name:'Immutable Backup Configuration',framework:'NIST CSF',frameworkRef:'CSF-PR.DS-1',status:'Implemented',owner:'IT Team',description:'Veeam Hardened Repository with object-lock enabled; 90-day retention.',risks:['R-008'],evidence:[]},
+    {id:'CTRL-008',name:'DLP Solution',framework:'ISO 27001',frameworkRef:'ISO-5.3',status:'Planned',owner:'IT Security',description:'Microsoft Purview DLP policies enforcing data labeling and egress controls.',risks:['R-010'],evidence:[]},
+    {id:'CTRL-009',name:'SIEM & Alerting',framework:'SOC 2',frameworkRef:'SOC2-CC7.2',status:'In Progress',owner:'IT Security',description:'Splunk SIEM correlating logs from cloud, endpoints, and network devices.',risks:['R-013'],evidence:[]},
+    {id:'CTRL-010',name:'GDPR Encryption Controls',framework:'GDPR',frameworkRef:'GDPR-Art.32',status:'Implemented',owner:'IT Security',description:'AES-256 encryption for data at rest; TLS 1.3 for all data in transit.',risks:['R-014'],evidence:[]},
+  ],
+  audits: [
+    {id:'AUD-001',name:'ISO 27001 Gap Assessment 2026',framework:'ISO 27001',status:'In Progress',lead:'Chris Olowo, PMP®',startDate:'2026-02-01',endDate:'2026-04-30',controls:['CTRL-001','CTRL-002','CTRL-003','CTRL-006'],findings:'Partial compliance identified. PAM not yet implemented. Vendor questionnaires 60% complete.',evidence:['EV-001','EV-002'],createdAt:'2026-01-28'},
+    {id:'AUD-002',name:'SOC 2 Type II Readiness',framework:'SOC 2',status:'Planned',lead:'External Auditor',startDate:'2026-05-01',endDate:'2026-07-31',controls:['CTRL-001','CTRL-009'],findings:'',evidence:[],createdAt:'2026-02-15'},
+  ],
+  evidence: [
+    {id:'EV-001',name:'Patch_Management_Policy_v2.pdf',type:'Policy',size:'142 KB',mime:'application/pdf',linkedTo:'CTRL-001',uploadedBy:'Chris Olowo',uploadedAt:'2026-02-05',checksum:'sha256:a1b2c3d4...'},
+    {id:'EV-002',name:'Security_Awareness_Training_Q1_2026.png',type:'Screenshot',size:'480 KB',mime:'image/png',linkedTo:'CTRL-002',uploadedBy:'Chris Olowo',uploadedAt:'2026-02-28',checksum:'sha256:e5f6g7h8...'},
+    {id:'EV-003',name:'Cloud_Config_Report_March2026.xlsx',type:'Report',size:'256 KB',mime:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',linkedTo:'CTRL-004',uploadedBy:'DevOps Lead',uploadedAt:'2026-03-01',checksum:'sha256:i9j0k1l2...'},
+    {id:'EV-004',name:'Backup_Test_Results_Feb2026.pdf',type:'Report',size:'88 KB',mime:'application/pdf',linkedTo:'CTRL-007',uploadedBy:'IT Team',uploadedAt:'2026-03-02',checksum:'sha256:m3n4o5p6...'},
+  ],
+  incidents: [
+    {id:'INC-001',title:'Phishing Campaign — HR Dept',description:'Spear-phishing emails targeting HR staff impersonating CEO requesting W-2 data.',severity:'Medium',status:'Resolved',affectedAssets:['A-003','A-007'],rootCause:'Insufficient email filtering; lack of DMARC enforcement.',responseActions:'Deployed Proofpoint; enforced DMARC; phishing simulation run post-incident.',lessonsLearned:'Email gateway must be reviewed quarterly. DMARC required on all domains.',linkedRisks:['R-002'],linkedControls:['CTRL-002'],date:'2026-03-01',closedDate:'2026-03-05'},
+    {id:'INC-002',title:'Unauthorized Access — Customer DB',description:'Suspicious query patterns detected from a service account with excessive privileges.',severity:'High',status:'Investigating',affectedAssets:['A-001','A-010'],rootCause:'Under investigation — potential credential compromise.',responseActions:'Service account disabled; forensic review in progress; legal notified.',lessonsLearned:'',linkedRisks:['R-007','R-003'],linkedControls:['CTRL-006'],date:'2026-03-08',closedDate:''},
+    {id:'INC-003',title:'Malware Detection on Endpoint',description:'CrowdStrike detected Cobalt Strike beacon on Finance department laptop.',severity:'Low',status:'Resolved',affectedAssets:['A-005'],rootCause:'User visited malicious advertising network via unpatched browser.',responseActions:'Endpoint isolated and reimaged; browser auto-update enforced via GPO.',lessonsLearned:'Browser patch cycle must align with OS patching schedule.',linkedRisks:['R-001'],linkedControls:['CTRL-001'],date:'2026-03-09',closedDate:'2026-03-09'},
+    {id:'INC-004',title:'DDoS Attack on Public Website',description:'Volumetric DDoS attack (28 Gbps) targeted the public marketing site for 4 hours.',severity:'Critical',status:'Mitigated',affectedAssets:['A-004'],rootCause:'Target of opportunistic L3/L4 amplification attack.',responseActions:'CloudFlare DDoS protection triggered; traffic scrubbed; service restored in 47 min.',lessonsLearned:'Response playbook worked well. Review CloudFlare thresholds for future capacity.',linkedRisks:['R-011'],linkedControls:[],date:'2026-03-10',closedDate:'2026-03-10'},
+  ],
+  soa: [
+    {id:'SOA-001',controlRef:'ISO-5.1',controlName:'Security policies',applicable:true,justification:'Required for ISO 27001 governance framework establishment.',measures:'Security Policy Framework document; quarterly review cycle.',evidence:'EV-001',status:'Complete'},
+    {id:'SOA-002',controlRef:'ISO-5.2',controlName:'Info security roles',applicable:true,justification:'Defines RACI for security responsibilities across the organization.',measures:'RACI matrix in Information Security Management System (ISMS).',evidence:'',status:'In Progress'},
+    {id:'SOA-003',controlRef:'ISO-5.3',controlName:'Segregation of duties',applicable:true,justification:'Prevents fraud and unauthorized changes by enforcing dual control.',measures:'Enforced via Active Directory role assignments; reviewed quarterly.',evidence:'',status:'In Progress'},
+    {id:'SOA-004',controlRef:'ISO-5.4',controlName:'Management responsibilities',applicable:true,justification:'Ensures management accountability for ISMS compliance.',measures:'Management review meetings; corrective action tracking.',evidence:'',status:'Planned'},
+    {id:'SOA-005',controlRef:'ISO-5.7',controlName:'Threat intel',applicable:true,justification:'Feeds threat intelligence into risk assessments and patch prioritization.',measures:'CISA alerts subscription; threat intel feeds in SIEM.',evidence:'',status:'Planned'},
+    {id:'SOA-006',controlRef:'ISO-6.1',controlName:'Screening',applicable:true,justification:'All employees and contractors undergo background checks prior to hire.',measures:'Background check provider (Sterling): criminal, credit, reference.',evidence:'',status:'Complete'},
+    {id:'SOA-007',controlRef:'CSF-ID.AM-1',controlName:'Asset Inventory',applicable:true,justification:'Critical foundation for risk management and incident response.',measures:'CMDB in ServiceNow; quarterly reconciliation.',evidence:'',status:'In Progress'},
+    {id:'SOA-008',controlRef:'GDPR-Art.25',controlName:'Privacy by design',applicable:true,justification:'Required under GDPR for any processing of EU data subjects.',measures:'PIA process; privacy reviews in SDLC gate process.',evidence:'',status:'Planned'},
+  ],
+  resilience: [
+    {id:'BIA-001',service:'Customer Database',assetId:'A-001',rto:'4h',rpo:'1h',criticality:'Critical',dependencies:['A-002','A-010'],maxTolerance:'4 hours',annualCost:'$250,000',status:'Documented',lastReviewed:'2026-01-15'},
+    {id:'BIA-002',service:'Payment Processing',assetId:'A-009',rto:'1h',rpo:'15min',criticality:'Critical',dependencies:['A-002','A-001'],maxTolerance:'1 hour',annualCost:'$180,000',status:'Documented',lastReviewed:'2026-01-20'},
+    {id:'BIA-003',service:'Email Platform (M365)',assetId:'A-007',rto:'8h',rpo:'4h',criticality:'High',dependencies:['A-002'],maxTolerance:'8 hours',annualCost:'$45,000',status:'Documented',lastReviewed:'2026-02-01'},
+    {id:'BIA-004',service:'VPN Gateway',assetId:'A-006',rto:'2h',rpo:'30min',criticality:'Critical',dependencies:['A-002','A-012'],maxTolerance:'2 hours',annualCost:'$30,000',status:'Documented',lastReviewed:'2026-02-10'},
+    {id:'BIA-005',service:'Public Website',assetId:'A-004',rto:'30min',rpo:'N/A',criticality:'Medium',dependencies:['A-002'],maxTolerance:'2 hours',annualCost:'$20,000',status:'Documented',lastReviewed:'2026-03-01'},
+  ],
+  vendors: [
+    {id:'V-001',name:'Amazon Web Services (AWS)',service:'Cloud Hosting',riskRating:'Medium',status:'Compliant',contact:'aws-support@amazon.com',lastAssessed:'2026-01-15'},
+    {id:'V-002',name:'Microsoft',service:'Identity & Email Services (M365)',riskRating:'Low',status:'Compliant',contact:'microsoft-enterprise@microsoft.com',lastAssessed:'2026-01-20'},
+    {id:'V-003',name:'TechServe MSP',service:'Managed IT Support',riskRating:'High',status:'Under Review',contact:'info@techservemsp.com',lastAssessed:'2025-11-01'},
+    {id:'V-004',name:'DataAnalytics Inc.',service:'Marketing Analytics',riskRating:'Medium',status:'Remediation Required',contact:'security@dataanalytics.com',lastAssessed:'2025-12-15'},
+    {id:'V-005',name:'Stripe',service:'Payment Processing',riskRating:'Low',status:'Compliant',contact:'security@stripe.com',lastAssessed:'2026-02-01'},
+    {id:'V-006',name:'CloudFlare',service:'CDN & DDoS Protection',riskRating:'Low',status:'Compliant',contact:'security@cloudflare.com',lastAssessed:'2026-02-01'},
+  ]
+};
+
+function getStore() {
+  try {
+    const raw = localStorage.getItem('grc_store_v3');
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+function saveStore(data) {
+  localStorage.setItem('grc_store_v3', JSON.stringify(data));
+}
+function initStore() {
+  const existing = getStore();
+  // Seed if no data, OR if stale empty data from a previous broken version
+  const isEmpty = !existing ||
+    (!existing.assets?.length && !existing.risks?.length && !existing.controls?.length);
+  if (isEmpty) saveStore(JSON.parse(JSON.stringify(SEED_DATA)));
+}
+function store() { return getStore() || SEED_DATA; }
+function updateStore(fn) { const s = store(); fn(s); saveStore(s); render(); }
+
+// ULID-like ID generator
+function genId(prefix) {
+  return prefix + '-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,6).toUpperCase();
+}
+
+function riskCategory(score) {
+  if (score >= 17) return 'Critical';
+  if (score >= 10) return 'High';
+  if (score >= 5) return 'Medium';
+  return 'Low';
+}
+function riskScore(l,i){ return l*i; }
+
+// =============================================
+// RENDER ENGINE
+// =============================================
+let currentView = 'dashboard';
+let chartInstances = {};
+let modalState = null;
+let filterStates = {};
+let searchQuery = '';
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = '✓ ' + msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+function navigate(view) {
+  currentView = view;
+  // Safe chart destroy — looks up live instances directly from canvas DOM elements
+  // Prevents double-registration bug that causes infinite resize loop
+  ['health-chart','risk-cat-chart','ctrl-chart'].forEach(id => {
+    const canvas = document.getElementById(id);
+    if (canvas) { const c = Chart.getChart(canvas); if (c) c.destroy(); }
+  });
+  chartInstances = {};
+  render();
+}
+
+function showModal(state) { modalState = state; render(); }
+function closeModal() { modalState = null; render(); }
+
+// =============================================
+// COMPONENTS
+// =============================================
+function renderSidebar() {
+  const s = store();
+  const criticalRisks = s.risks.filter(r=>r.category==='Critical').length;
+  const openIncidents = s.incidents.filter(i=>i.status!=='Resolved'&&i.status!=='Mitigated').length;
+
+  const navGroups = [
+    { label: 'Overview', items: [
+      { id:'dashboard', icon:'📊', label:'Dashboard' },
+    ]},
+    { label: 'Inventory', items: [
+      { id:'assets', icon:'🖥️', label:'Assets' },
+      { id:'vendors', icon:'🏢', label:'Vendors' },
+    ]},
+    { label: 'Risk & Controls', items: [
+      { id:'risks', icon:'⚠️', label:'Risk Register', badge: criticalRisks > 0 ? criticalRisks : null },
+      { id:'matrix', icon:'🗂️', label:'Risk Matrix' },
+      { id:'frameworks', icon:'📚', label:'Framework Library' },
+      { id:'controls', icon:'🔒', label:'Controls' },
+    ]},
+    { label: 'Audit & Compliance', items: [
+      { id:'audits', icon:'📋', label:'Audits' },
+      { id:'evidence', icon:'📁', label:'Evidence' },
+      { id:'soa', icon:'📝', label:'Statement of Applicability' },
+    ]},
+    { label: 'Resilience', items: [
+      { id:'resilience', icon:'💡', label:'Business Continuity' },
+      { id:'incidents', icon:'🚨', label:'Incidents', badge: openIncidents > 0 ? openIncidents : null },
+    ]},
+  ];
+
+  return `
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">GRC</div>
+        <div class="logo-text">
+          <h1>GRC Platform</h1>
+          <p>Chris Olowo, PMP®</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        ${navGroups.map(g => `
+          <div class="nav-group">
+            <div class="nav-group-label">${g.label}</div>
+            ${g.items.map(item => `
+              <div class="nav-item ${currentView===item.id?'active':''}" onclick="navigate('${item.id}')">
+                <span class="nav-icon">${item.icon}</span>
+                ${item.label}
+                ${item.badge ? `<span class="nav-badge">${item.badge}</span>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        `).join('')}
+      </nav>
+    </aside>`;
+}
+
+function renderTopbar() {
+  const titles = {
+    dashboard:'Dashboard', assets:'Asset Management', vendors:'Vendor Management',
+    risks:'Risk Register', matrix:'Risk Matrix', frameworks:'Framework Library',
+    controls:'Controls', audits:'Audits', evidence:'Evidence Management',
+    soa:'Statement of Applicability', resilience:'Business Continuity & Resilience',
+    incidents:'Incident Management'
+  };
+  const subtitles = {
+    dashboard:'Security & compliance posture overview',
+    assets:'Manage systems, applications, and infrastructure',
+    frameworks:'480+ security and AI controls from major compliance frameworks'
+  };
+  return `
+    <header class="topbar">
+      <div>
+        <div class="topbar-title">${titles[currentView]||''}</div>
+        ${subtitles[currentView] ? `<div class="topbar-subtitle">${subtitles[currentView]}</div>` : ''}
+      </div>
+      <div class="topbar-spacer"></div>
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" placeholder="Search… (Ctrl+K)" id="global-search" value="${searchQuery}" oninput="searchQuery=this.value;render()"/>
+      </div>
+      <div class="topbar-actions">
+        <div class="avatar" title="Chris Olowo, PMP®">CO</div>
+      </div>
+    </header>`;
+}
+
+// =============================================
+// DASHBOARD VIEW
+// =============================================
+function renderDashboard() {
+  const s = store();
+  const criticalRisks = s.risks.filter(r=>r.category==='Critical').length;
+  const highRisks = s.risks.filter(r=>r.category==='High').length;
+  const openRisks = s.risks.filter(r=>r.status==='Open').length;
+  const implCtrl = s.controls.filter(c=>c.status==='Implemented').length;
+  const ctrlEff = s.controls.length > 0 ? Math.round(implCtrl/s.controls.length*100) : 0;
+  const riskScore_calc = Math.max(0, 100-(criticalRisks*20)-(highRisks*10));
+  const health = Math.round((ctrlEff + riskScore_calc)/2);
+  const openInc = s.incidents.filter(i=>i.status!=='Resolved'&&i.status!=='Mitigated').length;
+  const topRisks = [...s.risks].sort((a,b)=>b.score-a.score).slice(0,6);
+  const recentInc = [...s.incidents].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);
+
+  const sev = (sev) => {
+    const m = {Critical:'badge-critical',High:'badge-high',Medium:'badge-medium',Low:'badge-low'};
+    return m[sev]||'badge-gray';
+  };
+
+  setTimeout(() => {
+    // Health donut
+    const ctx = document.getElementById('health-chart');
+    if (ctx && !chartInstances['health']) {
+      chartInstances['health'] = new Chart(ctx, {
+        type:'doughnut',
+        data:{datasets:[{data:[health,100-health],backgroundColor:['#4f8ef7','rgba(99,120,180,0.15)'],borderWidth:0,circumference:270,rotation:225}]},
+        options:{responsive:true,maintainAspectRatio:false,animation:{duration:400},cutout:'80%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
+      });
+    }
+    // Risk by category bar
+    const rc = document.getElementById('risk-cat-chart');
+    if (rc && !chartInstances['risk-cat']) {
+      const cats=['Low','Medium','High','Critical'];
+      const counts = cats.map(c=>s.risks.filter(r=>r.category===c).length);
+      chartInstances['risk-cat'] = new Chart(rc, {
+        type:'bar',
+        data:{labels:cats,datasets:[{data:counts,backgroundColor:['#2ecc8a','#f5d020','#f5a623','#f05252'],borderRadius:6,borderSkipped:false,maxBarThickness:48}]},
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          animation:{duration:400},
+          plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(10,15,30,0.95)',titleColor:'#e2e8f0',bodyColor:'#e2e8f0',borderColor:'rgba(255,255,255,0.08)',borderWidth:1}},
+          scales:{
+            x:{grid:{color:'rgba(99,120,180,0.1)'},ticks:{color:'#8b98b5'}},
+            y:{beginAtZero:true,grid:{color:'rgba(99,120,180,0.1)'},ticks:{color:'#8b98b5',stepSize:1,precision:0}}
+          }
+        }
+      });
+    }
+    // Control status pie
+    const csp = document.getElementById('ctrl-chart');
+    if (csp && !chartInstances['ctrl']) {
+      const statuses=['Implemented','In Progress','Planned'];
+      const counts2 = statuses.map(st=>s.controls.filter(c=>c.status===st).length);
+      chartInstances['ctrl'] = new Chart(csp, {
+        type:'doughnut',
+        data:{labels:statuses,datasets:[{data:counts2,backgroundColor:['#2ecc8a','#4f8ef7','#8b98b5'],borderWidth:0}]},
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          animation:{duration:400},
+          plugins:{
+            legend:{position:'bottom',labels:{color:'#8b98b5',font:{size:11},padding:12}},
+            tooltip:{backgroundColor:'rgba(10,15,30,0.95)',titleColor:'#e2e8f0',bodyColor:'#e2e8f0',borderColor:'rgba(255,255,255,0.08)',borderWidth:1}
+          },
+          cutout:'65%'
+        }
+      });
+    }
+  }, 50);
+
+  const scoreClass = s => {
+    if(s>=17)return 'score-25'; if(s>=10)return 'score-16'; if(s>=5)return 'score-9'; return 'score-4';
+  };
+
+  return `
+    <div class="content-area" id="dashboard">
+      <!-- Metrics row -->
+      <div class="grid grid-5" style="margin-bottom:20px">
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon blue">🖥️</div>
+            <span class="metric-trend flat">Stable</span>
+          </div>
+          <div class="metric-value">${s.assets.length}</div>
+          <div class="metric-label">Total Assets</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon red">⚠️</div>
+            <span class="metric-trend up">+${criticalRisks} critical</span>
+          </div>
+          <div class="metric-value">${s.risks.length}</div>
+          <div class="metric-label">Active Risks</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon green">🔒</div>
+            <span class="metric-trend down">${ctrlEff}% effective</span>
+          </div>
+          <div class="metric-value">${s.controls.length}</div>
+          <div class="metric-label">Controls</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon orange">🚨</div>
+            <span class="metric-trend ${openInc>0?'up':'flat'}">${openInc} open</span>
+          </div>
+          <div class="metric-value">${s.incidents.length}</div>
+          <div class="metric-label">Incidents</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon purple">🏢</div>
+            <span class="metric-trend flat">Managed</span>
+          </div>
+          <div class="metric-value">${s.vendors.length}</div>
+          <div class="metric-label">Vendors</div>
+        </div>
+      </div>
+
+      <!-- Bento grid -->
+      <div class="dashboard-bento">
+        <!-- Health score -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">❤️ GRC Health Score</div>
+            <span class="badge ${health>=80?'badge-success':health>=50?'badge-warning':'badge-critical'}">${health>=80?'Healthy':health>=50?'Fair':'Needs Attention'}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:20px">
+            <div class="health-ring">
+              <canvas id="health-chart" width="110" height="110"></canvas>
+              <div class="health-ring-label">
+                <span class="score">${health}</span>
+                <span class="score-label">Score</span>
+              </div>
+            </div>
+            <div style="flex:1">
+              <div style="margin-bottom:12px">
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-bottom:4px">
+                  <span>Control Effectiveness</span><span>${ctrlEff}%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:${ctrlEff}%;background:var(--green)"></div></div>
+              </div>
+              <div style="margin-bottom:12px">
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-bottom:4px">
+                  <span>Risk Score</span><span>${riskScore_calc}</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:${riskScore_calc}%;background:var(--accent)"></div></div>
+              </div>
+              <div style="font-size:12px;color:var(--text-muted)">
+                ${openRisks} open risks · ${criticalRisks} critical · ${openInc} active incidents
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk categories chart -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📊 Risk Distribution</div>
+          </div>
+          <div style="position:relative;height:160px;width:100%;overflow:hidden"><canvas id="risk-cat-chart"></canvas></div>
+        </div>
+
+        <!-- Control status -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔒 Control Status</div>
+          </div>
+          <div style="position:relative;height:160px;width:100%;overflow:hidden"><canvas id="ctrl-chart"></canvas></div>
+        </div>
+
+        <!-- Top risks -->
+        <div class="card bento-wide">
+          <div class="card-header">
+            <div class="card-title">🔥 Top Risks by Score</div>
+            <button class="btn btn-secondary btn-sm" onclick="navigate('risks')">View All →</button>
+          </div>
+          ${topRisks.map(r => {
+            const asset = store().assets.find(a=>a.id===r.assetId);
+            return `<div class="risk-row-item">
+              <span class="severity-dot dot-${r.category.toLowerCase()}"></span>
+              <span class="risk-name">${r.description}</span>
+              ${asset ? `<span style="font-size:11px;color:var(--text-muted);margin-right:8px">${asset.name}</span>` : ''}
+              <span class="score-pill ${scoreClass(r.score)}">${r.score}</span>
+              <span class="badge ${sev(r.category)}" style="margin-left:4px">${r.category}</span>
+            </div>`;
+          }).join('')}
+        </div>
+
+        <!-- Recent incidents -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🚨 Recent Incidents</div>
+            <button class="btn btn-secondary btn-sm" onclick="navigate('incidents')">View All →</button>
+          </div>
+          ${recentInc.map(i => `
+            <div class="risk-row-item">
+              <span class="severity-dot dot-${i.severity.toLowerCase()}"></span>
+              <div style="flex:1">
+                <div style="font-size:13px;color:var(--text-primary)">${i.title}</div>
+                <div style="font-size:11px;color:var(--text-muted)">${i.date}</div>
+              </div>
+              <span class="badge ${sev(i.severity)}">${i.severity}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// =============================================
+// ASSETS VIEW
+// =============================================
+function renderAssets() {
+  const s = store();
+  let assets = s.assets;
+  const filter = filterStates.assets || 'All';
+  const types = ['All', 'Application', 'Infrastructure', 'Data Repository', 'Vendor'];
+  if (filter !== 'All') assets = assets.filter(a => a.type === filter);
+  if (searchQuery) assets = assets.filter(a => a.name.toLowerCase().includes(searchQuery.toLowerCase()) || a.owner.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const classColor = c => ({Critical:'badge-critical',Confidential:'badge-high',Restricted:'badge-warning',Internal:'badge-info',Public:'badge-success'}[c]||'badge-gray');
+  const critColor = c => ({Critical:'badge-critical',High:'badge-high',Medium:'badge-medium',Low:'badge-low'}[c]||'badge-gray');
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Asset Management</h2>
+        <p>${s.assets.length} assets registered · ${s.assets.filter(a=>a.status==='Active').length} active</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-asset'})">+ Add Asset</button>
+    </div>
+    <div class="filter-bar">
+      ${types.map(t=>`<div class="filter-chip ${filter===t?'active':''}" onclick="filterStates.assets='${t}';render()">${t}</div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>ID</th><th>Name</th><th>Type</th><th>Owner</th>
+            <th>Classification</th><th>Criticality</th><th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody>
+            ${assets.length === 0 ? `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🖥️</div><h3>No assets found</h3><p>Add your first asset to get started.</p></div></td></tr>` :
+            assets.map(a => `<tr>
+              <td class="td-mono">${a.id}</td>
+              <td class="td-primary">${a.name}</td>
+              <td><span class="badge badge-gray">${a.type||'—'}</span></td>
+              <td>${a.owner}</td>
+              <td><span class="badge ${classColor(a.classification)}">${a.classification}</span></td>
+              <td><span class="badge ${critColor(a.criticality)}">${a.criticality||'—'}</span></td>
+              <td><span class="badge ${a.status==='Active'?'badge-success':a.status==='Decommissioning'?'badge-warning':'badge-gray'}">${a.status}</span></td>
+              <td><div class="action-row">
+                <button class="btn btn-secondary btn-xs" onclick="showModal({type:'edit-asset',id:'${a.id}'})">Edit</button>
+                <button class="btn btn-secondary btn-xs" onclick="deleteRecord('assets','${a.id}')">✕</button>
+              </div></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+// =============================================
+// RISKS VIEW
+// =============================================
+function renderRisks() {
+  const s = store();
+  let risks = s.risks;
+  const filter = filterStates.risks || 'All';
+  if (filter !== 'All') risks = risks.filter(r => r.category === filter);
+  if (searchQuery) risks = risks.filter(r => r.description.toLowerCase().includes(searchQuery.toLowerCase()));
+  risks = [...risks].sort((a,b)=>b.score-a.score);
+
+  const catBadge = c => ({Critical:'badge-critical',High:'badge-high',Medium:'badge-medium',Low:'badge-low'}[c]||'badge-gray');
+  const statusBadge = st => ({Open:'badge-critical','In Mitigation':'badge-warning',Mitigated:'badge-success'}[st]||'badge-gray');
+  const scoreClass = s => { if(s>=17)return 'score-25'; if(s>=10)return 'score-16'; if(s>=5)return 'score-9'; return 'score-4'; };
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Risk Register</h2>
+        <p>${s.risks.length} risks · ${s.risks.filter(r=>r.category==='Critical').length} critical · ${s.risks.filter(r=>r.status==='Open').length} open</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-risk'})">+ Add Risk</button>
+    </div>
+    <div class="filter-bar">
+      ${['All','Critical','High','Medium','Low'].map(t=>`<div class="filter-chip ${filter===t?'active':''}" onclick="filterStates.risks='${t}';render()">${t}</div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>ID</th><th>Risk Description</th><th>Asset</th><th>Owner</th>
+            <th>Likelihood</th><th>Impact</th><th>Score</th><th>Category</th><th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody>
+            ${risks.length === 0 ? `<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">⚠️</div><h3>No risks found</h3><p>Add a risk to the register to get started.</p></div></td></tr>` :
+            risks.map(r => {
+              const asset = s.assets.find(a=>a.id===r.assetId);
+              return `<tr>
+                <td class="td-mono">${r.id}</td>
+                <td class="td-primary" style="max-width:240px">${r.description}</td>
+                <td style="font-size:12px">${asset?asset.name:'—'}</td>
+                <td style="font-size:12px">${r.owner}</td>
+                <td style="text-align:center;font-family:var(--font-mono)">${r.likelihood}</td>
+                <td style="text-align:center;font-family:var(--font-mono)">${r.impact}</td>
+                <td style="text-align:center"><span class="score-pill ${scoreClass(r.score)}">${r.score}</span></td>
+                <td><span class="badge ${catBadge(r.category)}">${r.category}</span></td>
+                <td><span class="badge ${statusBadge(r.status)}">${r.status}</span></td>
+                <td><div class="action-row">
+                  <button class="btn btn-secondary btn-xs" onclick="showModal({type:'edit-risk',id:'${r.id}'})">Edit</button>
+                  <button class="btn btn-secondary btn-xs" onclick="deleteRecord('risks','${r.id}')">✕</button>
+                </div></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+// =============================================
+// RISK MATRIX VIEW
+// =============================================
+function renderMatrix() {
+  const s = store();
+  // Build 5x5 grid (likelihood 1-5 row, impact 1-5 col)
+  const getCellClass = (l,i) => {
+    const score = l * i;
+    if(score>=17) return 'cell-critical';
+    if(score>=10) return 'cell-high';
+    if(score>=5) return 'cell-medium';
+    return 'cell-low';
+  };
+
+  const getCellLabel = (l,i) => {
+    const score=l*i;
+    if(score>=17) return 'Critical';
+    if(score>=10) return 'High';
+    if(score>=5) return 'Medium';
+    return 'Low';
+  };
+
+  const getRisksAt = (l, i) => s.risks.filter(r => r.likelihood === l && r.impact === i);
+
+  const dotColors = {Critical:'#f05252',High:'#f5a623',Medium:'#f5d020',Low:'#2ecc8a'};
+
+  let gridHtml = '';
+  // Y axis labels + cells (likelihood 5 to 1 from top)
+  for(let l=5; l>=1; l--) {
+    // Y-axis label
+    gridHtml += `<div style="display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted);font-family:var(--font-mono)">${l}</div>`;
+    for(let i=1; i<=5; i++) {
+      const risks = getRisksAt(l, i);
+      const cls = getCellClass(l,i);
+      const lbl = getCellLabel(l,i);
+      gridHtml += `<div class="matrix-cell ${cls}" title="L${l} × I${i} = ${l*i} (${lbl})">
+        <span style="position:absolute;top:4px;right:6px;font-size:9px;opacity:0.5">${l*i}</span>
+        ${risks.map((r,idx)=>`
+          <div class="risk-dot" style="background:${dotColors[r.category]};left:${20+idx*24}px;top:50%;transform:translateY(-50%)" title="${r.description}">
+            ${r.id.replace('R-','')}
+            <div class="risk-dot-tooltip">${r.description} (Score: ${r.score})</div>
+          </div>`).join('')}
+      </div>`;
+    }
+  }
+  // X-axis row
+  gridHtml += `<div></div>`;
+  for(let i=1;i<=5;i++) {
+    gridHtml += `<div style="display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted);font-family:var(--font-mono)">${i}</div>`;
+  }
+
+  const legend = [
+    {cls:'cell-critical',label:'Critical (17-25)'},
+    {cls:'cell-high',label:'High (10-16)'},
+    {cls:'cell-medium',label:'Medium (5-9)'},
+    {cls:'cell-low',label:'Low (1-4)'},
+  ];
+
+  return `<div class="content-area">
+    <div class="page-header">
+      <h2>Risk Matrix</h2>
+      <p>Visual likelihood × impact heatmap with risk placement. Hover dots for details.</p>
+    </div>
+    <div class="grid grid-2" style="gap:24px;align-items:start">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🗂️ Likelihood × Impact Matrix</div>
+        </div>
+        <div style="margin-bottom:8px;font-size:12px;color:var(--text-muted);text-align:center;font-weight:600;letter-spacing:0.05em">LIKELIHOOD →</div>
+        <div class="risk-matrix-wrap">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:0.05em;transform:rotate(180deg);padding:8px 0">IMPACT ↑</div>
+            <div>
+              <div class="risk-matrix" style="min-width:380px">
+                ${gridHtml}
+              </div>
+              <div class="axis-title" style="margin-top:4px">Impact (1–5)</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+          ${legend.map(l=>`<div style="display:flex;align-items:center;gap:6px">
+            <div class="matrix-cell ${l.cls}" style="width:16px;height:16px;border-radius:3px;min-height:auto"></div>
+            <span style="font-size:11px;color:var(--text-secondary)">${l.label}</span>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📋 Risk Placement Summary</div>
+        </div>
+        <div style="margin-bottom:12px">
+          ${['Critical','High','Medium','Low'].map(cat=>{
+            const catRisks = s.risks.filter(r=>r.category===cat);
+            const colors={Critical:'var(--red)',High:'var(--orange)',Medium:'var(--yellow)',Low:'var(--green)'};
+            return `<div style="margin-bottom:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                <span style="font-size:13px;font-weight:600;color:${colors[cat]}">${cat}</span>
+                <span style="font-size:12px;color:var(--text-muted)">${catRisks.length} risk${catRisks.length!==1?'s':''}</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-secondary)">
+                ${catRisks.slice(0,3).map(r=>`• ${r.description}`).join('<br>') || '<span style="color:var(--text-muted)">None</span>'}
+                ${catRisks.length>3?`<br><span style="color:var(--text-muted)">+${catRisks.length-3} more</span>`:''}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="section-divider"></div>
+        <div class="card-title" style="margin-bottom:12px">⚙️ Thresholds Config</div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);background:var(--bg-surface);border-radius:var(--radius);padding:12px">
+          Low:      1–4  (score = likelihood × impact)<br>
+          Medium:   5–9<br>
+          High:    10–16<br>
+          Critical: 17–25
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// =============================================
+// FRAMEWORK LIBRARY VIEW
+// =============================================
+function renderFrameworks() {
+  const activeFramework = filterStates.framework || 'All';
+  const activeCategory = filterStates.frameworkCat || 'All';
+  const frameworks = ['All','ISO 27001','NIST CSF','SOC 2','GDPR','CIS','HIPAA'];
+  const categories = ['All','Access Control','Asset Management','Data Protection','Network Security','Incident Mgmt','Risk Management','Compliance','Logging','Policy & Governance'];
+
+  let controls = FRAMEWORKS_LIBRARY;
+  if (activeFramework !== 'All') controls = controls.filter(c=>c.framework===activeFramework);
+  if (activeCategory !== 'All') controls = controls.filter(c=>c.cat===activeCategory);
+  if (searchQuery) controls = controls.filter(c=>c.name.toLowerCase().includes(searchQuery.toLowerCase())||c.id.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const fwColors = {'ISO 27001':'badge-info','NIST CSF':'badge-success','SOC 2':'badge-purple','GDPR':'badge-warning','CIS':'badge-high','HIPAA':'badge-gray'};
+
+  return `<div class="content-area">
+    <div class="page-header">
+      <h2>Framework Control Library</h2>
+      <p>${FRAMEWORKS_LIBRARY.length}+ security and compliance controls from ${frameworks.length-1} major frameworks. Use these as reference when implementing your own controls.</p>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div style="margin-bottom:12px">
+        <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Framework</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${frameworks.map(f=>`<div class="framework-chip ${activeFramework===f?'active':''}" onclick="filterStates.framework='${f}';render()">${f}</div>`).join('')}
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">Category</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${categories.map(c=>`<div class="framework-chip ${activeCategory===c?'active':''}" onclick="filterStates.frameworkCat='${c}';render()">${c}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Controls</div>
+        <span class="badge badge-info">${controls.length} controls</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Control ID</th><th>Name</th><th>Category</th><th>Framework</th><th>Description</th><th>Action</th>
+          </tr></thead>
+          <tbody>
+            ${controls.map(c=>`<tr class="control-row">
+              <td>${c.id}</td>
+              <td class="td-primary">${c.name}</td>
+              <td><span class="badge badge-gray">${c.cat}</span></td>
+              <td><span class="badge ${fwColors[c.framework]||'badge-gray'}">${c.framework}</span></td>
+              <td style="font-size:12px;color:var(--text-muted);max-width:300px">${c.desc.length>80?c.desc.slice(0,80)+'…':c.desc}</td>
+              <td><button class="btn btn-secondary btn-xs" onclick="addControlFromLibrary('${c.id}','${c.name}','${c.framework}')">+ Add</button></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+function addControlFromLibrary(id, name, fw) {
+  const s = store();
+  if (s.controls.find(c=>c.frameworkRef===id)) { showToast('Control already in your library'); return; }
+  updateStore(s => {
+    s.controls.push({id:genId('CTRL'),name,framework:fw,frameworkRef:id,status:'Planned',owner:'',description:'',risks:[],evidence:[]});
+  });
+  showToast(`Added "${name}" to your controls`);
+}
+
+// =============================================
+// CONTROLS VIEW
+// =============================================
+function renderControls() {
+  const s = store();
+  let controls = s.controls;
+  if (searchQuery) controls = controls.filter(c=>c.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const stFilter = filterStates.ctrlStatus||'All';
+  if(stFilter!=='All') controls=controls.filter(c=>c.status===stFilter);
+
+  const stBadge = st => ({Implemented:'badge-success','In Progress':'badge-warning',Planned:'badge-gray'}[st]||'badge-gray');
+  const fwColors = {'ISO 27001':'badge-info','NIST CSF':'badge-success','SOC 2':'badge-purple','GDPR':'badge-warning','CIS':'badge-high','HIPAA':'badge-gray'};
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Controls</h2>
+        <p>${s.controls.length} controls · ${s.controls.filter(c=>c.status==='Implemented').length} implemented</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-control'})">+ Add Control</button>
+    </div>
+    <div class="filter-bar">
+      ${['All','Implemented','In Progress','Planned'].map(t=>`<div class="filter-chip ${stFilter===t?'active':''}" onclick="filterStates.ctrlStatus='${t}';render()">${t}</div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>ID</th><th>Name</th><th>Framework</th><th>Framework Ref</th><th>Status</th><th>Owner</th><th>Linked Risks</th><th>Actions</th>
+          </tr></thead>
+          <tbody>
+            ${controls.length===0?`<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🔒</div><h3>No controls</h3><p>Add a control or import from the Framework Library.</p><button class="btn btn-primary" onclick="navigate('frameworks')">Browse Frameworks</button></div></td></tr>`:
+            controls.map(c=>{
+              const linkedRisks = s.risks.filter(r=>r.controlIds&&r.controlIds.includes(c.frameworkRef));
+              return `<tr>
+                <td class="td-mono">${c.id}</td>
+                <td class="td-primary">${c.name}</td>
+                <td><span class="badge ${fwColors[c.framework]||'badge-gray'}">${c.framework}</span></td>
+                <td class="td-mono">${c.frameworkRef||'—'}</td>
+                <td><span class="badge ${stBadge(c.status)}">${c.status}</span></td>
+                <td>${c.owner||'—'}</td>
+                <td style="font-size:12px">${linkedRisks.length>0?linkedRisks.map(r=>`<span class="badge badge-gray">${r.id}</span>`).join(' '):'—'}</td>
+                <td><div class="action-row">
+                  <button class="btn btn-secondary btn-xs" onclick="showModal({type:'edit-control',id:'${c.id}'})">Edit</button>
+                  <button class="btn btn-secondary btn-xs" onclick="deleteRecord('controls','${c.id}')">✕</button>
+                </div></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+// =============================================
+// AUDITS VIEW
+// =============================================
+function renderAudits() {
+  const s = store();
+  const stBadge = st => ({'In Progress':'badge-warning',Completed:'badge-success',Planned:'badge-gray','On Hold':'badge-high'}[st]||'badge-gray');
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Audits</h2>
+        <p>${s.audits.length} audits · ${s.audits.filter(a=>a.status==='In Progress').length} in progress</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-audit'})">+ New Audit</button>
+    </div>
+    <div class="grid grid-2" style="gap:16px">
+      ${s.audits.length===0?`<div class="card"><div class="empty-state"><div class="empty-icon">📋</div><h3>No audits</h3><p>Create your first audit.</p></div></div>`:
+      s.audits.map(a=>{
+        const linkedControls = s.controls.filter(c=>a.controls&&a.controls.includes(c.id));
+        const linkedEvidence = s.evidence.filter(e=>a.evidence&&a.evidence.includes(e.id));
+        return `<div class="card">
+          <div class="card-header">
+            <div class="card-title">📋 ${a.name}</div>
+            <span class="badge ${stBadge(a.status)}">${a.status}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+            <div style="font-size:12px"><span style="color:var(--text-muted)">Framework:</span> <strong>${a.framework}</strong></div>
+            <div style="font-size:12px"><span style="color:var(--text-muted)">Lead:</span> <strong>${a.lead}</strong></div>
+            <div style="font-size:12px"><span style="color:var(--text-muted)">Start:</span> ${a.startDate}</div>
+            <div style="font-size:12px"><span style="color:var(--text-muted)">End:</span> ${a.endDate}</div>
+          </div>
+          ${a.findings?`<div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;background:var(--bg-surface);padding:10px;border-radius:var(--radius);border-left:3px solid var(--orange)"><strong>Findings:</strong> ${a.findings}</div>`:''}
+          <div style="display:flex;gap:16px;font-size:12px;color:var(--text-muted);margin-bottom:12px">
+            <span>🔒 ${linkedControls.length} controls</span>
+            <span>📁 ${linkedEvidence.length} evidence items</span>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-secondary btn-sm" onclick="showModal({type:'edit-audit',id:'${a.id}'})">Edit</button>
+            <button class="btn btn-secondary btn-sm" onclick="showModal({type:'audit-detail',id:'${a.id}'})">View Detail</button>
+            <button class="btn btn-secondary btn-sm" onclick="deleteRecord('audits','${a.id}')">Delete</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+// =============================================
+// EVIDENCE VIEW
+// =============================================
+function renderEvidence() {
+  const s = store();
+  const typeIcon = t => ({Policy:'📄',Screenshot:'🖼️',Report:'📊',Config:'⚙️',Certificate:'🏆'}[t]||'📁');
+  const mimeLabel = m => m.includes('pdf')?'PDF':m.includes('image')?'Image':m.includes('sheet')?'Excel':'Doc';
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Evidence Management</h2>
+        <p>Policies, screenshots, reports, and configuration exports linked to controls, risks, and audits.</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-evidence'})">+ Upload Evidence</button>
+    </div>
+    <!-- Upload zone -->
+    <div class="upload-zone" onclick="showModal({type:'add-evidence'})" style="margin-bottom:20px">
+      <div class="upload-icon">☁️</div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:4px">Drag & drop files here, or click to browse</div>
+      <div style="font-size:12px">Supported: PDF, PNG, JPG, XLSX, DOCX, CSV · Max 50MB</div>
+    </div>
+    ${s.evidence.length===0?`<div class="empty-state"><div class="empty-icon">📁</div><h3>No evidence uploaded</h3><p>Upload your first evidence file.</p></div>`:
+    `<div class="evidence-grid">
+      ${s.evidence.map(e=>{
+        const linked = s.controls.find(c=>c.id===e.linkedTo||c.frameworkRef===e.linkedTo);
+        return `<div class="evidence-card">
+          <div class="evidence-icon">${typeIcon(e.type)}</div>
+          <div class="evidence-name">${e.name}</div>
+          <div class="evidence-meta">${e.type} · ${mimeLabel(e.mime)} · ${e.size}</div>
+          <div class="evidence-meta">Uploaded by ${e.uploadedBy}</div>
+          <div class="evidence-meta">${e.uploadedAt}</div>
+          ${linked?`<div style="margin-top:4px"><span class="badge badge-info" style="font-size:10px">🔒 ${linked.name}</span></div>`:''}
+          <div class="action-row" style="margin-top:8px">
+            <button class="btn btn-secondary btn-xs">⬇ Download</button>
+            <button class="btn btn-secondary btn-xs" onclick="deleteRecord('evidence','${e.id}')">✕</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`}
+  </div>`;
+}
+
+// =============================================
+// SOA VIEW
+// =============================================
+function renderSoa() {
+  const s = store();
+  const applicable = s.soa.filter(e=>e.applicable).length;
+  const complete = s.soa.filter(e=>e.status==='Complete').length;
+  const pct = s.soa.length > 0 ? Math.round(complete/s.soa.length*100) : 0;
+  const stBadge = st => ({Complete:'badge-success','In Progress':'badge-warning',Planned:'badge-gray'}[st]||'badge-gray');
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Statement of Applicability (SoA)</h2>
+        <p>ISO 27001 Annex A — ${s.soa.length} controls assessed · ${applicable} applicable · ${pct}% complete</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-soa'})">+ Add Entry</button>
+    </div>
+    <!-- Progress -->
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:24px">
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--text-secondary)">SoA Completion</span>
+            <span style="color:var(--accent);font-weight:600">${pct}%</span>
+          </div>
+          <div class="progress-bar" style="height:8px">
+            <div class="progress-fill" style="width:${pct}%;background:var(--accent)"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;flex-shrink:0">
+          <div style="text-align:center"><div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--green)">${applicable}</div><div style="font-size:11px;color:var(--text-muted)">Applicable</div></div>
+          <div style="text-align:center"><div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--text-muted)">${s.soa.length-applicable}</div><div style="font-size:11px;color:var(--text-muted)">Excluded</div></div>
+          <div style="text-align:center"><div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--accent)">${complete}</div><div style="font-size:11px;color:var(--text-muted)">Complete</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Control Ref</th><th>Control Name</th><th>Applicable</th><th>Justification</th><th>Measures</th><th>Evidence</th><th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody>
+            ${s.soa.map(entry => {
+              const ev = s.evidence.find(e=>e.id===entry.evidence);
+              return `<tr class="${entry.applicable?'soa-row-applicable':'soa-row-excluded'}">
+                <td class="td-mono">${entry.controlRef}</td>
+                <td class="td-primary">${entry.controlName}</td>
+                <td><span class="badge ${entry.applicable?'badge-success':'badge-gray'}">${entry.applicable?'Yes':'No'}</span></td>
+                <td style="font-size:12px;color:var(--text-secondary);max-width:200px">${entry.justification}</td>
+                <td style="font-size:12px;color:var(--text-secondary);max-width:160px">${entry.measures||'—'}</td>
+                <td>${ev?`<span class="badge badge-info" style="font-size:10px">📁 ${ev.name.slice(0,20)}…</span>`:'<span style="color:var(--text-muted);font-size:12px">—</span>'}</td>
+                <td><span class="badge ${stBadge(entry.status)}">${entry.status}</span></td>
+                <td><div class="action-row">
+                  <button class="btn btn-secondary btn-xs" onclick="showModal({type:'edit-soa',id:'${entry.id}'})">Edit</button>
+                  <button class="btn btn-secondary btn-xs" onclick="deleteRecord('soa','${entry.id}')">✕</button>
+                </div></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+// =============================================
+// RESILIENCE / BIA VIEW
+// =============================================
+function renderResilience() {
+  const s = store();
+  const critColor = c => ({Critical:'badge-critical',High:'badge-high',Medium:'badge-medium',Low:'badge-low'}[c]||'badge-gray');
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Business Continuity & Resilience</h2>
+        <p>Business Impact Analysis (BIA), RTO, RPO, and critical service dependencies.</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-bia'})">+ Add BIA Entry</button>
+    </div>
+    <!-- Summary metrics -->
+    <div class="grid grid-4" style="margin-bottom:20px">
+      <div class="metric-card">
+        <div class="metric-icon blue">💡</div>
+        <div class="metric-value">${s.resilience.length}</div>
+        <div class="metric-label">Services Assessed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon red">⚡</div>
+        <div class="metric-value">${s.resilience.filter(r=>r.criticality==='Critical').length}</div>
+        <div class="metric-label">Critical Services</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon green">⏱️</div>
+        <div class="metric-value">${s.resilience.reduce((best,r)=>{const h=parseFloat(r.rto);return isNaN(h)?best:Math.min(best,h)},99)}h</div>
+        <div class="metric-label">Shortest RTO</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon orange">💰</div>
+        <div class="metric-value">$${(s.resilience.reduce((sum,r)=>sum+(parseInt(r.annualCost?.replace(/\D/g,''))||0),0)/1000).toFixed(0)}K</div>
+        <div class="metric-label">Annual Impact</div>
+      </div>
+    </div>
+    <!-- BIA cards -->
+    <div class="grid grid-2" style="gap:16px">
+      ${s.resilience.map(b=>{
+        const asset = s.assets.find(a=>a.id===b.assetId);
+        const deps = b.dependencies.map(d=>s.assets.find(a=>a.id===d)).filter(Boolean);
+        return `<div class="bia-card">
+          <div class="bia-card-header">
+            <div class="bia-name">💡 ${b.service}</div>
+            <span class="badge ${critColor(b.criticality)}">${b.criticality}</span>
+          </div>
+          ${asset?`<div style="font-size:12px;color:var(--text-muted);margin-bottom:10px">Asset: ${asset.name}</div>`:''}
+          <div class="rto-rpo">
+            <div class="rto-rpo-item">
+              <div class="val">${b.rto}</div>
+              <div class="lbl">RTO</div>
+            </div>
+            <div class="rto-rpo-item">
+              <div class="val">${b.rpo}</div>
+              <div class="lbl">RPO</div>
+            </div>
+            <div class="rto-rpo-item">
+              <div class="val">${b.maxTolerance}</div>
+              <div class="lbl">Max Outage</div>
+            </div>
+          </div>
+          ${deps.length>0?`<div style="margin-top:10px;font-size:12px">
+            <span style="color:var(--text-muted)">Dependencies: </span>
+            ${deps.map(d=>`<span class="badge badge-gray">${d.name}</span>`).join(' ')}
+          </div>`:''}
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+            <span style="font-size:11px;color:var(--text-muted)">Last reviewed: ${b.lastReviewed}</span>
+            <span class="badge ${b.status==='Documented'?'badge-success':'badge-warning'}">${b.status}</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+// =============================================
+// INCIDENTS VIEW
+// =============================================
+function renderIncidents() {
+  const s = store();
+  const sevBadge = sv => ({Critical:'badge-critical',High:'badge-high',Medium:'badge-medium',Low:'badge-low'}[sv]||'badge-gray');
+  const stBadge = st => ({Open:'badge-critical',Investigating:'badge-high',Mitigated:'badge-warning','Resolved':'badge-success'}[st]||'badge-gray');
+  const dotColor = sv => ({Critical:'#f05252',High:'#f5a623',Medium:'#f5d020',Low:'#2ecc8a'}[sv]||'#8b98b5');
+
+  const filter = filterStates.incidents || 'All';
+  let incidents = s.incidents;
+  if (filter !== 'All') incidents = incidents.filter(i => i.status === filter);
+  if (searchQuery) incidents = incidents.filter(i=>i.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Incident Management</h2>
+        <p>${s.incidents.length} incidents · ${s.incidents.filter(i=>i.status!=='Resolved'&&i.status!=='Mitigated').length} active</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-incident'})">+ Log Incident</button>
+    </div>
+    <div class="filter-bar">
+      ${['All','Open','Investigating','Mitigated','Resolved'].map(t=>`<div class="filter-chip ${filter===t?'active':''}" onclick="filterStates.incidents='${t}';render()">${t}</div>`).join('')}
+    </div>
+    <div class="grid grid-2" style="gap:16px">
+      ${incidents.length===0?`<div class="card"><div class="empty-state"><div class="empty-icon">🚨</div><h3>No incidents found</h3></div></div>`:
+      incidents.map(inc=>{
+        const affectedAssets = s.assets.filter(a=>inc.affectedAssets&&inc.affectedAssets.includes(a.id));
+        const linkedRisks = s.risks.filter(r=>inc.linkedRisks&&inc.linkedRisks.includes(r.id));
+        return `<div class="card" style="border-left:3px solid ${dotColor(inc.severity)}">
+          <div class="card-header">
+            <div class="card-title"><span class="severity-dot dot-${inc.severity.toLowerCase()}"></span>${inc.title}</div>
+            <span class="badge ${stBadge(inc.status)}">${inc.status}</span>
+          </div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-bottom:10px">${inc.description}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;font-size:12px">
+            <div><span style="color:var(--text-muted)">Date: </span>${inc.date}</div>
+            <div><span style="color:var(--text-muted)">Severity: </span><span class="badge ${sevBadge(inc.severity)}">${inc.severity}</span></div>
+            ${inc.rootCause?`<div style="grid-column:span 2"><span style="color:var(--text-muted)">Root Cause: </span>${inc.rootCause}</div>`:''}
+          </div>
+          ${inc.responseActions?`<div style="background:var(--bg-surface);border-radius:var(--radius);padding:8px 12px;font-size:12px;margin-bottom:8px;border-left:2px solid var(--accent)">
+            <strong style="color:var(--text-secondary)">Response:</strong> ${inc.responseActions}
+          </div>`:''}
+          ${inc.lessonsLearned?`<div style="background:var(--green-dim);border-radius:var(--radius);padding:8px 12px;font-size:12px;margin-bottom:8px;border-left:2px solid var(--green)">
+            <strong style="color:var(--green)">Lessons Learned:</strong> ${inc.lessonsLearned}
+          </div>`:''}
+          <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--text-muted);margin-bottom:12px">
+            ${affectedAssets.length>0?`<span>🖥️ ${affectedAssets.map(a=>a.name).join(', ')}</span>`:''}
+            ${linkedRisks.length>0?`<span>⚠️ ${linkedRisks.map(r=>r.id).join(', ')}</span>`:''}
+          </div>
+          <div class="action-row">
+            <button class="btn btn-secondary btn-sm" onclick="showModal({type:'edit-incident',id:'${inc.id}'})">Edit</button>
+            <button class="btn btn-secondary btn-sm" onclick="deleteRecord('incidents','${inc.id}')">Delete</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+// =============================================
+// VENDORS VIEW
+// =============================================
+function renderVendors() {
+  const s = store();
+  const stBadge = st => ({Compliant:'badge-success','Under Review':'badge-warning','Remediation Required':'badge-critical','Non-Compliant':'badge-high'}[st]||'badge-gray');
+  const riskBadge = r => ({High:'badge-critical',Medium:'badge-medium',Low:'badge-low'}[r]||'badge-gray');
+
+  return `<div class="content-area">
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2>Vendor Management</h2>
+        <p>${s.vendors.length} vendors · ${s.vendors.filter(v=>v.status==='Compliant').length} compliant</p>
+      </div>
+      <button class="btn btn-primary" onclick="showModal({type:'add-vendor'})">+ Add Vendor</button>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>ID</th><th>Vendor</th><th>Service</th><th>Risk Rating</th><th>Status</th><th>Last Assessed</th><th>Actions</th>
+          </tr></thead>
+          <tbody>
+            ${s.vendors.map(v=>`<tr>
+              <td class="td-mono">${v.id}</td>
+              <td class="td-primary">${v.name}</td>
+              <td>${v.service}</td>
+              <td><span class="badge ${riskBadge(v.riskRating)}">${v.riskRating}</span></td>
+              <td><span class="badge ${stBadge(v.status)}">${v.status}</span></td>
+              <td style="font-size:12px;color:var(--text-muted)">${v.lastAssessed}</td>
+              <td><div class="action-row">
+                <button class="btn btn-secondary btn-xs" onclick="showModal({type:'edit-vendor',id:'${v.id}'})">Edit</button>
+                <button class="btn btn-secondary btn-xs" onclick="deleteRecord('vendors','${v.id}')">✕</button>
+              </div></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+// =============================================
+// MODALS
+// =============================================
+function renderModal() {
+  if (!modalState) return '';
+  const s = store();
+
+  let content = '';
+  let title = '';
+
+  if (modalState.type === 'add-asset' || modalState.type === 'edit-asset') {
+    const isEdit = modalState.type === 'edit-asset';
+    const a = isEdit ? s.assets.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit Asset' : 'Add New Asset';
+    content = `
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Name *</label><input class="form-control" id="f-name" value="${a.name||''}" placeholder="e.g. Customer Database"/></div>
+        <div class="form-group"><label class="form-label">Owner *</label><input class="form-control" id="f-owner" value="${a.owner||''}" placeholder="IT Team"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Type</label>
+          <select class="form-control" id="f-type">
+            ${['Application','Infrastructure','Data Repository','Vendor','Other'].map(t=>`<option ${(a.type||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="f-status">
+            ${['Active','Inactive','Decommissioning'].map(t=>`<option ${(a.status||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Classification</label>
+          <select class="form-control" id="f-classification">
+            ${['Public','Internal','Confidential','Restricted','Critical'].map(t=>`<option ${(a.classification||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Criticality</label>
+          <select class="form-control" id="f-criticality">
+            ${['Low','Medium','High','Critical'].map(t=>`<option ${(a.criticality||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="f-description">${a.description||''}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveAsset('${isEdit?a.id:''}')">${isEdit?'Save Changes':'Add Asset'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-risk' || modalState.type === 'edit-risk') {
+    const isEdit = modalState.type === 'edit-risk';
+    const r = isEdit ? s.risks.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit Risk' : 'Add Risk to Register';
+    content = `
+      <div class="form-group"><label class="form-label">Risk Description *</label><input class="form-control" id="f-description" value="${r.description||''}" placeholder="Describe the risk"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Asset</label>
+          <select class="form-control" id="f-assetId">
+            <option value="">— Select Asset —</option>
+            ${s.assets.map(a=>`<option value="${a.id}" ${r.assetId===a.id?'selected':''}>${a.name}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Owner</label><input class="form-control" id="f-owner" value="${r.owner||''}"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Likelihood (1–5)</label>
+          <select class="form-control" id="f-likelihood" onchange="updateScorePreview()">
+            ${[1,2,3,4,5].map(n=>`<option ${r.likelihood===n?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Impact (1–5)</label>
+          <select class="form-control" id="f-impact" onchange="updateScorePreview()">
+            ${[1,2,3,4,5].map(n=>`<option ${r.impact===n?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div id="score-preview" style="background:var(--bg-surface);border-radius:var(--radius);padding:10px 14px;font-size:13px;margin-bottom:12px">
+        Score preview: <strong id="score-val">${r.score||'—'}</strong> — <strong id="cat-val">${r.category||'—'}</strong>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="f-status">
+            ${['Open','In Mitigation','Mitigated','Accepted'].map(t=>`<option ${(r.status||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Mitigation Plan</label><textarea class="form-control" id="f-mitigation">${r.mitigationPlan||''}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveRisk('${isEdit?r.id:''}')">${isEdit?'Save Changes':'Add Risk'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-audit' || modalState.type === 'edit-audit') {
+    const isEdit = modalState.type === 'edit-audit';
+    const a = isEdit ? s.audits.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit Audit' : 'New Audit';
+    content = `
+      <div class="form-group"><label class="form-label">Audit Name *</label><input class="form-control" id="f-name" value="${a.name||''}" placeholder="ISO 27001 Gap Assessment 2026"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Framework</label>
+          <select class="form-control" id="f-framework">
+            ${['ISO 27001','NIST CSF','SOC 2','GDPR','CIS','HIPAA'].map(f=>`<option ${(a.framework||'')==f?'selected':''}>${f}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="f-status">
+            ${['Planned','In Progress','Completed','On Hold'].map(t=>`<option ${(a.status||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Lead Auditor</label><input class="form-control" id="f-lead" value="${a.lead||''}"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Start Date</label><input class="form-control" type="date" id="f-startDate" value="${a.startDate||''}"/></div>
+        <div class="form-group"><label class="form-label">End Date</label><input class="form-control" type="date" id="f-endDate" value="${a.endDate||''}"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Findings / Notes</label><textarea class="form-control" id="f-findings">${a.findings||''}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveAudit('${isEdit?a.id:''}')">${isEdit?'Save Changes':'Create Audit'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-evidence' || modalState.type === 'edit-evidence') {
+    const isEdit = modalState.type === 'edit-evidence';
+    const e = isEdit ? s.evidence.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit Evidence' : 'Upload Evidence';
+    content = `
+      <div class="form-group"><label class="form-label">File Name *</label><input class="form-control" id="f-name" value="${e.name||''}" placeholder="policy_document_v2.pdf"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Type</label>
+          <select class="form-control" id="f-type">
+            ${['Policy','Screenshot','Report','Config','Certificate','Other'].map(t=>`<option ${(e.type||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Linked To (Control)</label>
+          <select class="form-control" id="f-linkedTo">
+            <option value="">— None —</option>
+            ${s.controls.map(c=>`<option value="${c.id}" ${e.linkedTo===c.id?'selected':''}>${c.name}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">File Size</label><input class="form-control" id="f-size" value="${e.size||''}" placeholder="142 KB"/></div>
+        <div class="form-group"><label class="form-label">Uploaded By</label><input class="form-control" id="f-uploadedBy" value="${e.uploadedBy||'Chris Olowo'}"/></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveEvidence('${isEdit?e.id:''}')">${isEdit?'Save':'Upload Evidence'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-incident' || modalState.type === 'edit-incident') {
+    const isEdit = modalState.type === 'edit-incident';
+    const inc = isEdit ? s.incidents.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit Incident' : 'Log New Incident';
+    content = `
+      <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="f-title" value="${inc.title||''}" placeholder="Brief incident title"/></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="f-description">${inc.description||''}</textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Severity</label>
+          <select class="form-control" id="f-severity">
+            ${['Low','Medium','High','Critical'].map(t=>`<option ${(inc.severity||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="f-status">
+            ${['Open','Investigating','Mitigated','Resolved'].map(t=>`<option ${(inc.status||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Date</label><input class="form-control" type="date" id="f-date" value="${inc.date||new Date().toISOString().slice(0,10)}"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Root Cause</label><input class="form-control" id="f-rootCause" value="${inc.rootCause||''}"/></div>
+      <div class="form-group"><label class="form-label">Response Actions</label><textarea class="form-control" id="f-responseActions">${inc.responseActions||''}</textarea></div>
+      <div class="form-group"><label class="form-label">Lessons Learned</label><textarea class="form-control" id="f-lessonsLearned">${inc.lessonsLearned||''}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveIncident('${isEdit?inc.id:''}')">${isEdit?'Save Changes':'Log Incident'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-soa' || modalState.type === 'edit-soa') {
+    const isEdit = modalState.type === 'edit-soa';
+    const e = isEdit ? s.soa.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit SoA Entry' : 'Add SoA Entry';
+    content = `
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Control Ref *</label><input class="form-control" id="f-controlRef" value="${e.controlRef||''}" placeholder="ISO-5.1"/></div>
+        <div class="form-group"><label class="form-label">Control Name *</label><input class="form-control" id="f-controlName" value="${e.controlName||''}" placeholder="Security policies"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Applicable</label>
+          <select class="form-control" id="f-applicable">
+            <option value="true" ${e.applicable!==false?'selected':''}>Yes</option>
+            <option value="false" ${e.applicable===false?'selected':''}>No</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="f-status">
+            ${['Planned','In Progress','Complete'].map(t=>`<option ${(e.status||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Justification</label><textarea class="form-control" id="f-justification">${e.justification||''}</textarea></div>
+      <div class="form-group"><label class="form-label">Measures</label><textarea class="form-control" id="f-measures">${e.measures||''}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveSoa('${isEdit?e.id:''}')">${isEdit?'Save Changes':'Add Entry'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-control' || modalState.type === 'edit-control') {
+    const isEdit = modalState.type === 'edit-control';
+    const c = isEdit ? s.controls.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit Control' : 'Add Control';
+    content = `
+      <div class="form-group"><label class="form-label">Name *</label><input class="form-control" id="f-name" value="${c.name||''}" placeholder="Control name"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Framework</label>
+          <select class="form-control" id="f-framework">
+            ${['ISO 27001','NIST CSF','SOC 2','GDPR','CIS','HIPAA','Custom'].map(f=>`<option ${(c.framework||'')==f?'selected':''}>${f}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="f-status">
+            ${['Planned','In Progress','Implemented'].map(t=>`<option ${(c.status||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Owner</label><input class="form-control" id="f-owner" value="${c.owner||''}"/></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="f-description">${c.description||''}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveControl('${isEdit?c.id:''}')">${isEdit?'Save Changes':'Add Control'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-vendor' || modalState.type === 'edit-vendor') {
+    const isEdit = modalState.type === 'edit-vendor';
+    const v = isEdit ? s.vendors.find(x=>x.id===modalState.id) : {};
+    title = isEdit ? 'Edit Vendor' : 'Add Vendor';
+    content = `
+      <div class="form-group"><label class="form-label">Vendor Name *</label><input class="form-control" id="f-name" value="${v.name||''}"/></div>
+      <div class="form-group"><label class="form-label">Service</label><input class="form-control" id="f-service" value="${v.service||''}"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Risk Rating</label>
+          <select class="form-control" id="f-riskRating">
+            ${['Low','Medium','High'].map(t=>`<option ${(v.riskRating||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="f-status">
+            ${['Compliant','Under Review','Remediation Required','Non-Compliant'].map(t=>`<option ${(v.status||'')==t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Contact Email</label><input class="form-control" id="f-contact" value="${v.contact||''}"/></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveVendor('${isEdit?v.id:''}')">${isEdit?'Save Changes':'Add Vendor'}</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'add-bia') {
+    title = 'Add BIA Entry';
+    content = `
+      <div class="form-group"><label class="form-label">Service Name *</label><input class="form-control" id="f-service" placeholder="Customer Database"/></div>
+      <div class="form-group"><label class="form-label">Asset</label>
+        <select class="form-control" id="f-assetId">
+          <option value="">— Select Asset —</option>
+          ${s.assets.map(a=>`<option value="${a.id}">${a.name}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">RTO</label><input class="form-control" id="f-rto" placeholder="4h"/></div>
+        <div class="form-group"><label class="form-label">RPO</label><input class="form-control" id="f-rpo" placeholder="1h"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Criticality</label>
+          <select class="form-control" id="f-criticality">
+            ${['Low','Medium','High','Critical'].map(t=>`<option>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Max Tolerable Outage</label><input class="form-control" id="f-maxTolerance" placeholder="4 hours"/></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveBia()">Add BIA Entry</button>
+      </div>`;
+  }
+
+  else if (modalState.type === 'audit-detail') {
+    const a = s.audits.find(x=>x.id===modalState.id);
+    if (!a) return '';
+    title = `Audit: ${a.name}`;
+    const linkedControls = s.controls.filter(c=>a.controls&&a.controls.includes(c.id));
+    const linkedEvidence = s.evidence.filter(e=>a.evidence&&a.evidence.includes(e.id));
+    content = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;font-size:13px">
+        <div><span style="color:var(--text-muted)">Framework</span><br/><strong>${a.framework}</strong></div>
+        <div><span style="color:var(--text-muted)">Lead</span><br/><strong>${a.lead}</strong></div>
+        <div><span style="color:var(--text-muted)">Start</span><br/><strong>${a.startDate}</strong></div>
+        <div><span style="color:var(--text-muted)">End</span><br/><strong>${a.endDate}</strong></div>
+      </div>
+      ${a.findings?`<div style="background:var(--bg-surface);border-radius:var(--radius);padding:12px;font-size:13px;margin-bottom:16px;border-left:3px solid var(--orange)"><strong>Findings:</strong><br/>${a.findings}</div>`:''}
+      <div class="card-title" style="margin-bottom:8px">Linked Controls (${linkedControls.length})</div>
+      ${linkedControls.length>0?`<div style="margin-bottom:16px">${linkedControls.map(c=>`<span class="badge badge-info" style="margin:2px">${c.name}</span>`).join('')}</div>`:
+      '<div style="color:var(--text-muted);font-size:12px;margin-bottom:16px">No controls linked</div>'}
+      <div class="card-title" style="margin-bottom:8px">Evidence (${linkedEvidence.length})</div>
+      ${linkedEvidence.length>0?linkedEvidence.map(e=>`<div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px">📄 ${e.name} · ${e.uploadedAt}</div>`).join(''):
+      '<div style="color:var(--text-muted);font-size:12px">No evidence linked</div>'}
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+      </div>`;
+  }
+
+  if (!content) return '';
+
+  return `
+    <div class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">${title}</div>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        ${content}
+      </div>
+    </div>`;
+}
+
+// =============================================
+// CRUD OPERATIONS
+// =============================================
+function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+function saveAsset(editId) {
+  const name = val('f-name');
+  if(!name) { alert('Name is required'); return; }
+  updateStore(s => {
+    const data = {name,owner:val('f-owner'),type:val('f-type'),status:val('f-status'),classification:val('f-classification'),criticality:val('f-criticality'),description:val('f-description')};
+    if(editId) { const i=s.assets.findIndex(a=>a.id===editId); if(i>=0) Object.assign(s.assets[i],data); }
+    else s.assets.push({id:genId('A'),risks:[],controls:[],...data});
+  });
+  closeModal();
+  showToast(editId?'Asset updated':'Asset added');
+}
+
+function saveRisk(editId) {
+  const desc = val('f-description');
+  if(!desc) { alert('Description is required'); return; }
+  const l = parseInt(val('f-likelihood')||1);
+  const i = parseInt(val('f-impact')||1);
+  const sc = l*i;
+  const cat = riskCategory(sc);
+  updateStore(s => {
+    const data = {description:desc,assetId:val('f-assetId'),owner:val('f-owner'),likelihood:l,impact:i,score:sc,category:cat,status:val('f-status'),mitigationPlan:val('f-mitigation'),controlIds:[]};
+    if(editId) { const idx=s.risks.findIndex(r=>r.id===editId); if(idx>=0) Object.assign(s.risks[idx],data); }
+    else s.risks.push({id:genId('R'),createdAt:new Date().toISOString().slice(0,10),...data});
+  });
+  closeModal();
+  showToast(editId?'Risk updated':'Risk added to register');
+}
+
+function saveAudit(editId) {
+  const name = val('f-name');
+  if(!name) { alert('Name required'); return; }
+  updateStore(s => {
+    const data = {name,framework:val('f-framework'),status:val('f-status'),lead:val('f-lead'),startDate:val('f-startDate'),endDate:val('f-endDate'),findings:val('f-findings')};
+    if(editId) { const i=s.audits.findIndex(a=>a.id===editId); if(i>=0) Object.assign(s.audits[i],data); }
+    else s.audits.push({id:genId('AUD'),controls:[],evidence:[],createdAt:new Date().toISOString().slice(0,10),...data});
+  });
+  closeModal();
+  showToast(editId?'Audit updated':'Audit created');
+}
+
+function saveEvidence(editId) {
+  const name = val('f-name');
+  if(!name) { alert('File name required'); return; }
+  updateStore(s => {
+    const data = {name,type:val('f-type'),linkedTo:val('f-linkedTo'),size:val('f-size')||'—',mime:'application/octet-stream',uploadedBy:val('f-uploadedBy')||'Chris Olowo',uploadedAt:new Date().toISOString().slice(0,10),checksum:'sha256:pending'};
+    if(editId) { const i=s.evidence.findIndex(e=>e.id===editId); if(i>=0) Object.assign(s.evidence[i],data); }
+    else s.evidence.push({id:genId('EV'),...data});
+  });
+  closeModal();
+  showToast(editId?'Evidence updated':'Evidence uploaded');
+}
+
+function saveIncident(editId) {
+  const title = val('f-title');
+  if(!title) { alert('Title required'); return; }
+  updateStore(s => {
+    const data = {title,description:val('f-description'),severity:val('f-severity'),status:val('f-status'),date:val('f-date'),rootCause:val('f-rootCause'),responseActions:val('f-responseActions'),lessonsLearned:val('f-lessonsLearned'),affectedAssets:[],linkedRisks:[],linkedControls:[]};
+    if(editId) { const i=s.incidents.findIndex(x=>x.id===editId); if(i>=0) Object.assign(s.incidents[i],data); }
+    else s.incidents.push({id:genId('INC'),...data});
+  });
+  closeModal();
+  showToast(editId?'Incident updated':'Incident logged');
+}
+
+function saveSoa(editId) {
+  const ref = val('f-controlRef'); const name = val('f-controlName');
+  if(!ref||!name) { alert('Control Ref and Name required'); return; }
+  updateStore(s => {
+    const data = {controlRef:ref,controlName:name,applicable:val('f-applicable')==='true',justification:val('f-justification'),measures:val('f-measures'),status:val('f-status'),evidence:''};
+    if(editId) { const i=s.soa.findIndex(x=>x.id===editId); if(i>=0) Object.assign(s.soa[i],data); }
+    else s.soa.push({id:genId('SOA'),...data});
+  });
+  closeModal();
+  showToast(editId?'SoA entry updated':'SoA entry added');
+}
+
+function saveControl(editId) {
+  const name = val('f-name');
+  if(!name) { alert('Name required'); return; }
+  updateStore(s => {
+    const data = {name,framework:val('f-framework'),status:val('f-status'),owner:val('f-owner'),description:val('f-description'),frameworkRef:'',risks:[],evidence:[]};
+    if(editId) { const i=s.controls.findIndex(x=>x.id===editId); if(i>=0) Object.assign(s.controls[i],data); }
+    else s.controls.push({id:genId('CTRL'),...data});
+  });
+  closeModal();
+  showToast(editId?'Control updated':'Control added');
+}
+
+function saveVendor(editId) {
+  const name = val('f-name');
+  if(!name) { alert('Name required'); return; }
+  updateStore(s => {
+    const data = {name,service:val('f-service'),riskRating:val('f-riskRating'),status:val('f-status'),contact:val('f-contact'),lastAssessed:new Date().toISOString().slice(0,10)};
+    if(editId) { const i=s.vendors.findIndex(x=>x.id===editId); if(i>=0) Object.assign(s.vendors[i],data); }
+    else s.vendors.push({id:genId('V'),...data});
+  });
+  closeModal();
+  showToast(editId?'Vendor updated':'Vendor added');
+}
+
+function saveBia() {
+  const svc = val('f-service');
+  if(!svc) { alert('Service name required'); return; }
+  updateStore(s => {
+    s.resilience.push({id:genId('BIA'),service:svc,assetId:val('f-assetId'),rto:val('f-rto'),rpo:val('f-rpo'),criticality:val('f-criticality'),maxTolerance:val('f-maxTolerance'),dependencies:[],annualCost:'',status:'Documented',lastReviewed:new Date().toISOString().slice(0,10)});
+  });
+  closeModal();
+  showToast('BIA entry added');
+}
+
+function deleteRecord(entity, id) {
+  if (!confirm('Delete this record? This cannot be undone.')) return;
+  updateStore(s => { s[entity] = s[entity].filter(x=>x.id!==id); });
+  showToast('Record deleted');
+}
+
+function updateScorePreview() {
+  const l = parseInt(document.getElementById('f-likelihood')?.value||1);
+  const i = parseInt(document.getElementById('f-impact')?.value||1);
+  const sc = l*i;
+  const cat = riskCategory(sc);
+  const sv = document.getElementById('score-val');
+  const cv = document.getElementById('cat-val');
+  if(sv) sv.textContent = sc;
+  if(cv) { cv.textContent = cat; cv.className='badge badge-'+cat.toLowerCase(); }
+}
+
+function resetToSeed() {
+  if (!confirm('Reset all data to seed? This will overwrite your current data.')) return;
+  saveStore(SEED_DATA);
+  render();
+  showToast('Data reset to demo seed');
+}
+
+// =============================================
+// MAIN RENDER
+// =============================================
+function render() {
+  const viewRenderers = {
+    dashboard: renderDashboard,
+    assets: renderAssets,
+    vendors: renderVendors,
+    risks: renderRisks,
+    matrix: renderMatrix,
+    frameworks: renderFrameworks,
+    controls: renderControls,
+    audits: renderAudits,
+    evidence: renderEvidence,
+    soa: renderSoa,
+    resilience: renderResilience,
+    incidents: renderIncidents,
+  };
+
+  const renderer = viewRenderers[currentView] || renderDashboard;
+  const appEl = document.getElementById('app');
+
+  appEl.innerHTML = `
+    ${renderSidebar()}
+    <div class="main-area">
+      ${renderTopbar()}
+      ${renderer()}
+    </div>
+    ${renderModal()}
+  `;
+}
+
+// Keyboard shortcut
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey||e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    const gs = document.getElementById('global-search');
+    if (gs) gs.focus();
+  }
+  if (e.key === 'Escape' && modalState) closeModal();
+});
+
+// Boot
+initStore();
+render();
+</script>
+</body>
+</html>
