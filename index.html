@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chris Olowo, PMP® | Cybersecurity Project Manager & GRC Leader</title>
+  <meta name="description" content="PMP®-certified Cybersecurity Project Manager specialising in GRC, risk management, AI governance, and emergency management programs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:    #07090f;
+      --bg2:   #0c1018;
+      --surf:  #111722;
+      --edge:  rgba(255,255,255,0.07);
+      --edge2: rgba(255,255,255,0.12);
+      --text:  #edf2fa;
+      --mid:   #8795b0;
+      --dim:   #4a5568;
+      --blue:  #5294ff;
+      --blue2: #2563eb;
+      --teal:  #2dd4a0;
+      --gold:  #f0c040;
+      --red:   #f05060;
+      --fd: 'Syne', sans-serif;
+      --fb: 'DM Sans', sans-serif;
+      --fm: 'IBM Plex Mono', monospace;
+      --max: 1080px;
+      --nh: 62px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fb); font-size:15px; line-height:1.65; overflow-x:hidden; }
+    ::selection { background:rgba(82,148,255,.22); }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:#1e2a40; border-radius:3px; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      height:var(--nh); display:flex; align-items:center; justify-content:space-between;
+      padding:0 48px;
+      transition:background .35s, border-color .35s, backdrop-filter .35s;
+      border-bottom:1px solid transparent;
+    }
+    nav.on { background:rgba(7,9,15,.93); border-bottom-color:var(--edge); backdrop-filter:blur(18px); }
+    .logo { font-family:var(--fd); font-size:17px; font-weight:800; letter-spacing:.05em; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:9px; }
+    .ldot { width:6px; height:6px; border-radius:50%; background:var(--blue); box-shadow:0 0 7px rgba(82,148,255,.7); animation:blink 2.6s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(1.7)} }
+    .nav-r { display:flex; gap:28px; align-items:center; }
+    .nav-r a { font-family:var(--fm); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .2s; }
+    .nav-r a:hover { color:var(--text); }
+    .nav-cta { padding:6px 16px !important; background:var(--blue) !important; color:#fff !important; border-radius:6px; font-weight:500 !important; letter-spacing:.04em !important; transition:all .2s !important; }
+    .nav-cta:hover { background:var(--blue2) !important; transform:translateY(-1px); box-shadow:0 4px 20px rgba(82,148,255,.3) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height:100vh; display:flex; align-items:center;
+      padding:calc(var(--nh) + 64px) 48px 80px;
+      position:relative; overflow:hidden;
+    }
+    /* subtle grid */
+    #hero::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image: linear-gradient(rgba(82,148,255,.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(82,148,255,.025) 1px, transparent 1px);
+      background-size:72px 72px;
+      mask-image:radial-gradient(ellipse 70% 70% at 55% 40%, black 30%, transparent 100%);
+    }
+    /* glows */
+    #hero::after {
+      content:''; position:absolute; pointer-events:none;
+      top:-20%; right:-12%; width:600px; height:600px; border-radius:50%;
+      background:radial-gradient(circle, rgba(82,148,255,.09) 0%, transparent 65%);
+      filter:blur(60px);
+    }
+    .hero-glow2 {
+      position:absolute; pointer-events:none;
+      bottom:-20%; left:-8%; width:440px; height:440px; border-radius:50%;
+      background:radial-gradient(circle, rgba(45,212,160,.06) 0%, transparent 65%);
+      filter:blur(60px);
+    }
+
+    .hero-inner {
+      position:relative; z-index:1;
+      max-width:var(--max); margin:0 auto; width:100%;
+      display:grid; grid-template-columns:200px 1fr 320px; gap:52px; align-items:center;
+    }
+
+    /* availability */
+    .pill {
+      display:inline-flex; align-items:center; gap:7px;
+      font-family:var(--fm); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--teal); background:rgba(45,212,160,.07); border:1px solid rgba(45,212,160,.18);
+      padding:5px 13px; border-radius:20px; margin-bottom:32px;
+    }
+    .pdot { width:5px; height:5px; border-radius:50%; background:var(--teal); box-shadow:0 0 5px rgba(45,212,160,.8); animation:blink 2.2s ease-in-out infinite; }
+
+    /* portrait photo */
+    .photo-col { flex-shrink:0; display:flex; align-items:stretch; }
+    .photo-wrap { position:relative; width:200px; }
+    .photo {
+      width:100%; height:100%; min-height:280px;
+      border-radius:16px;
+      object-fit:cover; object-position:center top;
+      border:1px solid rgba(82,148,255,.3);
+      box-shadow:0 0 0 5px rgba(82,148,255,.06), 0 24px 56px rgba(0,0,0,.55);
+      display:block;
+    }
+    .photo-ph {
+      width:100%; min-height:280px; border-radius:16px;
+      background:var(--surf); border:2px dashed rgba(82,148,255,.22);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px; font-size:36px; color:var(--dim);
+    }
+    .photo-ph small { font-family:var(--fm); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); }
+    .pbadge {
+      position:absolute; bottom:12px; left:50%; transform:translateX(-50%);
+      background:var(--blue); color:#fff;
+      font-family:var(--fm); font-size:9px; font-weight:600; letter-spacing:.07em;
+      padding:4px 12px; border-radius:20px; border:2px solid var(--bg);
+      white-space:nowrap;
+    }
+    .photo-wrap::after {
+      content:''; position:absolute; bottom:-18px; left:10%; right:10%; height:36px;
+      background:rgba(82,148,255,.16); border-radius:50%; filter:blur(14px); pointer-events:none;
+    }
+
+    /* name */
+    h1 {
+      font-family:var(--fd); font-size:clamp(60px,9vw,108px);
+      font-weight:800; letter-spacing:.01em; line-height:.88;
+      margin-bottom:20px;
+    }
+    h1 span { color:var(--blue); display:block; }
+
+    .role {
+      font-size:15px; font-weight:400; color:var(--mid);
+      margin-bottom:28px; line-height:1.55;
+    }
+    .role strong { color:var(--text); font-weight:600; }
+
+    /* proof strip */
+    .proof {
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-bottom:36px;
+    }
+    .proof-item {
+      display:flex; align-items:center; gap:6px;
+      font-size:12.5px; color:var(--mid);
+    }
+    .proof-item::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--blue); opacity:.6; flex-shrink:0; }
+    .proof-sep { color:var(--dim); align-self:center; font-size:11px; }
+
+    .cta-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:7px; padding:11px 22px; border-radius:8px; font-family:var(--fb); font-size:13px; font-weight:600; text-decoration:none; transition:all .2s; border:none; cursor:pointer; }
+    .btn-p { background:var(--blue); color:#fff; box-shadow:0 0 20px rgba(82,148,255,.18); }
+    .btn-p:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 6px 24px rgba(82,148,255,.35); }
+    .btn-g { background:transparent; color:var(--text); border:1px solid var(--edge2); }
+    .btn-g:hover { border-color:var(--blue); color:var(--blue); }
+
+    /* hero side stat cards */
+    .hcards { display:flex; flex-direction:column; gap:9px; }
+    .hc {
+      display:flex; align-items:center; gap:13px;
+      background:rgba(17,23,34,.8); backdrop-filter:blur(10px);
+      border:1px solid var(--edge); border-radius:12px;
+      padding:14px 18px; text-decoration:none; color:inherit;
+      transition:border-color .2s, transform .2s;
+      position:relative; overflow:hidden;
+    }
+    .hc::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+      transform:scaleY(0); transform-origin:bottom; transition:transform .2s;
+    }
+    .hc:hover { transform:translateX(4px); }
+    .hc.b::before{background:var(--blue)} .hc.b:hover{border-color:rgba(82,148,255,.3)} .hc.b:hover::before{transform:scaleY(1)}
+    .hc.t::before{background:var(--teal)} .hc.t:hover{border-color:rgba(45,212,160,.3)} .hc.t:hover::before{transform:scaleY(1)}
+    .hc.g::before{background:var(--gold)} .hc.g:hover{border-color:rgba(240,192,64,.3)} .hc.g:hover::before{transform:scaleY(1)}
+    .hc.r::before{background:var(--red)} .hc.r:hover{border-color:rgba(240,80,96,.3)} .hc.r:hover::before{transform:scaleY(1)}
+    .hico { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; }
+    .ib{background:rgba(82,148,255,.12)} .it{background:rgba(45,212,160,.1)} .ig{background:rgba(240,192,64,.1)} .ir{background:rgba(240,80,96,.1)}
+    .hl { font-family:var(--fm); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:3px; }
+    .hv { font-size:12.5px; font-weight:600; color:var(--text); }
+    .hs { font-size:10.5px; color:var(--dim); }
+
+    /* ── ABOUT STRIP ── */
+    #about {
+      padding:80px 48px;
+      background:var(--bg2);
+      border-top:1px solid var(--edge);
+      border-bottom:1px solid var(--edge);
+    }
+    .about-inner { max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:1px; background:var(--edge); border-radius:14px; overflow:hidden; }
+    .about-col { background:var(--bg2); padding:32px 28px; }
+    .about-col h3 { font-family:var(--fd); font-size:14px; font-weight:700; color:var(--text); margin-bottom:10px; }
+    .about-col p { font-size:13px; color:var(--mid); line-height:1.8; }
+    .about-col .tag-row { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
+    .chip { font-family:var(--fm); font-size:9px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:4px; padding:3px 7px; }
+
+    /* ── PROJECTS ── */
+    #projects { padding:96px 48px; }
+    .proj-inner { max-width:var(--max); margin:0 auto; }
+    .section-label { font-family:var(--fm); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+    .section-label::before { content:''; width:20px; height:1px; background:var(--blue); opacity:.5; }
+    .section-title { font-family:var(--fd); font-size:clamp(32px,4vw,48px); font-weight:800; letter-spacing:.01em; color:var(--text); margin-bottom:48px; line-height:.95; }
+
+    .proj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+
+    .pc {
+      background:var(--surf); border:1px solid var(--edge); border-radius:14px;
+      padding:26px; display:flex; flex-direction:column;
+      position:relative; overflow:hidden;
+      transition:border-color .25s, transform .25s;
+    }
+    .pc:hover { border-color:var(--edge2); transform:translateY(-3px); }
+    .pc.feat {
+      grid-column:span 2;
+      background:linear-gradient(140deg, var(--surf) 0%, #131b2e 100%);
+      border-color:rgba(82,148,255,.22);
+    }
+    .pc.feat:hover { border-color:rgba(82,148,255,.45); transform:translateY(-4px); }
+    .feat-badge {
+      display:inline-flex; align-items:center; gap:5px;
+      font-family:var(--fm); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--teal); background:rgba(45,212,160,.08); border:1px solid rgba(45,212,160,.2);
+      padding:3px 10px; border-radius:20px; margin-bottom:14px; align-self:flex-start;
+    }
+    .ptag { font-family:var(--fm); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--blue); margin-bottom:10px; }
+    .pc.feat .ptag { display:none; }
+    .pc h3 { font-family:var(--fd); font-size:17px; font-weight:700; color:var(--text); margin-bottom:9px; line-height:1.2; }
+    .pc.feat h3 { font-size:21px; }
+    .pc p { font-size:13px; color:var(--mid); line-height:1.8; flex:1; margin-bottom:18px; }
+    .pmeta { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:18px; }
+    .pm { font-family:var(--fm); font-size:9px; text-transform:uppercase; letter-spacing:.05em; padding:3px 7px; border-radius:4px; background:rgba(255,255,255,.04); color:var(--dim); border:1px solid var(--edge); }
+    .plink { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--blue); text-decoration:none; transition:gap .18s, color .18s; align-self:flex-start; }
+    .plink:hover { gap:11px; color:#7ab4ff; }
+    .pc.feat .plink { color:var(--teal); }
+    .pc.feat .plink:hover { color:#5ef0c0; }
+
+    /* ── CREDENTIALS BAR ── */
+    #creds {
+      padding:48px 48px;
+      background:var(--bg2);
+      border-top:1px solid var(--edge);
+      border-bottom:1px solid var(--edge);
+    }
+    .creds-inner { max-width:var(--max); margin:0 auto; }
+    .creds-lbl { font-family:var(--fm); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:18px; }
+    .creds-row { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+    .cred {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:12px; font-weight:500; padding:6px 12px;
+      border-radius:6px; background:var(--surf); border:1px solid var(--edge); color:var(--mid);
+      transition:border-color .15s, color .15s, transform .15s;
+    }
+    .cred:hover { border-color:var(--edge2); color:var(--text); transform:translateY(-1px); }
+    .cred.flagship { background:rgba(82,148,255,.09); border-color:rgba(82,148,255,.28); color:var(--text); font-weight:700; }
+    .cred.ai { background:rgba(45,212,160,.06); border-color:rgba(45,212,160,.2); }
+    .cred.em { background:rgba(240,80,96,.06); border-color:rgba(240,80,96,.18); }
+    .cred img { width:14px; height:14px; object-fit:contain; border-radius:2px; flex-shrink:0; }
+    .cred::before { content:'◆'; font-size:6.5px; color:var(--blue); flex-shrink:0; }
+    .cred.has-logo::before, .cred.flagship::before { display:none; }
+    .cred.ai::before { color:var(--teal); }
+    .cred.em::before { color:var(--red); }
+
+    /* ── CONTACT ── */
+    #contact { padding:96px 48px; }
+    .contact-inner { max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .ct h2 { font-family:var(--fd); font-size:clamp(36px,5vw,64px); font-weight:800; line-height:.9; letter-spacing:.01em; color:var(--text); margin-bottom:20px; }
+    .ct p { font-size:14px; color:var(--mid); line-height:1.9; margin-bottom:32px; max-width:400px; }
+    .ct-cards { display:flex; flex-direction:column; gap:10px; }
+    .cc {
+      display:flex; align-items:center; gap:14px;
+      background:var(--surf); border:1px solid var(--edge); border-radius:12px;
+      padding:16px 20px; text-decoration:none; color:inherit;
+      transition:border-color .2s, transform .2s;
+      position:relative; overflow:hidden;
+    }
+    .cc::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; transform:scaleY(0); transform-origin:bottom; transition:transform .2s; }
+    .cc.li::before{background:var(--teal)} .cc.gh::before{background:var(--blue)}
+    .cc:hover { transform:translateX(5px); }
+    .cc.li:hover{border-color:rgba(45,212,160,.28)} .cc.li:hover::before{transform:scaleY(1)}
+    .cc.gh:hover{border-color:rgba(82,148,255,.28)} .cc.gh:hover::before{transform:scaleY(1)}
+    .ccl { font-family:var(--fm); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:3px; }
+    .ccv { font-size:13px; font-weight:600; color:var(--text); }
+
+    /* ── FOOTER ── */
+    footer { border-top:1px solid var(--edge); padding:28px 48px; background:var(--bg); }
+    .foot-inner { max-width:var(--max); margin:0 auto; display:flex; flex-direction:column; gap:20px; }
+    .disc { background:var(--surf); border:1px solid var(--edge); border-radius:8px; padding:13px 18px; display:flex; gap:10px; align-items:flex-start; }
+    .disc p { font-size:10.5px; color:var(--dim); line-height:1.75; }
+    .disc a { color:var(--blue); text-decoration:none; }
+    .foot-bot { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:11.5px; color:var(--dim); }
+    .flinks { display:flex; gap:18px; flex-wrap:wrap; }
+    .flinks a { color:var(--dim); text-decoration:none; transition:color .2s; }
+    .flinks a:hover { color:var(--text); }
+
+    /* ── FADE IN ── */
+    .fu { opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s ease; }
+    .fu.v { opacity:1; transform:none; }
+    .fu:nth-child(2){transition-delay:.07s}.fu:nth-child(3){transition-delay:.14s}
+    .fu:nth-child(4){transition-delay:.21s}.fu:nth-child(5){transition-delay:.28s}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      nav{padding:0 20px} .nav-r{display:none}
+      #hero{padding:calc(var(--nh)+40px) 20px 64px}
+      .hero-inner{grid-template-columns:1fr; gap:32px}
+      .photo-col{justify-content:center}
+      .photo-wrap{width:160px}
+      .photo,.photo-ph{min-height:220px}
+      .hcards{display:none}
+      #about{padding:56px 20px} .about-inner{grid-template-columns:1fr 1fr}
+      #projects,#contact{padding:72px 20px} #creds{padding:40px 20px}
+      footer{padding:24px 20px}
+      .proj-grid{grid-template-columns:1fr} .pc.feat{grid-column:span 1}
+      .contact-inner{grid-template-columns:1fr;gap:40px}
+      .foot-bot{flex-direction:column;text-align:center} .flinks{justify-content:center}
+    }
+    @media(max-width:600px){
+      .about-inner{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="logo"><div class="ldot"></div>CHRIS OLOWO</a>
+  <div class="nav-r">
+    <a href="#projects">Projects</a>
+    <a href="#creds">Credentials</a>
+    <a href="#contact">Contact</a>
+    <a href="grc-platform.html" class="nav-cta">GRC Platform →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+
+    <!-- Col 1: Portrait photo -->
+    <div class="photo-col">
+      <div class="photo-wrap">
+        <img src="Media.jpg" alt="Chris Olowo" class="photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="photo-ph" style="display:none">👤<small>photo.jpg</small></div>
+
+      </div>
+    </div>
+
+    <!-- Col 2: Name + content -->
+    <div>
+      <div class="pill"><div class="pdot"></div>Open to GRC &amp; Cybersecurity Engagements</div>
+
+      <h1>CHRIS<span>OLOWO</span></h1>
+
+      <p class="role">
+        <strong>Cybersecurity Project Manager &amp; GRC Leader</strong><br>
+        PMP®-certified · Risk · Governance · Compliance · AI Governance
+      </p>
+
+      <div class="proof">
+        <span class="proof-item">ISO 27001</span>
+        <span class="proof-sep">/</span>
+        <span class="proof-item">NIST CSF</span>
+        <span class="proof-sep">/</span>
+        <span class="proof-item">SOC 2</span>
+        <span class="proof-sep">/</span>
+        <span class="proof-item">FAIR</span>
+        <span class="proof-sep">/</span>
+        <span class="proof-item">ISO 42001</span>
+        <span class="proof-sep">/</span>
+        <span class="proof-item">ICS 100–300</span>
+      </div>
+
+      <div class="cta-row">
+        <a href="grc-platform.html" class="btn btn-p">Launch GRC Platform →</a>
+        <a href="#contact" class="btn btn-g">Get In Touch</a>
+      </div>
+    </div>
+
+    <!-- Col 3: Stat cards -->
+    <div class="hcards">
+      <a href="grc-platform.html" class="hc b">
+        <div class="hico ib">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z" fill="#5294ff" opacity=".2" stroke="#5294ff" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#5294ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="hl">Live Platform</div>
+          <div class="hv">Enterprise GRC Platform</div>
+          <div class="hs">Risk · Controls · Frameworks · KPI</div>
+        </div>
+      </a>
+      <div class="hc g">
+        <div class="hico ig">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.7 5.47L21 8.47l-4.5 4.39L17.54 19 12 16.1 6.46 19l1.04-6.14L3 8.47l6.3-.98L12 2z" fill="#f0c040" opacity=".25" stroke="#f0c040" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="hl">Top Credential</div>
+          <div class="hv">PMP® — Active</div>
+          <div class="hs">Project Management Institute</div>
+        </div>
+      </div>
+      <div class="hc r">
+        <div class="hico ir">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" fill="#f05060" opacity=".15" stroke="#f05060" stroke-width="1.5" stroke-linejoin="round"/><line x1="12" y1="9" x2="12" y2="13" stroke="#f05060" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="17" r=".8" fill="#f05060"/></svg>
+        </div>
+        <div>
+          <div class="hl">Emergency Management</div>
+          <div class="hv">ICS 100 · 200 · 300</div>
+          <div class="hs">H2Safety — field-certified</div>
+        </div>
+      </div>
+      <div class="hc t">
+        <div class="hico it">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="#2dd4a0" opacity=".1" stroke="#2dd4a0" stroke-width="1.5"/><path d="M8 12l2.5 2.5L16 9" stroke="#2dd4a0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="hl">30+ Credentials</div>
+          <div class="hv">GRC · AI Governance · Agile</div>
+          <div class="hs">PMI · IBM · Securiti · Amii</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div id="about">
+  <div class="about-inner">
+    <div class="about-col fu">
+      <h3>Governance</h3>
+      <p>GRC programs built for real workflows — policies, risk registers, SOAs, and evidence packs audit-ready from day one.</p>
+      <div class="tag-row"><span class="chip">ISO 27001</span><span class="chip">NIST CSF</span><span class="chip">GDPR</span></div>
+    </div>
+    <div class="about-col fu">
+      <h3>Risk Quantification</h3>
+      <p>FAIR-based modelling and KPI frameworks translating security risk into board-ready business language — not heat maps.</p>
+      <div class="tag-row"><span class="chip">FAIR</span><span class="chip">ROSI</span><span class="chip">KPI Dashboards</span></div>
+    </div>
+    <div class="about-col fu">
+      <h3>AI Governance</h3>
+      <p>ISO 42001-aligned AI risk frameworks for enterprise deployments — model security, regulatory mapping, ethical controls.</p>
+      <div class="tag-row"><span class="chip">ISO 42001</span><span class="chip">AI Risk</span><span class="chip">Responsible AI</span></div>
+    </div>
+    <div class="about-col fu">
+      <h3>Emergency Management</h3>
+      <p>ICS 100–300 field-certified with MSF and Federal Ministry of Health deployments. BCP and ERP built for real incidents.</p>
+      <div class="tag-row"><span class="chip">ICS 300</span><span class="chip">BCP / BIA</span><span class="chip">Incident Command</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="proj-inner">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Delivered Work</h2>
+
+    <div class="proj-grid">
+      <div class="pc feat fu">
+        <div class="feat-badge">★ Featured</div>
+        <h3>Enterprise GRC Platform</h3>
+        <p>A fully operational GRC command centre. Risk Register with FAIR quantification, 6 framework assessments (ISO 27001, NIST CSF, SOC 2, GDPR, CIS, HIPAA), Evidence repository, Statement of Applicability, Incident tracking, Business Continuity BIA, KPI &amp; ROI calculator, and a Reporting Hub generating board-ready PDF exports.</p>
+        <div class="pmeta">
+          <span class="pm">ISO 27001</span><span class="pm">NIST CSF</span><span class="pm">SOC 2</span>
+          <span class="pm">GDPR</span><span class="pm">FAIR</span><span class="pm">KPI</span><span class="pm">Risk Register</span>
+        </div>
+        <a href="grc-platform.html" class="plink">Launch Platform →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Interactive · Learning</div>
+        <h3>GRC Learning Lab</h3>
+        <p>Guided missions and enterprise-scale practice projects inside the live platform. Complete full projects in isolated workspaces with JSON export and PDF completion reports.</p>
+        <div class="pmeta"><span class="pm">Guided Missions</span><span class="pm">Practice Projects</span></div>
+        <a href="grc-platform.html" class="plink">Open Lab →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Framework · Emergency</div>
+        <h3>Emergency Management Risk Program</h3>
+        <p>Response plans and BCP frameworks for critical infrastructure — deployed at H2Safety Services with ICS 100–300 field certification.</p>
+        <div class="pmeta"><span class="pm">ICS Framework</span><span class="pm">BCP / ERP</span></div>
+        <a href="grc-platform.html" class="plink">View BCP →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Framework · AI</div>
+        <h3>AI Governance Risk Model</h3>
+        <p>Risk framework for enterprise AI deployments — model security, regulatory mapping, and governance controls aligned to ISO 42001.</p>
+        <div class="pmeta"><span class="pm">ISO 42001</span><span class="pm">AI Risk</span></div>
+        <a href="#contact" class="plink">Enquire →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Toolkit · Compliance</div>
+        <h3>Compliance Audit Toolkit</h3>
+        <p>Centralised toolkit for regulatory compliance audits — evidence collection, control testing, and audit-ready reporting across frameworks.</p>
+        <div class="pmeta"><span class="pm">Audit</span><span class="pm">Evidence</span><span class="pm">Compliance</span></div>
+        <a href="grc-platform.html" class="plink">Open Toolkit →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS BAR -->
+<div id="creds">
+  <div class="creds-inner">
+    <div class="creds-lbl">30+ Credentials — Core &amp; Selected</div>
+    <div class="creds-row">
+      <span class="cred flagship has-logo"><img src="https://logo.clearbit.com/pmi.org" alt="PMI" onerror="this.style.display='none'">PMP® — PMI</span>
+      <span class="cred em has-logo"><img src="https://logo.clearbit.com/h2safety.com" alt="H2Safety" onerror="this.style.display='none'">ICS-300 — H2Safety</span>
+      <span class="cred em has-logo"><img src="https://logo.clearbit.com/h2safety.com" alt="H2Safety" onerror="this.style.display='none'">ICS-200 — H2Safety</span>
+      <span class="cred em has-logo"><img src="https://logo.clearbit.com/h2safety.com" alt="H2Safety" onerror="this.style.display='none'">ICS-100 — H2Safety</span>
+      <span class="cred ai has-logo"><img src="https://logo.clearbit.com/securiti.ai" alt="Securiti" onerror="this.style.display='none'">AI Security &amp; Governance — Securiti AI</span>
+      <span class="cred ai has-logo"><img src="https://logo.clearbit.com/linkedin.com" alt="LinkedIn" onerror="this.style.display='none'">ISO/IEC 42001:2023</span>
+      <span class="cred ai has-logo"><img src="https://logo.clearbit.com/ibm.com" alt="IBM" onerror="this.style.display='none'">GenAI Strategy — IBM</span>
+      <span class="cred ai has-logo"><img src="https://logo.clearbit.com/amii.ca" alt="Amii" onerror="this.style.display='none'">Responsible AI 2 — Amii</span>
+      <span class="cred has-logo"><img src="https://logo.clearbit.com/linkedin.com" alt="LinkedIn" onerror="this.style.display='none'">GRC Compliance &amp; Regulatory Essentials</span>
+      <span class="cred has-logo"><img src="https://logo.clearbit.com/ibm.com" alt="IBM" onerror="this.style.display='none'">Cybersecurity Fundamentals — IBM</span>
+      <span class="cred has-logo"><img src="https://logo.clearbit.com/linkedin.com" alt="LinkedIn" onerror="this.style.display='none'">Six Sigma Green Belt</span>
+      <span class="cred has-logo"><img src="https://logo.clearbit.com/oracle.com" alt="Oracle" onerror="this.style.display='none'">Primavera P6 — Oracle</span>
+      <span class="cred has-logo"><img src="https://logo.clearbit.com/pmi.org" alt="PMI" onerror="this.style.display='none'">Agile PM Fundamentals — PMI</span>
+      <span class="cred ai">AI in Agile Delivery — PMI</span>
+      <span class="cred">Scrum Fundamentals (SFC) — VMEdu</span>
+      <span class="cred has-logo"><img src="https://logo.clearbit.com/uw.edu" alt="UW" onerror="this.style.display='none'">PM in Global Health — UW</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="ct fu">
+      <div class="section-label" style="margin-bottom:20px">Contact</div>
+      <h2>Let's<br>Build<br>Something.</h2>
+      <p>Looking to stand up a GRC function, strengthen a security program, or bring structured delivery to a compliance initiative? I'd like to hear about the challenge.</p>
+      <a href="grc-platform.html" class="btn btn-p">Explore the GRC Platform →</a>
+    </div>
+    <div class="ct-cards fu">
+      <a href="https://www.linkedin.com/in/chris-o-742316135" target="_blank" class="cc li">
+        <div class="hico it">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" stroke="#2dd4a0" stroke-width="1.5" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="#2dd4a0" stroke-width="1.5"/><circle cx="4" cy="4" r="2" stroke="#2dd4a0" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <div class="ccl">LinkedIn</div>
+          <div class="ccv">Chris Olowo, PMP® — /in/chris-o-742316135</div>
+        </div>
+      </a>
+      <a href="https://github.com/chrisolowolafe-sys" target="_blank" class="cc gh">
+        <div class="hico ib">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="#5294ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="ccl">GitHub</div>
+          <div class="ccv">chrisolowolafe-sys</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="disc">
+      <span style="font-size:13px;flex-shrink:0;margin-top:1px">⚠️</span>
+      <p><strong style="color:var(--mid)">Educational &amp; Portfolio Use Only.</strong> The GRC Platform is a learning and demonstration tool — not a certified compliance platform, legal service, or audit authority. All framework references are paraphrased for educational purposes. Platform content is the intellectual property of Christian Olowolafe. <a href="terms.html">Terms &amp; Disclaimer →</a></p>
+    </div>
+    <div class="foot-bot">
+      <span>© <span id="yr"></span> Christian Olowolafe (Chris Olowo, PMP®). All rights reserved.</span>
+      <div class="flinks">
+        <a href="#hero">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="grc-platform.html">GRC Platform</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://www.linkedin.com/in/chris-o-742316135" target="_blank">LinkedIn</a>
+        <a href="https://github.com/chrisolowolafe-sys" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('on', scrollY > 30), { passive:true });
+  const io = new IntersectionObserver(e => {
+    e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('v'); io.unobserve(x.target); } });
+  }, { threshold:0.08 });
+  document.querySelectorAll('.fu').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
