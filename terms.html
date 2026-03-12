@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Use & Disclaimer | Chris Olowo, PMP®</title>
+  <meta name="description" content="Terms of use and disclaimer for Chris Olowo's portfolio and GRC Platform.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #090d16; --ink2: #0f1623; --surf: #151c2e; --surf2: #1b2438;
+      --b1: rgba(255,255,255,0.06); --b2: rgba(255,255,255,0.12);
+      --text: #e6ecf6; --muted: #6e80a0; --muted2: #9aaac0;
+      --blue: #4a8cf5; --teal: #34d399; --gold: #f5c842;
+      --fd: 'Bebas Neue', sans-serif; --fb: 'DM Sans', sans-serif; --fm: 'DM Mono', monospace;
+      --r: 10px; --max: 800px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ink); color: var(--text); font-family: var(--fb); font-size: 15px; line-height: 1.7; }
+    ::-webkit-scrollbar { width: 3px; } ::-webkit-scrollbar-track { background: var(--ink); } ::-webkit-scrollbar-thumb { background: var(--blue); }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 62px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(9,13,22,.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--b1); }
+    .logo { font-family: var(--fd); font-size: 24px; letter-spacing: .04em; color: var(--text); text-decoration: none; }
+    .logo em { color: var(--blue); font-style: normal; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { padding: 7px 16px !important; background: var(--blue) !important; color: #fff !important; border-radius: 6px; font-weight: 700 !important; }
+
+    /* PAGE */
+    .page { max-width: var(--max); margin: 0 auto; padding: 100px 40px 80px; }
+
+    .page-eye { font-family: var(--fm); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .page-title { font-family: var(--fd); font-size: clamp(40px, 5vw, 64px); letter-spacing: .02em; line-height: .95; color: var(--text); margin-bottom: 20px; }
+    .page-meta { font-family: var(--fm); font-size: 11px; color: var(--muted); margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--b1); }
+
+    /* Quick summary box */
+    .summary-box { background: var(--surf); border: 1px solid rgba(74,140,245,.25); border-radius: var(--r); padding: 22px 26px; margin-bottom: 48px; }
+    .summary-box h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue); margin-bottom: 14px; }
+    .summary-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .stag { font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 6px; background: rgba(74,140,245,.08); border: 1px solid rgba(74,140,245,.18); color: var(--muted2); }
+
+    /* Sections */
+    .term-section { margin-bottom: 40px; }
+    .term-section h2 { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--b1); display: flex; align-items: center; gap: 10px; }
+    .term-section h2 span { font-family: var(--fm); font-size: 10px; color: var(--blue); font-weight: 400; text-transform: none; letter-spacing: 0; }
+    .term-section p { font-size: 14px; color: var(--muted2); line-height: 1.85; margin-bottom: 12px; }
+    .term-section p:last-child { margin-bottom: 0; }
+    .term-section ul { list-style: none; padding: 0; }
+    .term-section ul li { font-size: 14px; color: var(--muted2); line-height: 1.8; padding-left: 18px; position: relative; margin-bottom: 6px; }
+    .term-section ul li::before { content: '→'; position: absolute; left: 0; color: var(--blue); font-size: 11px; top: 3px; }
+
+    /* Ownership box */
+    .ownership-box { background: var(--surf); border: 1px solid var(--b1); border-radius: var(--r); padding: 22px 26px; margin-top: 16px; }
+    .ownership-box p { font-size: 13px; color: var(--muted2); line-height: 1.85; margin-bottom: 10px; }
+    .ownership-box p:last-child { margin-bottom: 0; }
+    .ownership-box strong { color: var(--text); }
+
+    /* Warning box */
+    .warn-box { background: rgba(245,200,66,.06); border: 1px solid rgba(245,200,66,.2); border-radius: var(--r); padding: 16px 20px; margin-bottom: 48px; display: flex; gap: 12px; align-items: flex-start; }
+    .warn-box .wi { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .warn-box p { font-size: 13px; color: var(--muted2); line-height: 1.75; margin: 0; }
+    .warn-box strong { color: var(--gold); }
+
+    /* Safety checklist */
+    .checklist { background: var(--surf); border: 1px solid rgba(52,211,153,.2); border-radius: var(--r); padding: 22px 26px; margin-top: 16px; }
+    .checklist h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); margin-bottom: 14px; }
+    .checklist ul { list-style: none; }
+    .checklist ul li { font-size: 13px; color: var(--muted2); padding-left: 22px; position: relative; margin-bottom: 8px; line-height: 1.7; }
+    .checklist ul li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--b1); padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; margin-left: 20px; transition: color .2s; }
+    footer a:hover { color: var(--text); }
+
+    @media(max-width: 700px) {
+      nav { padding: 0 18px; } .nav-links { display: none; }
+      .page { padding: 88px 18px 60px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">C<em>O</em>.</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="grc-platform.html" class="nav-cta">Launch GRC Platform →</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <p class="page-eye">Legal &amp; Disclaimers</p>
+  <h1 class="page-title">Terms of Use<br>&amp; Disclaimer</h1>
+  <p class="page-meta">Effective: Upon publication &nbsp;·&nbsp; Owner: Christian Olowolafe (Chris Olowo, PMP®)</p>
+
+  <div class="warn-box">
+    <div class="wi">⚠️</div>
+    <p><strong>Educational &amp; Portfolio Use Only.</strong> This website and the GRC Platform are learning and demonstration tools. They are not certified GRC platforms, legal services, audit services, or certification bodies. Do not rely on them as the sole basis for production compliance decisions, formal audits, regulatory filings, or certification activities.</p>
+  </div>
+
+  <div class="summary-box">
+    <h3>Quick Summary</h3>
+    <div class="summary-tags">
+      <span class="stag">Learning &amp; demo use only</span>
+      <span class="stag">No professional advice provided</span>
+      <span class="stag">Your local data stays on your device</span>
+      <span class="stag">No warranties given</span>
+      <span class="stag">Don't upload sensitive data</span>
+      <span class="stag">Framework references are paraphrased</span>
+      <span class="stag">Platform IP owned by Chris Olowo</span>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <div class="term-section">
+    <h2>1. Who This Is For <span>// Intended Audience</span></h2>
+    <p>This website and the GRC Platform are intended for individuals learning cybersecurity, governance, risk, and compliance (GRC) concepts, as well as professionals reviewing portfolio work. The platform simulates GRC workflows — including risk registers, controls, audits, vendor risk, evidence management, incident tracking, business continuity planning, policy registers, and framework assessments — for educational and demonstration purposes.</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="term-section">
+    <h2>2. No Professional Advice <span>// Important Limitation</span></h2>
+    <p>Nothing on this site constitutes legal advice, compliance advice, audit advice, certification guidance, financial advice, or professional consulting of any kind. All content and platform outputs are provided for general educational information only. If you need professional guidance, consult a qualified professional licensed in your jurisdiction.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="term-section">
+    <h2>3. Framework References <span>// Standards &amp; Paraphrasing</span></h2>
+    <p>This site references well-known standards and frameworks including ISO/IEC 27001, NIST CSF, SOC 2, GDPR, CIS Controls, HIPAA, ISO/IEC 42001, and FAIR. Any control statements, mappings, or descriptions presented are summarised, paraphrased, or simplified for training and demonstration purposes.</p>
+    <p>This site is not affiliated with, endorsed by, or sponsored by any standards body, framework owner, or certification authority, including PMI, NIST, ISO, AICPA, or any other organisation.</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="term-section">
+    <h2>4. Acceptable Use <span>// User Responsibilities</span></h2>
+    <ul>
+      <li>Do not enter real sensitive data — including personal data, payment card data, protected health information, passwords, API keys, proprietary incident details, or customer data.</li>
+      <li>Use fictional or demo company names and sample data only.</li>
+      <li>Do not use this site for illegal activities, harassment, malware distribution, or unauthorised access attempts.</li>
+      <li>You are responsible for ensuring your use complies with local laws, employer policies, and contractual obligations.</li>
+      <li>If you use platform outputs for portfolio or demonstration purposes, clearly communicate that they represent a simulated environment, not real organisational data.</li>
+    </ul>
+  </div>
+
+  <!-- 5 -->
+  <div class="term-section">
+    <h2>5. Data Storage &amp; Privacy <span>// localStorage</span></h2>
+    <p>The GRC Platform stores your entries (risks, controls, assessments, incidents, policies, etc.) locally in your browser using <code style="font-family:var(--fm);font-size:12px;background:var(--surf2);padding:2px 6px;border-radius:4px;color:var(--muted2)">localStorage</code>. This means:</p>
+    <ul>
+      <li>Data is stored on your device and browser profile — not on any server operated by this site.</li>
+      <li>Clearing your browser storage, using private/incognito mode, or switching devices may erase your saved data.</li>
+      <li>On a shared device, other users of the same browser profile may be able to access stored data.</li>
+      <li>You are responsible for managing and protecting your local data.</li>
+      <li>Any exported reports, PDFs, or screenshots are generated by you — the site owner is not responsible for how exported materials are used or represented externally.</li>
+    </ul>
+  </div>
+
+  <!-- 6 -->
+  <div class="term-section">
+    <h2>6. Intellectual Property <span>// Trademarks &amp; Ownership</span></h2>
+    <p>All trademarks, product names, and logos referenced on this site are the property of their respective owners. References are for educational identification purposes only. Nothing on this site grants you a licence to use any third-party trademark.</p>
+    <div class="ownership-box">
+      <p><strong>Platform Ownership.</strong> The GRC Platform — including its design, workflows, user interface, architecture, scenario logic, simulation structure, and educational methodology — is the intellectual property of <strong>Christian Olowolafe (Chris Olowo, PMP®)</strong> unless otherwise stated.</p>
+      <p>Users are granted a limited, non-exclusive licence to use the platform for personal learning and portfolio review purposes only. Commercial redistribution, resale, white-labelling, or creation of derivative platforms requires explicit written permission from the owner.</p>
+      <p><strong>Restrictions:</strong> You may not copy, replicate, reverse engineer, scrape, resell, white-label, or reproduce the platform's workflows, UI structure, or simulation concepts for competing products without written authorisation.</p>
+    </div>
+
+    <div style="margin-top:24px;background:var(--surf);border:1px solid var(--b1);border-radius:var(--r);padding:22px 24px;">
+      <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:14px">Acknowledgements &amp; Inspirations</h4>
+      <p style="font-size:13px;color:var(--muted2);line-height:1.8;margin-bottom:12px">
+        While the GRC Platform, its design, structure, and implementation are original work, the following resources and individuals provided inspiration, conceptual reference, and learning material that informed its development:
+      </p>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px">
+        <li style="display:flex;gap:12px;align-items:flex-start">
+          <span style="color:var(--blue);font-size:13px;flex-shrink:0;margin-top:2px">→</span>
+          <div>
+            <strong style="color:var(--text);font-size:13px">GRC Mastery — Unix Guy</strong>
+            <p style="font-size:12px;color:var(--muted);margin:3px 0 0">Educational GRC content and framework guidance that helped shape the conceptual approach to governance, risk, and compliance methodology used in this platform.</p>
+          </div>
+        </li>
+        <li style="display:flex;gap:12px;align-items:flex-start">
+          <span style="color:var(--blue);font-size:13px;flex-shrink:0;margin-top:2px">→</span>
+          <div>
+            <strong style="color:var(--text);font-size:13px">John Bommeraveni J. — <a href="https://github.com/JohnBommeraveniJ" target="_blank" style="color:var(--blue);text-decoration:none">GitHub</a></strong>
+            <p style="font-size:12px;color:var(--muted);margin:3px 0 0">Portfolio design and presentation ideas that influenced the visual and structural approach of this site.</p>
+          </div>
+        </li>
+        <li style="display:flex;gap:12px;align-items:flex-start">
+          <span style="color:var(--blue);font-size:13px;flex-shrink:0;margin-top:2px">→</span>
+          <div>
+            <strong style="color:var(--text);font-size:13px">Various Online Resources</strong>
+            <p style="font-size:12px;color:var(--muted);margin:3px 0 0">Multiple publicly available GRC, cybersecurity, and project management learning resources contributed to the educational content and framework references presented throughout this platform.</p>
+          </div>
+        </li>
+      </ul>
+      <p style="font-size:11px;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--b1)">
+        Acknowledgement of inspiration does not imply endorsement, affiliation, or authorisation by any of the above. All implementation, code, and platform logic are independently developed by Christian Olowolafe.
+      </p>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="term-section">
+    <h2>7. Availability &amp; Changes <span>// No Guarantees</span></h2>
+    <p>The site and platform may be changed, suspended, or discontinued at any time without notice. While we aim for a reliable and functional experience, no website is guaranteed to be error-free or fully secure. Use this site at your own risk.</p>
+  </div>
+
+  <!-- 8 -->
+  <div class="term-section">
+    <h2>8. Disclaimer of Warranties <span>// As-Is Basis</span></h2>
+    <p>To the maximum extent permitted by applicable law, this site and platform are provided "as is" and "as available," without warranties of any kind — express or implied — including implied warranties of merchantability, fitness for a particular purpose, accuracy, completeness, or non-infringement.</p>
+  </div>
+
+  <!-- 9 -->
+  <div class="term-section">
+    <h2>9. Limitation of Liability <span>// Maximum Extent Permitted</span></h2>
+    <p>To the maximum extent permitted by applicable law, the site owner will not be liable for any indirect, incidental, special, consequential, or punitive damages — including loss of profits, data, goodwill, or business interruption — arising from your use of or inability to use this site, even if advised of the possibility of such damages.</p>
+    <p>Some jurisdictions do not allow certain limitations of liability. In those jurisdictions, liability will be limited to the minimum extent permitted by law.</p>
+  </div>
+
+  <!-- 10 -->
+  <div class="term-section">
+    <h2>10. Third-Party Services <span>// External Libraries &amp; Links</span></h2>
+    <p>This site may include third-party libraries (such as Google Fonts and CDN-hosted resources) and may link to external websites. The site owner does not control those services and is not responsible for their content, policies, or availability. Your use of third-party services is subject to their own terms and privacy policies.</p>
+  </div>
+
+  <!-- 11 -->
+  <div class="term-section">
+    <h2>11. International Use <span>// Global Access</span></h2>
+    <p>This site may be accessed globally. Laws and regulations vary by country and jurisdiction. You are solely responsible for determining whether your use of this site is permitted under the laws applicable to you.</p>
+  </div>
+
+  <!-- 12 -->
+  <div class="term-section">
+    <h2>12. Governing Law <span>// Jurisdiction</span></h2>
+    <p>Unless otherwise required by applicable consumer protection laws, these terms are governed by the laws of the site owner's place of operation, without regard to conflict of laws principles. If any provision is found unenforceable, the remaining provisions remain in full effect.</p>
+  </div>
+
+  <!-- 13 -->
+  <div class="term-section">
+    <h2>13. Updates to These Terms <span>// Changes</span></h2>
+    <p>These terms may be updated from time to time. Continued use of the site after an update constitutes acceptance of the revised terms. The effective date at the top of this page reflects the most recent revision.</p>
+  </div>
+
+  <!-- 14 -->
+  <div class="term-section">
+    <h2>14. Contact <span>// Questions</span></h2>
+    <p>If you have questions about these terms, contact the site owner via the contact methods listed on the <a href="index.html#contact" style="color:var(--blue);text-decoration:none;">portfolio home page</a>.</p>
+  </div>
+
+  <!-- Safety Checklist -->
+  <div class="term-section">
+    <h2>Practical Safety Checklist <span>// Before You Use the Platform</span></h2>
+    <div class="checklist">
+      <h4>Follow these practices when using the GRC Platform</h4>
+      <ul>
+        <li>Use fictional or demo company names and sample data only — never real client or employer data.</li>
+        <li>Do not paste internal documents, policies, system logs, incident tickets, or any proprietary information.</li>
+        <li>Review and validate any exported report with a qualified professional before using it in real compliance work.</li>
+        <li>If you are in a regulated environment, follow your organisation's policies and legal requirements.</li>
+        <li>Clearly disclose to any audience that outputs are from a simulated demo environment.</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  <span>© <span id="yr"></span> Chris Olowolafe (Chris Olowo, PMP®). All rights reserved.</span>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="grc-platform.html">GRC Platform</a>
+    <a href="https://www.linkedin.com/in/chris-o-742316135" target="_blank">LinkedIn</a>
+    <a href="https://github.com/chrisolowolafe-sys" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
