@@ -10,6 +10,8 @@ Preferred-Languages: en
 
 Expires: 2027-01-01T00:00:00.000Z
 
+Canonical: https://chrisolowolafe-sys.github.io/Chris-Olowo-GRC-Portfolio/.well-known/security.txt
+
 Policy: https://chrisolowolafe-sys.github.io/Chris-Olowo-GRC-Portfolio/terms.html
 
 Scope: https://chrisolowolafe-sys.github.io/Chris-Olowo-GRC-Portfolio/
