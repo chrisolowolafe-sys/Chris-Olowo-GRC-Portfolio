@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- GitHub Pages → Cloudflare Pages redirect -->
+  <script>
+    (function() {
+      var gh = 'chrisolowolafe-sys.github.io';
+      var cf = 'https://chris-olowo-grc-portfolio.pages.dev';
+      if (window.location.hostname === gh) {
+        var path = window.location.pathname.replace('/Chris-Olowo-GRC-Portfolio', '');
+        window.location.replace(cf + path + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Chris Olowo GRC Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f172a'/><path d='M16 4L6 8v8c0 7 5 13.5 10 15 5-1.5 10-8 10-15V8L16 4z' fill='%235294ff' opacity='.9'/><path d='M12 16l3 3 5-6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" />
+  <meta property="og:title" content="Chris Olowo, PMP® | Cybersecurity Project Manager & GRC Leader" />
+  <meta property="og:url" content="https://chris-olowo-grc-portfolio.pages.dev/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg: #07090f; --bg2: #0c1018;
+      --blue: #5294ff; --blue2: #3a7ff0;
+      --text: #e2e8f0; --mid: #94a3b8; --dim: #475569;
+      --edge: rgba(255,255,255,.07);
+      --fb: 'DM Sans', system-ui, sans-serif;
+      --fh: 'Syne', sans-serif;
+    }
+    html, body { height:100%; background:var(--bg); color:var(--text); font-family:var(--fb); }
+    body { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:32px; text-align:center; }
+
+    /* Background glow */
+    .glow { position:fixed; top:20%; left:50%; transform:translateX(-50%); width:600px; height:300px; background:radial-gradient(ellipse,rgba(82,148,255,.08) 0%,transparent 70%); pointer-events:none; }
+
+    /* Shield icon */
+    .icon { width:72px; height:72px; background:rgba(82,148,255,.1); border:1px solid rgba(82,148,255,.2); border-radius:18px; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; }
+
+    /* Code badge */
+    .code { font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; color:var(--blue); background:rgba(82,148,255,.1); border:1px solid rgba(82,148,255,.2); padding:4px 12px; border-radius:20px; display:inline-block; margin-bottom:20px; letter-spacing:.08em; }
+
+    h1 { font-family:var(--fh); font-size:clamp(32px,6vw,56px); font-weight:800; color:#fff; line-height:1.1; margin-bottom:14px; }
+    h1 span { color:var(--blue); }
+
+    p { font-size:15px; color:var(--mid); line-height:1.7; max-width:420px; margin:0 auto 32px; }
+
+    .btn-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:9px; font-family:var(--fb); font-size:14px; font-weight:600; text-decoration:none; transition:all .2s; border:none; cursor:pointer; }
+    .btn-p { background:var(--blue); color:#fff; box-shadow:0 0 24px rgba(82,148,255,.2); }
+    .btn-p:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 6px 24px rgba(82,148,255,.35); }
+    .btn-g { background:transparent; color:var(--text); border:1px solid var(--edge); }
+    .btn-g:hover { border-color:var(--blue); color:var(--blue); }
+
+    /* Countdown */
+    .redirect { margin-top:32px; font-size:12px; color:var(--dim); }
+    .redirect span { color:var(--blue); font-weight:600; }
+
+    /* Footer */
+    footer { position:fixed; bottom:20px; font-size:11px; color:var(--dim); }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <div class="icon">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z" fill="#5294ff" opacity=".2" stroke="#5294ff" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M12 8v4M12 16h.01" stroke="#5294ff" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="code">404 — NOT FOUND</div>
+
+  <h1>Page <span>Out of</span><br>Scope.</h1>
+
+  <p>This page doesn't exist or has moved. Head back to the portfolio or launch the GRC Platform directly.</p>
+
+  <div class="btn-row">
+    <a href="https://chris-olowo-grc-portfolio.pages.dev/" class="btn btn-p">← Back to Portfolio</a>
+    <a href="https://chris-olowo-grc-portfolio.pages.dev/grc-platform" class="btn btn-g">Launch GRC Platform →</a>
+  </div>
+
+  <div class="redirect">Redirecting to portfolio in <span id="count">10</span>s</div>
+
+  <footer>Chris Olowo, PMP® · Cybersecurity Project Manager & GRC Leader</footer>
+
+  <script>
+    var n = 10;
+    var el = document.getElementById('count');
+    var t = setInterval(function() {
+      n--;
+      el.textContent = n;
+      if (n <= 0) {
+        clearInterval(t);
+        window.location.href = 'https://chris-olowo-grc-portfolio.pages.dev/';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
