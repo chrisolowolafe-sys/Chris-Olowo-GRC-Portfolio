@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Consulting Brief Generator — Chris Olowo</title>
+<style>
+  :root {
+    --bg: #f8fafc; --surface: #ffffff; --border: #e2e8f0;
+    --text: #0f172a; --muted: #64748b; --accent: #2563eb;
+    --green: #16a34a; --red: #dc2626; --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+  label { font-size: 13px; font-weight: 500; display: block; margin-bottom: 5px; }
+  input, select, textarea {
+    width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 7px;
+    font-size: 13px; font-family: inherit; background: var(--bg); color: var(--text);
+    transition: border-color .15s;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 180px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .btn { padding: 9px 20px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: opacity .15s; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+  .btn-primary:hover:not(:disabled) { opacity: .88; }
+  .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+  #output-card { display: none; }
+  #output-content {
+    white-space: pre-wrap; font-size: 13px; line-height: 1.85; color: var(--text);
+    max-height: 640px; overflow-y: auto; padding: 4px 0;
+  }
+  .output-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+  #loading { display: none; text-align: center; padding: 32px; color: var(--muted); }
+  .notice { font-size: 12px; color: var(--muted); padding: 10px 14px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 7px; margin-top: 14px; }
+  .key-row { display: flex; gap: 8px; align-items: center; }
+  .key-row input { font-family: monospace; }
+  #key-status { font-size: 11px; color: var(--green); }
+  @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📋 Consulting Brief Generator</h1>
+  <p class="subtitle">Private tool — not deployed publicly. Transforms GRC portfolio content into Big 4 consulting format. Review and edit all output before use.</p>
+
+  <!-- API Key -->
+  <div class="card">
+    <div class="card-title">Anthropic API Key</div>
+    <div class="key-row">
+      <input type="password" id="api-key" placeholder="sk-ant-..." style="font-family:monospace">
+      <button class="btn btn-secondary" onclick="saveKey()" style="white-space:nowrap">Save</button>
+    </div>
+    <span id="key-status"></span>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px">Stored in sessionStorage only — clears when tab closes. Never committed to any file.</div>
+  </div>
+
+  <!-- Configuration -->
+  <div class="card">
+    <div class="card-title">Configuration</div>
+    <div class="grid-3" style="margin-bottom:14px">
+      <div>
+        <label>Target Firm</label>
+        <select id="firm">
+          <option>PwC</option><option>Deloitte</option><option>EY</option><option>KPMG</option>
+        </select>
+      </div>
+      <div>
+        <label>Client Sector</label>
+        <select id="sector">
+          <option>Financial Services</option><option>Energy & Utilities</option>
+          <option>Public Sector</option><option>Healthcare</option><option>Technology</option>
+          <option>Retail & Consumer</option><option>Manufacturing</option><option>Insurance</option>
+        </select>
+      </div>
+      <div>
+        <label>Output Format</label>
+        <select id="format">
+          <option value="full">Full Engagement Brief</option>
+          <option value="executive">Executive Summary</option>
+          <option value="casestudy">Flagship Case Study</option>
+          <option value="cover">Cover Letter Talking Points</option>
+          <option value="linkedin">LinkedIn Project Description</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <label>Specific Role / JD Focus (optional)</label>
+      <input type="text" id="role-focus" placeholder="e.g. Cybersecurity Senior Associate — GRC Advisory, PwC Canada">
+    </div>
+  </div>
+
+  <!-- Content input -->
+  <div class="card">
+    <div class="card-title">Your Portfolio Content</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Paste any combination: project descriptions, credential list, GRC platform features, skills — whatever you want reframed.</div>
+    <textarea id="content" placeholder="Paste your portfolio content here…&#10;&#10;Examples:&#10;- Project descriptions from your landing page&#10;- GRC platform feature list&#10;- Skills and credentials&#10;- Any text you want reframed in consulting language"></textarea>
+  </div>
+
+  <!-- Generate -->
+  <div class="actions">
+    <button class="btn btn-primary" id="gen-btn" onclick="generate()">✨ Generate Brief</button>
+    <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+    <span style="font-size:12px;color:var(--muted)">~15–30 seconds · Claude claude-sonnet-4-20250514</span>
+  </div>
+
+  <div id="loading">
+    <div style="font-size:28px;margin-bottom:10px">⏳</div>
+    <div>Generating your consulting brief…</div>
+    <div style="font-size:11px;margin-top:4px">Claude is applying Big 4 consulting frameworks to your content</div>
+  </div>
+
+  <!-- Output -->
+  <div class="card" id="output-card" style="margin-top:16px">
+    <div class="output-header">
+      <strong style="font-size:14px">Generated Brief</strong>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary" style="font-size:12px;padding:6px 14px" onclick="copyOutput()">📋 Copy</button>
+        <button class="btn btn-secondary" style="font-size:12px;padding:6px 14px" onclick="downloadOutput()">⬇ Download</button>
+      </div>
+    </div>
+    <div id="output-content"></div>
+  </div>
+
+  <div class="notice">
+    ⚠ <strong>Always review before use.</strong> Generated content is a structured starting point. Add your personal voice, verify claims against your actual experience, and tailor to the specific role before including in any application.
+  </div>
+</div>
+
+<script>
+const FORMATS = {
+  full: `Generate a FULL CONSULTING ENGAGEMENT BRIEF with these sections:
+1. Client Overview (fictional but realistic for the sector)
+2. Business Challenge
+3. Cybersecurity Challenge
+4. Regulatory & Framework Context (Canadian context — OSFI B-13, PIPEDA, relevant ISO/NIST)
+5. Approach & Methodology
+6. Key Findings
+7. Risk & Impact Analysis
+8. Strategic Recommendations (prioritised, 3-tier: immediate / short-term / long-term)
+9. Business Outcomes
+10. Executive Summary (3 bullet points)`,
+
+  executive: `Generate a concise EXECUTIVE SUMMARY suitable for C-suite presentation:
+- Opening paragraph: situation and context
+- 5 key risk/finding highlights
+- 3 strategic priorities with business rationale
+- Closing paragraph: recommended next steps and business case`,
+
+  casestudy: `Generate a FLAGSHIP CASE STUDY titled "Enterprise Cybersecurity Transformation Roadmap" with:
+- Current State Assessment
+- Target State Architecture
+- Gap Analysis with prioritised risk areas
+- Phased Roadmap: Phase 1 Quick Wins (0–90 days), Phase 2 Foundation (90–180 days), Phase 3 Maturity (6–18 months)
+- Governance Model
+- Executive Summary (half page)`,
+
+  cover: `Generate COVER LETTER TALKING POINTS structured as:
+1. Three achievement statements in STAR format (Situation, Task, Action, Result) — consulting-framed
+2. Three consulting capability statements (1–2 sentences each) aligned to the firm's service lines
+3. Two sentences on why this specific firm
+4. Three differentiators that set this candidate apart from typical GRC applicants`,
+
+  linkedin: `Generate THREE LinkedIn project descriptions (100–150 words each) in consulting format:
+- Each should read as a completed client engagement
+- Use metrics and outcomes where possible
+- Professional third-person or first-person consulting voice
+- Include relevant frameworks and sector context`,
+};
+
+function saveKey() {
+  const v = document.getElementById('api-key').value.trim();
+  if (!v || v.startsWith('•')) { alert('Enter your API key first'); return; }
+  sessionStorage.setItem('cb_key', v);
+  document.getElementById('api-key').value = '••••••••••••••••••••';
+  document.getElementById('key-status').textContent = '✓ Saved for this session';
+}
+
+function getKey() {
+  return sessionStorage.getItem('cb_key') || '';
+}
+
+async function generate() {
+  const key = getKey();
+  if (!key) { alert('Enter and save your Anthropic API key first.'); return; }
+
+  const content = document.getElementById('content').value.trim();
+  if (!content) { alert('Paste your portfolio content first.'); return; }
+
+  const firm   = document.getElementById('firm').value;
+  const sector = document.getElementById('sector').value;
+  const format = document.getElementById('format').value;
+  const role   = document.getElementById('role-focus').value.trim();
+
+  document.getElementById('gen-btn').disabled = true;
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('output-card').style.display = 'none';
+
+  const systemPrompt = `You are a Senior Cybersecurity Consultant at ${firm} with deep expertise in cybersecurity advisory, GRC, and client-facing consulting in the ${sector} sector.
+Write in a confident, professional Big 4 consulting voice — authoritative, structured, and client-ready.
+Use language like: "assessed current-state security posture", "identified control gaps", "developed target operating model", "delivered actionable recommendations aligned to business objectives", "enabled regulatory readiness".
+Never use academic or student language. Write as someone who has led client engagements.
+Keep content realistic — do not invent deep technical depth that a GRC consultant would not have.
+Format output clearly with markdown section headers.${role ? `\n\nTarget role context: ${role}` : ''}`;
+
+  const userPrompt = `${FORMATS[format]}
+
+TARGET FIRM: ${firm}
+CLIENT SECTOR: ${sector}${role ? `\nTARGET ROLE: ${role}` : ''}
+
+Transform the following portfolio content into consulting format:
+
+---
+${content}
+---
+
+Make any client scenarios fictional but realistic for the ${sector} sector in Canada.
+Align language and structure to ${firm}'s known consulting methodology.
+Position the candidate as a trusted advisor, not a technical implementer.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 3000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }],
+      }),
+    });
+
+    if (!res.ok) {
+      const e = await res.json().catch(()=>({}));
+      throw new Error(e.error?.message || `Error ${res.status}`);
+    }
+
+    const data = await res.json();
+    const text = data.content?.map(b=>b.text||'').join('\n') || '';
+
+    document.getElementById('output-content').textContent = text;
+    document.getElementById('output-card').style.display = 'block';
+    window._lastOutput = { text, firm, sector, format };
+
+    document.getElementById('output-card').scrollIntoView({ behavior: 'smooth' });
+
+  } catch(err) {
+    alert('Generation failed: ' + (err.message || 'Unknown error'));
+  } finally {
+    document.getElementById('gen-btn').disabled = false;
+    document.getElementById('loading').style.display = 'none';
+  }
+}
+
+function copyOutput() {
+  const el = document.getElementById('output-content');
+  navigator.clipboard.writeText(el.textContent)
+    .then(()=>alert('Copied to clipboard.'))
+    .catch(()=>alert('Copy failed — select text manually.'));
+}
+
+function downloadOutput() {
+  const d = window._lastOutput;
+  if (!d) return;
+  const blob = new Blob([d.text], {type:'text/plain'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `Brief_${d.firm}_${d.sector.replace(/[\s&]/g,'_')}_${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function clearAll() {
+  document.getElementById('content').value = '';
+  document.getElementById('output-card').style.display = 'none';
+  document.getElementById('output-content').textContent = '';
+}
+
+// ── Owner gate ───────────────────────────────────────────────────────────────
+const _TOOL_OWNER_KEY = 'GRC-OWN-2026-CO';
+const _TOOL_SESSION   = 'cb_tool_owner';
+
+function checkToolOwner() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('owner') === _TOOL_OWNER_KEY) {
+    sessionStorage.setItem(_TOOL_SESSION, '1');
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+  if (sessionStorage.getItem(_TOOL_SESSION) !== '1') {
+    document.body.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:-apple-system,'Segoe UI',sans-serif;background:#f8fafc">
+        <div style="text-align:center;color:#64748b">
+          <div style="font-size:40px;margin-bottom:16px">🔐</div>
+          <div style="font-size:16px;font-weight:600;color:#0f172a;margin-bottom:8px">Access Restricted</div>
+          <div style="font-size:13px">This tool requires an owner access key.</div>
+        </div>
+      </div>`;
+    return false;
+  }
+  return true;
+}
+
+// Restore key hint if saved
+if (!checkToolOwner()) { /* locked */ } else {
+if (sessionStorage.getItem('cb_key')) {
+  document.getElementById('api-key').value = '••••••••••••••••••••';
+  document.getElementById('key-status').textContent = '✓ Key saved for this session';
+}
+} // end owner check
+</script>
+</body>
+</html>
