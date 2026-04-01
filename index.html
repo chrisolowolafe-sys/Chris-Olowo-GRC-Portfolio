@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- GitHub Pages → Cloudflare Pages redirect -->
+  <script>
+    (function() {
+      var gh = 'chrisolowolafe-sys.github.io';
+      var cf = 'https://chris-olowo-grc-portfolio.pages.dev';
+      if (window.location.hostname === gh) {
+        var path = window.location.pathname.replace('/Chris-Olowo-GRC-Portfolio', '');
+        window.location.replace(cf + path + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chris Olowo, PMP® | Cybersecurity Project Manager & GRC Leader</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f172a'/><path d='M16 4L6 8v8c0 7 5 13.5 10 15 5-1.5 10-8 10-15V8L16 4z' fill='%235294ff' opacity='.9'/><path d='M12 16l3 3 5-6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" />
+  <meta name="description" content="PMP®-certified Cybersecurity Project Manager specialising in GRC, risk management, AI governance, and emergency management programs.">
+  <meta name="author" content="Chris Olowo, PMP®" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://chris-olowo-grc-portfolio.pages.dev/" />
+  <!-- Security Headers (enforced via Cloudflare _headers file — meta tags kept for fallback only) -->
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Open Graph / LinkedIn / Slack previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Chris Olowo, PMP® | Cybersecurity Project Manager & GRC Leader" />
+  <meta property="og:description" content="PMP®-certified Cybersecurity Project Manager & GRC Leader — ISO 27001, NIST CSF, AI Governance, Operational Resilience. View the live ShomriTech GRC Platform." />
+  <meta property="og:url" content="https://chris-olowo-grc-portfolio.pages.dev/" />
+  <meta property="og:image" content="https://chris-olowo-grc-portfolio.pages.dev/Media.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Chris Olowo GRC Portfolio" />
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Chris Olowo, PMP® | Cybersecurity Project Manager & GRC Leader" />
+  <meta name="twitter:description" content="PMP®-certified Cybersecurity PM & GRC Leader — ISO 27001, NIST CSF, AI Governance, Operational Resilience." />
+  <meta name="twitter:image" content="https://chris-olowo-grc-portfolio.pages.dev/Media.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:    #07090f;
+      --bg2:   #0c1018;
+      --surf:  #111722;
+      --edge:  rgba(255,255,255,0.07);
+      --edge2: rgba(255,255,255,0.12);
+      --text:  #edf2fa;
+      --mid:   #8795b0;
+      --dim:   #4a5568;
+      --blue:  #5294ff;
+      --blue2: #2563eb;
+      --teal:  #2dd4a0;
+      --gold:  #f0c040;
+      --red:   #f05060;
+      --fd: 'Syne', sans-serif;
+      --fb: 'DM Sans', sans-serif;
+      --fm: 'IBM Plex Mono', monospace;
+      --max: 1080px;
+      --nh: 62px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fb); font-size:15px; line-height:1.65; overflow-x:hidden; }
+    ::selection { background:rgba(82,148,255,.22); }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:#1e2a40; border-radius:3px; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      height:var(--nh); display:flex; align-items:center; justify-content:space-between;
+      padding:0 48px;
+      transition:background .35s, border-color .35s, backdrop-filter .35s;
+      border-bottom:1px solid transparent;
+    }
+    nav.on { background:rgba(7,9,15,.93); border-bottom-color:var(--edge); backdrop-filter:blur(18px); }
+    .logo { font-family:var(--fd); font-size:17px; font-weight:800; letter-spacing:.05em; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:9px; }
+    .ldot { width:6px; height:6px; border-radius:50%; background:var(--blue); box-shadow:0 0 7px rgba(82,148,255,.7); animation:blink 2.6s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(1.7)} }
+    .nav-r { display:flex; gap:28px; align-items:center; }
+    .nav-r a { font-family:var(--fm); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .2s; }
+    .nav-r a:hover { color:var(--text); }
+    .nav-cta { padding:6px 16px !important; background:var(--blue) !important; color:#fff !important; border-radius:6px; font-weight:500 !important; letter-spacing:.04em !important; transition:all .2s !important; }
+    .nav-cta:hover { background:var(--blue2) !important; transform:translateY(-1px); box-shadow:0 4px 20px rgba(82,148,255,.3) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height:100vh; display:flex; align-items:center;
+      padding:calc(var(--nh) + 64px) 48px 80px;
+      position:relative; overflow:hidden;
+    }
+    /* subtle grid */
+    #hero::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image: linear-gradient(rgba(82,148,255,.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(82,148,255,.025) 1px, transparent 1px);
+      background-size:72px 72px;
+      mask-image:radial-gradient(ellipse 70% 70% at 55% 40%, black 30%, transparent 100%);
+    }
+    /* glows */
+    #hero::after {
+      content:''; position:absolute; pointer-events:none;
+      top:-20%; right:-12%; width:600px; height:600px; border-radius:50%;
+      background:radial-gradient(circle, rgba(82,148,255,.09) 0%, transparent 65%);
+      filter:blur(60px);
+    }
+    .hero-glow2 { display:none; }
+
+    /* ── NEW HERO LAYOUT ── */
+    .hero-main {
+      position:relative; z-index:2;
+      max-width:var(--max); margin:0 auto; width:100%;
+      display:grid; grid-template-columns:1fr 280px; gap:0;
+      align-items:start; padding:80px 48px 0;
+    }
+    .hero-left {
+      padding-right:64px;
+      border-right:1px solid var(--edge2);
+    }
+    .hero-right {
+      padding-left:48px;
+      display:flex; flex-direction:column; gap:32px;
+    }
+    /* diagonal accent */
+    .hero-diag {
+      position:absolute; top:0; right:28%;
+      width:1px; height:100%;
+      background:linear-gradient(to bottom,transparent,rgba(82,148,255,.12) 30%,rgba(82,148,255,.12) 70%,transparent);
+      transform:skewX(-8deg); pointer-events:none; z-index:1;
+    }
+    /* background atmosphere text */
+    .atm-bg {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      font-family:var(--fd);
+      font-size:clamp(160px,22vw,320px); font-weight:800;
+      color:rgba(82,148,255,.03); letter-spacing:-.05em;
+      pointer-events:none; user-select:none; white-space:nowrap; z-index:0;
+    }
+
+    /* availability */
+    .pill {
+      display:inline-flex; align-items:center; gap:7px;
+      font-family:var(--fm); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--teal); background:rgba(45,212,160,.07); border:1px solid rgba(45,212,160,.18);
+      padding:5px 13px; border-radius:20px; margin-bottom:32px;
+    }
+    .pdot { width:5px; height:5px; border-radius:50%; background:var(--teal); box-shadow:0 0 5px rgba(45,212,160,.8); animation:blink 2.2s ease-in-out infinite; }
+
+    /* portrait photo */
+    .photo-col { flex-shrink:0; display:flex; align-items:stretch; }
+    .photo-wrap { position:relative; width:200px; }
+    .photo {
+      width:100%; height:100%; min-height:280px;
+      border-radius:16px;
+      object-fit:cover; object-position:center top;
+      border:1px solid rgba(82,148,255,.3);
+      box-shadow:0 0 0 5px rgba(82,148,255,.06), 0 24px 56px rgba(0,0,0,.55);
+      display:block;
+    }
+    .photo-ph {
+      width:100%; min-height:280px; border-radius:16px;
+      background:var(--surf); border:2px dashed rgba(82,148,255,.22);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px; font-size:36px; color:var(--dim);
+    }
+    .photo-ph small { font-family:var(--fm); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); }
+    .pbadge {
+      position:absolute; bottom:12px; left:50%; transform:translateX(-50%);
+      background:var(--blue); color:#fff;
+      font-family:var(--fm); font-size:9px; font-weight:600; letter-spacing:.07em;
+      padding:4px 12px; border-radius:20px; border:2px solid var(--bg);
+      white-space:nowrap;
+    }
+    .photo-wrap::after {
+      content:''; position:absolute; bottom:-18px; left:10%; right:10%; height:36px;
+      background:rgba(82,148,255,.16); border-radius:50%; filter:blur(14px); pointer-events:none;
+    }
+
+    /* name */
+    h1 {
+      font-family:var(--fd); font-size:clamp(38px,4.5vw,54px);
+      font-weight:800; letter-spacing:.06em; line-height:.98;
+      margin-bottom:20px;
+    }
+    h1 span { color:var(--blue); display:block; letter-spacing:.04em; }
+
+    .role {
+      font-size:15px; font-weight:400; color:var(--mid);
+      margin-bottom:28px; line-height:1.55;
+    }
+    .role strong { color:var(--text); font-weight:600; }
+
+    /* proof strip */
+    .proof {
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-bottom:36px;
+    }
+    .proof-item {
+      display:flex; align-items:center; gap:6px;
+      font-size:12.5px; color:var(--mid);
+    }
+    .proof-item::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--blue); opacity:.6; flex-shrink:0; }
+    .proof-sep { color:var(--dim); align-self:center; font-size:11px; }
+
+    .cta-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .btn { display:inline-flex; align-items:center; gap:7px; padding:11px 22px; border-radius:8px; font-family:var(--fb); font-size:13px; font-weight:600; text-decoration:none; transition:all .2s; border:none; cursor:pointer; }
+    .btn-p { background:var(--blue); color:#fff; box-shadow:0 0 20px rgba(82,148,255,.18); }
+    .btn-p:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 6px 24px rgba(82,148,255,.35); }
+    .btn-g { background:transparent; color:var(--text); border:1px solid var(--edge2); }
+    .btn-g:hover { border-color:var(--blue); color:var(--blue); }
+    .btn-hero { padding:14px 32px; font-size:15px; border-radius:10px; box-shadow:0 0 32px rgba(82,148,255,.28); letter-spacing:.01em; }
+
+    /* hero side stat cards */
+    .hcards { display:flex; flex-direction:column; gap:9px; }
+    .hc {
+      display:flex; align-items:center; gap:13px;
+      background:rgba(17,23,34,.8); backdrop-filter:blur(10px);
+      border:1px solid var(--edge); border-radius:12px;
+      padding:14px 18px; text-decoration:none; color:inherit;
+      transition:border-color .2s, transform .2s;
+      position:relative; overflow:hidden;
+    }
+    .hc::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+      transform:scaleY(0); transform-origin:bottom; transition:transform .2s;
+    }
+    .hc:hover { transform:translateX(4px); }
+    .hc.b::before{background:var(--blue)} .hc.b:hover{border-color:rgba(82,148,255,.3)} .hc.b:hover::before{transform:scaleY(1)}
+    .hc.t::before{background:var(--teal)} .hc.t:hover{border-color:rgba(45,212,160,.3)} .hc.t:hover::before{transform:scaleY(1)}
+    .hc.g::before{background:var(--gold)} .hc.g:hover{border-color:rgba(240,192,64,.3)} .hc.g:hover::before{transform:scaleY(1)}
+    .hc.r::before{background:var(--red)} .hc.r:hover{border-color:rgba(240,80,96,.3)} .hc.r:hover::before{transform:scaleY(1)}
+    .hico { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; }
+    .ib{background:rgba(82,148,255,.12)} .it{background:rgba(45,212,160,.1)} .ig{background:rgba(240,192,64,.1)} .ir{background:rgba(240,80,96,.1)}
+    .hl { font-family:var(--fm); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:3px; }
+    .hv { font-size:12.5px; font-weight:600; color:var(--text); }
+    .hs { font-size:10.5px; color:var(--dim); }
+
+    /* ── ABOUT STRIP ── */
+    #about {
+      padding:80px 48px;
+      background:var(--bg2);
+      border-top:1px solid var(--edge);
+      border-bottom:1px solid var(--edge);
+    }
+    .about-inner { max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:1px; background:var(--edge); border-radius:14px; overflow:hidden; }
+    .about-col { background:var(--bg2); padding:32px 28px; }
+    .about-col h3 { font-family:var(--fd); font-size:14px; font-weight:700; color:var(--text); margin-bottom:10px; }
+    .about-col p { font-size:13px; color:var(--mid); line-height:1.8; }
+    .about-col .tag-row { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
+    .chip { font-family:var(--fm); font-size:9px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:4px; padding:3px 7px; }
+
+    /* ── PROJECTS ── */
+    #projects { padding:96px 48px; }
+    .proj-inner { max-width:var(--max); margin:0 auto; }
+    .section-label { font-family:var(--fm); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+    .section-label::before { content:''; width:20px; height:1px; background:var(--blue); opacity:.5; }
+    .section-title { font-family:var(--fd); font-size:clamp(32px,4vw,48px); font-weight:800; letter-spacing:.01em; color:var(--text); margin-bottom:48px; line-height:.95; }
+
+    .proj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+
+    .pc {
+      background:var(--surf); border:1px solid var(--edge); border-radius:14px;
+      padding:26px; display:flex; flex-direction:column;
+      position:relative; overflow:hidden;
+      transition:border-color .25s, transform .25s;
+    }
+    .pc:hover { border-color:var(--edge2); transform:translateY(-3px); }
+    .pc.feat {
+      grid-column:span 2;
+      background:linear-gradient(140deg, var(--surf) 0%, #131b2e 100%);
+      border-color:rgba(82,148,255,.22);
+    }
+    .pc.feat:hover { border-color:rgba(82,148,255,.45); transform:translateY(-4px); }
+    .feat-badge {
+      display:inline-flex; align-items:center; gap:5px;
+      font-family:var(--fm); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--teal); background:rgba(45,212,160,.08); border:1px solid rgba(45,212,160,.2);
+      padding:3px 10px; border-radius:20px; margin-bottom:14px; align-self:flex-start;
+    }
+    .ptag { font-family:var(--fm); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--blue); margin-bottom:10px; }
+    .pc.feat .ptag { display:none; }
+    .pc h3 { font-family:var(--fd); font-size:17px; font-weight:700; color:var(--text); margin-bottom:9px; line-height:1.2; }
+    .pc.feat h3 { font-size:21px; }
+    .pc p { font-size:13px; color:var(--mid); line-height:1.8; flex:1; margin-bottom:18px; }
+    .pmeta { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:18px; }
+    .pm { font-family:var(--fm); font-size:9px; text-transform:uppercase; letter-spacing:.05em; padding:3px 7px; border-radius:4px; background:rgba(255,255,255,.04); color:var(--dim); border:1px solid var(--edge); }
+    .plink { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--blue); text-decoration:none; transition:gap .18s, color .18s; align-self:flex-start; }
+    .plink:hover { gap:11px; color:#7ab4ff; }
+    .pc.feat .plink { color:var(--teal); }
+    .pc.feat .plink:hover { color:#5ef0c0; }
+
+    /* ── CREDENTIALS BAR ── */
+    #creds {
+      padding:48px 48px;
+      background:var(--bg2);
+      border-top:1px solid var(--edge);
+      border-bottom:1px solid var(--edge);
+    }
+    .creds-inner { max-width:var(--max); margin:0 auto; }
+    .creds-lbl { font-family:var(--fm); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:18px; }
+    .creds-row { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+    .cred {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:12px; font-weight:500; padding:6px 12px;
+      border-radius:6px; background:var(--surf); border:1px solid var(--edge); color:var(--mid);
+      transition:border-color .15s, color .15s, transform .15s;
+    }
+    .cred:hover { border-color:var(--edge2); color:var(--text); transform:translateY(-1px); }
+    .cred.flagship {
+      background:linear-gradient(135deg,rgba(82,148,255,.13) 0%,rgba(82,148,255,.06) 100%);
+      border-color:rgba(82,148,255,.4); color:var(--text); font-weight:700;
+      font-size:13.5px; padding:8px 16px; box-shadow:0 0 14px rgba(82,148,255,.12);
+    }
+    .cred.flagship::after {
+      content:'Active'; font-size:9px; font-weight:600; letter-spacing:.06em;
+      background:rgba(82,148,255,.18); color:var(--blue); padding:2px 6px; border-radius:4px;
+      margin-left:4px;
+    }
+    .cred.ai { background:rgba(45,212,160,.06); border-color:rgba(45,212,160,.2); }
+    .cred.em { background:rgba(240,80,96,.06); border-color:rgba(240,80,96,.18); }
+    .cred img { width:14px; height:14px; object-fit:contain; border-radius:2px; flex-shrink:0; }
+    .cred::before { content:'◆'; font-size:6.5px; color:var(--blue); flex-shrink:0; }
+    .cred.has-logo::before, .cred.flagship::before { display:none; }
+    .cred.ai::before { color:var(--teal); }
+    .cred.em::before { color:var(--red); }
+
+    /* ── CONTACT ── */
+    #contact { padding:96px 48px; }
+    .contact-inner { max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .ct h2 { font-family:var(--fd); font-size:clamp(36px,5vw,64px); font-weight:800; line-height:.9; letter-spacing:.01em; color:var(--text); margin-bottom:20px; }
+    .ct p { font-size:14px; color:var(--mid); line-height:1.9; margin-bottom:32px; max-width:400px; }
+    .ct-cards { display:flex; flex-direction:column; gap:10px; }
+    .cc {
+      display:flex; align-items:center; gap:14px;
+      background:var(--surf); border:1px solid var(--edge); border-radius:12px;
+      padding:16px 20px; text-decoration:none; color:inherit;
+      transition:border-color .2s, transform .2s;
+      position:relative; overflow:hidden;
+    }
+    .cc::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; transform:scaleY(0); transform-origin:bottom; transition:transform .2s; }
+    .cc.li::before{background:var(--teal)} .cc.gh::before{background:var(--blue)}
+    .cc:hover { transform:translateX(5px); }
+    .cc.li:hover{border-color:rgba(45,212,160,.28)} .cc.li:hover::before{transform:scaleY(1)}
+    .cc.gh:hover{border-color:rgba(82,148,255,.28)} .cc.gh:hover::before{transform:scaleY(1)}
+    .ccl { font-family:var(--fm); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin-bottom:3px; }
+    .ccv { font-size:13px; font-weight:600; color:var(--text); }
+
+    /* ── FOOTER ── */
+    footer { border-top:1px solid var(--edge); padding:28px 48px; background:var(--bg); }
+    .foot-inner { max-width:var(--max); margin:0 auto; display:flex; flex-direction:column; gap:20px; }
+    .disc { background:var(--surf); border:1px solid var(--edge); border-radius:8px; padding:13px 18px; display:flex; gap:10px; align-items:flex-start; }
+    .disc p { font-size:10.5px; color:var(--dim); line-height:1.75; }
+    .disc a { color:var(--blue); text-decoration:none; }
+    .foot-bot { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:11.5px; color:var(--dim); }
+    .flinks { display:flex; gap:18px; flex-wrap:wrap; }
+    .flinks a { color:var(--dim); text-decoration:none; transition:color .2s; }
+    .flinks a:hover { color:var(--text); }
+
+    /* ── FADE IN ── */
+    .fu { opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s ease; }
+    .fu.v { opacity:1; transform:none; }
+    .fu:nth-child(2){transition-delay:.07s}.fu:nth-child(3){transition-delay:.14s}
+    .fu:nth-child(4){transition-delay:.21s}.fu:nth-child(5){transition-delay:.28s}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      nav{padding:0 20px} .nav-r{display:none}
+      #hero{padding:calc(var(--nh)+40px) 20px 64px}
+      .hero-inner{grid-template-columns:1fr; gap:32px}
+      .photo-col{justify-content:center}
+      .photo-wrap{width:160px}
+      .photo,.photo-ph{min-height:220px}
+      .hcards{display:none}
+      #about{padding:56px 20px} .about-inner{grid-template-columns:1fr 1fr}
+      #projects,#contact{padding:72px 20px} #creds{padding:40px 20px}
+      footer{padding:24px 20px}
+      .proj-grid{grid-template-columns:1fr} .pc.feat{grid-column:span 1}
+      .contact-inner{grid-template-columns:1fr;gap:40px}
+      .foot-bot{flex-direction:column;text-align:center} .flinks{justify-content:center}
+    }
+    @media(max-width:600px){
+      .about-inner{grid-template-columns:1fr}
+    }
+
+    /* ── COLLAPSIBLE SECTIONS ── */
+    .section-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .section-toggle:hover { background: rgba(82,148,255,0.04); }
+    .section-toggle-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-toggle-label {
+      font-family: var(--fm);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .section-toggle-title {
+      font-family: var(--fd);
+      font-size: clamp(20px,2.5vw,28px);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: .01em;
+    }
+    .section-toggle-chevron {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mid);
+      flex-shrink: 0;
+      transition: transform 0.3s ease, border-color 0.2s;
+    }
+    .section-toggle[aria-expanded="true"] .section-toggle-chevron {
+      transform: rotate(180deg);
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+    .section-collapsible {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .section-collapsible.open {
+      max-height: 9000px; /* large enough for any section */
+      transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @media(max-width:900px){
+      .section-toggle { padding: 20px; }
+    }
+
+    /* ── SECURITY ARCHITECTURE SECTION ── */
+    #security { padding:96px 48px; background:var(--bg2); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge); }
+    .sec-inner { max-width:var(--max); margin:0 auto; }
+    .sec-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:48px; }
+    .sec-card {
+      background:var(--surf); border:1px solid var(--edge); border-radius:14px;
+      padding:24px; position:relative; overflow:hidden;
+      transition:border-color .25s, transform .25s;
+    }
+    .sec-card:hover { border-color:var(--edge2); transform:translateY(-3px); }
+    .sec-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg, var(--blue), transparent);
+      opacity:0; transition:opacity .25s;
+    }
+    .sec-card:hover::before { opacity:1; }
+    .sec-icon { font-size:22px; margin-bottom:12px; }
+    .sec-card h3 { font-family:var(--fd); font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
+    .sec-card p { font-size:12.5px; color:var(--mid); line-height:1.8; margin-bottom:12px; }
+    .sec-tags { display:flex; flex-wrap:wrap; gap:5px; }
+    .sec-tag { font-family:var(--fm); font-size:9px; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); background:rgba(82,148,255,.08); border:1px solid rgba(82,148,255,.18); border-radius:4px; padding:3px 8px; }
+    .sec-badge-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+    .sec-badge {
+      display:inline-flex; align-items:center; gap:6px; padding:6px 14px;
+      border-radius:20px; font-family:var(--fm); font-size:10px; letter-spacing:.06em;
+      font-weight:600; text-transform:uppercase;
+    }
+    .sec-badge.green { background:rgba(45,212,160,.08); border:1px solid rgba(45,212,160,.2); color:var(--teal); }
+    .sec-badge.blue  { background:rgba(82,148,255,.08); border:1px solid rgba(82,148,255,.2); color:var(--blue); }
+    .sec-badge.gold  { background:rgba(240,192,64,.08); border:1px solid rgba(240,192,64,.2); color:var(--gold); }
+    .sec-owasp { margin-top:48px; background:var(--surf); border:1px solid var(--edge); border-radius:14px; padding:28px; }
+    .sec-owasp h3 { font-family:var(--fd); font-size:16px; font-weight:700; color:var(--text); margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+    .owasp-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .owasp-item { display:flex; align-items:flex-start; gap:10px; padding:10px; border-radius:8px; background:var(--bg2); border:1px solid var(--edge); }
+    .owasp-num { font-family:var(--fm); font-size:9px; font-weight:700; letter-spacing:.08em; color:var(--blue); background:rgba(82,148,255,.1); border-radius:4px; padding:2px 7px; flex-shrink:0; margin-top:2px; }
+    .owasp-text h4 { font-size:12px; font-weight:600; color:var(--text); margin-bottom:3px; }
+    .owasp-text p { font-size:11px; color:var(--mid); line-height:1.6; }
+    @media(max-width:900px){
+      #security{padding:72px 20px}
+      .sec-grid{grid-template-columns:1fr}
+      .owasp-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){ .sec-grid{grid-template-columns:1fr} }
+
+  
+    /* ── WHAT'S INSIDE SECTION ── */
+    #platform { padding:96px 48px; }
+    .plat-inner { max-width:var(--max); margin:0 auto; }
+    .plat-intro { font-size:14px; color:var(--mid); line-height:1.9; max-width:620px; margin-bottom:48px; }
+    .plat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:32px; }
+    .plat-card {
+      background:var(--surf); border:1px solid var(--edge); border-radius:12px;
+      padding:20px; position:relative; overflow:hidden;
+      transition:border-color .2s, transform .2s;
+    }
+    .plat-card:hover { border-color:var(--edge2); transform:translateY(-2px); }
+    .plat-card::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--blue),var(--teal));
+      transform:scaleX(0); transform-origin:left; transition:transform .25s;
+    }
+    .plat-card:hover::after { transform:scaleX(1); }
+    .plat-icon { font-size:20px; margin-bottom:10px; }
+    .plat-card h3 { font-family:var(--fd); font-size:13px; font-weight:700; color:var(--text); margin-bottom:6px; }
+    .plat-card p { font-size:12px; color:var(--mid); line-height:1.75; }
+    .plat-card .plat-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:10px; }
+    .plat-tag { font-family:var(--fm); font-size:8.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--dim); background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:3px; padding:2px 6px; }
+    .plat-cta-row { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .plat-cta-note { font-family:var(--fm); font-size:10px; letter-spacing:.08em; color:var(--dim); }
+
+    /* ── STRIDE + CONTROL MAPPING ── */
+    .stride-wrap { margin-top:48px; }
+    .stride-heading {
+      font-family:var(--fd); font-size:18px; font-weight:800; color:var(--text);
+      margin-bottom:6px; display:flex; align-items:center; gap:10px;
+    }
+    .stride-sub { font-size:12.5px; color:var(--mid); margin-bottom:28px; line-height:1.7; }
+    .stride-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:48px; }
+    .stride-card {
+      border-radius:10px; padding:18px; border:1px solid var(--edge);
+      position:relative; overflow:hidden; background:var(--surf);
+    }
+    .stride-letter {
+      font-family:var(--fd); font-size:28px; font-weight:800; line-height:1;
+      margin-bottom:4px;
+    }
+    .stride-name { font-family:var(--fm); font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--dim); margin-bottom:10px; }
+    .stride-threat { font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:5px; }
+    .stride-mitigation { font-size:11px; color:var(--mid); line-height:1.65; }
+    .stride-status {
+      display:inline-flex; align-items:center; gap:4px;
+      font-family:var(--fm); font-size:8.5px; letter-spacing:.06em; text-transform:uppercase;
+      padding:2px 8px; border-radius:10px; margin-top:8px;
+    }
+    .stride-mitigated { background:rgba(45,212,160,.08); color:var(--teal); border:1px solid rgba(45,212,160,.2); }
+    .stride-accepted  { background:rgba(240,192,64,.08); color:var(--gold); border:1px solid rgba(240,192,64,.2); }
+    /* STRIDE letter colours */
+    .sc-s { color:#5294ff; } .sc-t { color:#f05060; } .sc-r { color:#f0c040; }
+    .sc-i { color:#a78bfa; } .sc-d { color:#f97316; } .sc-e { color:#2dd4a0; }
+
+    /* Control mapping table */
+    .ctrl-table-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--edge); }
+    .ctrl-table { width:100%; border-collapse:collapse; font-size:12px; }
+    .ctrl-table thead tr { background:var(--bg2); border-bottom:1px solid var(--edge); }
+    .ctrl-table th { padding:10px 14px; text-align:left; font-family:var(--fm); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); font-weight:600; white-space:nowrap; }
+    .ctrl-table td { padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.04); color:var(--mid); vertical-align:top; }
+    .ctrl-table tr:last-child td { border-bottom:none; }
+    .ctrl-table tr:hover td { background:rgba(255,255,255,.02); }
+    .ctrl-id { font-family:var(--fm); font-size:10px; color:var(--blue); font-weight:600; white-space:nowrap; }
+    .ctrl-badge { display:inline-block; font-family:var(--fm); font-size:8px; letter-spacing:.05em; text-transform:uppercase; padding:2px 7px; border-radius:4px; white-space:nowrap; }
+    .ctrl-impl { background:rgba(45,212,160,.1); color:var(--teal); border:1px solid rgba(45,212,160,.2); }
+    .ctrl-partial { background:rgba(240,192,64,.1); color:var(--gold); border:1px solid rgba(240,192,64,.2); }
+    .ctrl-desc { font-size:11.5px; color:var(--text); font-weight:500; margin-bottom:3px; }
+    .ctrl-evidence { font-size:10.5px; color:var(--mid); }
+
+    /* DevSecOps panel */
+    .devsec-wrap { margin-top:48px; }
+    .devsec-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:24px; }
+    .devsec-card { background:var(--bg2); border:1px solid var(--edge); border-radius:10px; padding:18px; }
+    .devsec-card h4 { font-family:var(--fm); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--blue); margin-bottom:12px; }
+    .devsec-item { display:flex; align-items:flex-start; gap:8px; margin-bottom:8px; font-size:12px; color:var(--mid); line-height:1.6; }
+    .devsec-dot { width:5px; height:5px; border-radius:50%; background:var(--teal); flex-shrink:0; margin-top:6px; }
+    .devsec-item strong { color:var(--text); }
+
+    @media(max-width:900px){
+      #platform{padding:72px 20px}
+      .plat-grid{grid-template-columns:1fr 1fr}
+      .stride-grid{grid-template-columns:1fr 1fr}
+      .devsec-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){
+      .plat-grid{grid-template-columns:1fr}
+      .stride-grid{grid-template-columns:1fr}
+    }
+
+
+    /* ── HERO EYEBROW ── */
+    .hero-eyebrow {
+      font-family:var(--fm); font-size:10px; font-weight:500;
+      letter-spacing:.2em; text-transform:uppercase; color:var(--blue);
+      display:flex; align-items:center; gap:12px; margin-bottom:32px;
+      opacity:0; animation:heroFadeUp .6s ease .1s forwards;
+    }
+    .hero-eyebrow::before {
+      content:''; display:block; width:32px; height:1px; background:var(--blue);
+    }
+    /* ── HERO STATEMENT ── */
+    .hero-statement {
+      font-family:var(--fd);
+      font-size:clamp(44px,5.5vw,78px); font-weight:800;
+      line-height:.95; letter-spacing:-.03em; color:var(--text);
+      margin-bottom:40px;
+      opacity:0; animation:heroFadeUp .7s ease .2s forwards;
+    }
+    .hero-statement em {
+      font-style:normal; color:transparent;
+      -webkit-text-stroke:1.5px rgba(82,148,255,.6);
+    }
+    .hero-rule {
+      width:48px; height:2px;
+      background:linear-gradient(90deg,var(--blue),transparent);
+      margin-bottom:24px;
+      opacity:0; animation:heroFadeUp .6s ease .3s forwards;
+    }
+    .hero-sub-new {
+      font-size:15px; font-weight:300; color:var(--mid);
+      line-height:1.75; max-width:520px; margin-bottom:48px;
+      opacity:0; animation:heroFadeUp .7s ease .35s forwards;
+    }
+    .hero-sub-new strong { color:var(--text); font-weight:500; }
+    .hero-actions {
+      display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+      opacity:0; animation:heroFadeUp .6s ease .45s forwards;
+    }
+    .btn-primary-new {
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--blue); color:#fff;
+      font-family:var(--fm); font-size:11px; font-weight:500;
+      letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
+      padding:12px 24px; border-radius:4px; transition:all .2s;
+      border:none; cursor:pointer;
+    }
+    .btn-primary-new:hover { opacity:.85; transform:translateY(-1px); }
+    .btn-ghost-new {
+      display:inline-flex; align-items:center; gap:8px;
+      background:transparent; color:var(--mid);
+      font-family:var(--fm); font-size:11px; font-weight:500;
+      letter-spacing:.1em; text-transform:uppercase; text-decoration:none;
+      padding:12px 24px; border-radius:4px;
+      border:1px solid var(--edge2); transition:all .2s; cursor:pointer;
+    }
+    .btn-ghost-new:hover { color:var(--text); border-color:rgba(255,255,255,.15); }
+    /* ── IDENTITY PANEL ── */
+    .id-identity {
+      display:flex; flex-direction:column; align-items:flex-start; gap:16px;
+      opacity:0; animation:heroFadeUp .8s ease .3s forwards;
+    }
+    .id-avatar {
+      width:100%; max-width:220px;
+      border-radius:14px;
+      border:1px solid rgba(82,148,255,.3);
+      background:var(--surf);
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden; flex-shrink:0;
+      box-shadow:0 0 0 5px rgba(82,148,255,.06), 0 20px 48px rgba(0,0,0,.5);
+      position:relative;
+    }
+    .id-avatar img {
+      width:100%; height:auto; min-height:260px;
+      object-fit:cover; object-position:center top;
+      display:block; border-radius:14px;
+    }
+    .id-avatar-fallback {
+      font-family:var(--fd); font-size:52px; font-weight:800; color:var(--blue);
+      width:100%; min-height:260px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px;
+    }
+    .id-avatar::after {
+      content:''; position:absolute; bottom:-14px; left:10%; right:10%; height:28px;
+      background:rgba(82,148,255,.14); border-radius:50%; filter:blur(12px); pointer-events:none;
+    }
+    .id-name-new { font-family:var(--fd); font-size:18px; font-weight:700; color:var(--text); line-height:1.2; }
+    .id-cred-new { font-family:var(--fm); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); margin-top:2px; }
+    /* framework stack */
+    .fw-stack {
+      display:flex; flex-direction:column; gap:0;
+      opacity:0; animation:heroFadeUp .8s ease .4s forwards;
+    }
+    .fw-label-new {
+      font-family:var(--fm); font-size:9px; letter-spacing:.15em;
+      text-transform:uppercase; color:var(--dim); margin-bottom:8px;
+    }
+    .fw-tag-new {
+      font-family:var(--fm); font-size:10px; letter-spacing:.06em; color:var(--mid);
+      display:flex; align-items:center; gap:8px;
+      padding:6px 0; border-bottom:1px solid var(--edge2);
+      transition:color .15s;
+    }
+    .fw-tag-new:last-child { border-bottom:none; }
+    .fw-tag-new::before { content:'—'; color:var(--blue); font-size:9px; flex-shrink:0; }
+    .fw-tag-new:hover { color:var(--text); }
+    /* location */
+    .id-location-new {
+      font-family:var(--fm); font-size:10px; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--dim);
+      display:flex; align-items:center; gap:6px;
+      padding-top:12px; border-top:1px solid var(--edge2);
+      opacity:0; animation:heroFadeUp .8s ease .5s forwards;
+    }
+    .id-location-new::before { content:'◎'; color:var(--teal); font-size:9px; }
+    /* ── TICKER BAR ── */
+    .hero-ticker {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      border-top:1px solid var(--edge2); position:relative; z-index:2;
+      opacity:0; animation:heroFadeUp .7s ease .55s forwards;
+    }
+    .ticker-item {
+      padding:24px 48px; border-right:1px solid var(--edge2);
+      display:flex; flex-direction:column; gap:6px;
+      transition:background .2s; cursor:default;
+      text-decoration:none;
+    }
+    .ticker-item:last-child { border-right:none; }
+    .ticker-item:hover { background:rgba(255,255,255,.02); }
+    .ticker-num {
+      font-family:var(--fd); font-size:clamp(28px,3vw,40px);
+      font-weight:800; line-height:1; color:var(--text); letter-spacing:-.02em;
+    }
+    .ticker-num sup { font-size:.55em; color:var(--blue); margin-left:2px; }
+    .ticker-label { font-family:var(--fm); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); }
+    .ticker-sub { font-size:11px; color:var(--mid); font-weight:300; margin-top:2px; }
+    /* animations */
+    @keyframes heroFadeUp {
+      from { opacity:0; transform:translateY(14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    /* responsive */
+    @media(max-width:900px){
+      .hero-main { grid-template-columns:1fr; padding:48px 24px 0; }
+      .hero-left { border-right:none; padding-right:0; border-bottom:1px solid var(--edge2); padding-bottom:40px; margin-bottom:40px; }
+      .hero-right { padding-left:0; flex-direction:row; flex-wrap:wrap; gap:24px; }
+      .hero-ticker { grid-template-columns:1fr 1fr; }
+      .ticker-item { padding:20px 24px; }
+      .hero-diag { display:none; }
+    }
+    @media(max-width:600px){
+      .hero-ticker { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="logo"><div class="ldot"></div>ShomriTech</a>
+  <div class="nav-r">
+    <a href="#projects-wrapper">Projects</a>
+    <a href="#creds-wrapper">Credentials</a>
+    <a href="#platform-wrapper">Platform</a>
+    <a href="#security-wrapper">Security</a>
+    <a href="#contact">Contact</a>
+    <a href="grc-platform.html" class="nav-cta">GRC Platform →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="atm-bg">GRC</div>
+  <div class="hero-diag"></div>
+
+  <div class="hero-main">
+
+    <!-- LEFT: Statement -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">Canada</div>
+
+      <h1 class="hero-statement">
+        Risk,<br>
+        governed with<br>
+        <em>discipline.</em>
+      </h1>
+
+      <div class="hero-rule"></div>
+
+      
+
+      <p class="hero-sub-new">A live GRC platform. Seven frameworks. Built from first principles.</p>
+
+      <div class="hero-actions">
+        <a href="grc-platform.html" class="btn-primary-new">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Launch ShomriTech Platform
+        </a>
+        <a href="#contact" class="btn-ghost-new">Get In Touch</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Identity -->
+    <div class="hero-right">
+      <div class="id-identity">
+        <div class="id-avatar">
+          <img src="Media.jpg" alt="Chris Olowo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="id-avatar-fallback" style="display:none">
+            <span>CO</span>
+            <small style="font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Chris Olowo</small>
+          </div>
+        </div>
+        <div>
+          <div class="id-name-new">Chris Olowo</div>
+          <div class="id-cred-new">PMP® · GRC Leader</div>
+        </div>
+      </div>
+
+      <div class="fw-stack">
+        <div class="fw-label-new">Frameworks</div>
+        <div class="fw-tag-new">ISO 27001</div>
+        <div class="fw-tag-new">NIST CSF</div>
+        <div class="fw-tag-new">SOC 2</div>
+        <div class="fw-tag-new">ISO 42001 · AI</div>
+        <div class="fw-tag-new">FAIR · OSFI B-13</div>
+        <div class="fw-tag-new">ICS 100–300</div>
+      </div>
+
+      <div class="id-location-new">Canada</div>
+    </div>
+
+  </div>
+
+  <!-- STAT TICKER -->
+  <div class="hero-ticker">
+    <div class="ticker-item">
+      <div class="ticker-num">5<sup>+</sup></div>
+      <div class="ticker-label">Years GRC Experience</div>
+      <div class="ticker-sub">Healthcare · Environmental · Safety</div>
+    </div>
+    <div class="ticker-item">
+      <div class="ticker-num">7</div>
+      <div class="ticker-label">Frameworks Assessed</div>
+      <div class="ticker-sub">ISO · NIST · SOC · GDPR · CIS · HIPAA · AI</div>
+    </div>
+    <div class="ticker-item">
+      <div class="ticker-num">25</div>
+      <div class="ticker-label">Active Credentials</div>
+      <div class="ticker-sub">PMP® · GRC · AI Governance · Agile</div>
+    </div>
+    <a href="grc-platform.html" class="ticker-item" style="text-decoration:none">
+      <div class="ticker-num" style="color:var(--blue)">1</div>
+      <div class="ticker-label">Live GRC Platform</div>
+      <div class="ticker-sub">ShomriTech · Launch →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div id="about">
+  <div class="about-inner">
+    <div class="about-col fu">
+      <h3>Governance</h3>
+      <p>GRC programs built for real workflows — policies, risk registers, SOAs, and evidence packs structured for audit — from day one.</p>
+      <div class="tag-row"><span class="chip">ISO 27001</span><span class="chip">NIST CSF</span><span class="chip">GDPR</span></div>
+    </div>
+    <div class="about-col fu">
+      <h3>Risk Quantification</h3>
+      <p>FAIR-based modelling and KPI frameworks translating security risk into board-ready business language — not heat maps.</p>
+      <div class="tag-row"><span class="chip">FAIR</span><span class="chip">ROSI</span><span class="chip">KPI Dashboards</span></div>
+    </div>
+    <div class="about-col fu">
+      <h3>AI Governance</h3>
+      <p>ISO 42001-aligned AI risk frameworks for enterprise deployments — model security, regulatory mapping, ethical controls.</p>
+      <div class="tag-row"><span class="chip">ISO 42001</span><span class="chip">AI Risk</span><span class="chip">Responsible AI</span></div>
+    </div>
+    <div class="about-col fu">
+      <h3>Operational Resilience</h3>
+      <p>BCP and incident response frameworks grounded in real operational environments — ICS principles applied to enterprise continuity planning and crisis governance.</p>
+      <div class="tag-row"><span class="chip">BCP / BIA</span><span class="chip">ISO 22301</span><span class="chip">Incident Response</span></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="collapsible-section" id="projects-wrapper">
+  <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+    <div class="section-toggle-inner">
+      <span class="section-toggle-label">Projects</span>
+      <span class="section-toggle-title">Delivered Work</span>
+    </div>
+    <span class="section-toggle-chevron">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </button>
+  <div class="section-collapsible">
+    <!-- PROJECTS -->
+<section id="projects">
+  <div class="proj-inner">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Delivered Work</h2>
+
+    <div class="proj-grid">
+      <div class="pc feat fu">
+        <div class="feat-badge">★ Featured</div>
+        <h3>Enterprise GRC Platform</h3>
+        <p>A fully interactive GRC command centre. Risk Register with FAIR quantification, 6 framework assessments (ISO 27001, NIST CSF, SOC 2, GDPR, CIS, HIPAA), Evidence repository, Statement of Applicability, Incident tracking, Business Continuity BIA, KPI &amp; ROI calculator, and a Reporting Hub generating board-ready PDF exports.</p>
+        <div class="pmeta">
+          <span class="pm">ISO 27001</span><span class="pm">NIST CSF</span><span class="pm">SOC 2</span>
+          <span class="pm">GDPR</span><span class="pm">FAIR</span><span class="pm">KPI</span><span class="pm">Risk Register</span>
+        </div>
+        <a href="grc-platform.html" class="plink">Launch Platform →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Interactive · Learning</div>
+        <h3>GRC Learning Lab</h3>
+        <p>Guided missions and enterprise-scale practice projects inside the live platform. Complete full projects in isolated workspaces with JSON export and PDF completion reports.</p>
+        <div class="pmeta"><span class="pm">Guided Missions</span><span class="pm">Practice Projects</span></div>
+        <a href="grc-platform.html#learning" class="plink">Open Lab →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Framework · Emergency</div>
+        <h3>Emergency Management Risk Program</h3>
+        <p>Live BCP and incident management module — Business Impact Analysis with RTO/RPO/Max Tolerance, criticality ratings, dependency mapping, and annual impact costing. Full incident lifecycle tracking from detection through root cause and lessons learned.</p>
+        <div class="pmeta"><span class="pm">BIA / RTO / RPO</span><span class="pm">Incident Lifecycle</span><span class="pm">ICS Framework</span><span class="pm">BCP / ERP</span></div>
+        <a href="grc-platform.html#resilience" class="plink">View BCP →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Framework · AI</div>
+        <h3>AI Governance Risk Model</h3>
+        <p>Risk framework for enterprise AI deployments — model security, regulatory mapping, and governance controls aligned to ISO 42001.</p>
+        <div class="pmeta"><span class="pm">ISO 42001</span><span class="pm">AI Risk</span></div>
+        <a href="grc-platform.html#aigovernance" class="plink">View AI Framework →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="ptag">Toolkit · Compliance</div>
+        <h3>Compliance Audit Toolkit</h3>
+        <p>Centralised toolkit for regulatory compliance audits — evidence collection, control testing, and audit-ready reporting across frameworks.</p>
+        <div class="pmeta"><span class="pm">Audit</span><span class="pm">Evidence</span><span class="pm">Compliance</span></div>
+        <a href="grc-platform.html#audits" class="plink">Open Toolkit →</a>
+      </div>
+    </div>
+  </div>
+</section>
+  </div>
+</div>
+<div class="collapsible-section" id="creds-wrapper">
+  <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+    <div class="section-toggle-inner">
+      <span class="section-toggle-label">Credentials</span>
+      <span class="section-toggle-title">25 Certifications</span>
+    </div>
+    <span class="section-toggle-chevron">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </button>
+  <div class="section-collapsible">
+    <!-- CREDENTIALS BAR -->
+<div id="creds">
+  <div class="creds-inner">
+    <div class="creds-lbl">25 Credentials — Core &amp; Selected</div>
+    <div class="creds-row">
+      <span class="cred flagship has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzAwMzA4NycvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5QTUk8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">PMP® — Project Management Institute</span>
+      <span class="cred em has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nI2U4NGIxYScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5IMlM8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">ICS-300: Intermediate ICS for Expanding Incidents — H2Safety</span>
+      <span class="cred em has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nI2U4NGIxYScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5IMlM8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">ICS-200: Basic ICS for Initial Response — H2Safety</span>
+      <span class="cred em has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nI2U4NGIxYScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5IMlM8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">ICS-100: Introduction to ICS — H2Safety</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzZjNDdmZicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5TRUM8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">AI Security &amp; Governance — Securiti AI</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzZjNDdmZicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5TRUM8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">PrivacyOps — Securiti AI</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">ISO/IEC 42001:2023: AI Management System — LinkedIn</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">Advanced AI Governance: Operationalizing Controls — LinkedIn</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">Managing AI Security Risks with ISO 27001 — LinkedIn</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">Leveraging AI for Governance, Risk &amp; Compliance — LinkedIn</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzAwYTk5ZCcvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5BTUk8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">AI Pathways: Responsible AI 2 — Amii</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzFmNzBjMScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5JQk08L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">GenAI for Execs: Formulate Your Use Case — IBM</span>
+      <span class="cred ai has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzFmNzBjMScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5JQk08L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">GenAI for Executives: An Introduction — IBM</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">NIST CSF 2.0 Primer — LinkedIn / Pearson</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">Cybersecurity Compliance &amp; Regulatory Essentials for GRC Analysts — LinkedIn</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">Incident Response Leadership for Cybersecurity Managers — LinkedIn</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">IAM Governance for Managers — LinkedIn</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzFmNzBjMScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5JQk08L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">Cybersecurity Fundamentals — IBM</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">Program Management for Cybersecurity Managers — LinkedIn</span>
+      <span class="cred  has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzAwMzA4NycvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5QTUk8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">Agile Project Management Fundamentals — PMI</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzYzNjZmMScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5TRkM8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">Scrum Fundamentals Certified (SFC) — VMEdu</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzBhNjZjMicvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5MSTwvdGV4dD48L3N2Zz4=" alt="" onerror="this.style.display='none'">Six Sigma: Green Belt — LinkedIn</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nI2Y4MDAwMCcvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5PUkM8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">Primavera P6 Professional Project Management — Oracle</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzFkNGVkOCcvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5VTkk8L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">Certificate in Procurement &amp; Logistics — UNICEF</span>
+      <span class="cred has-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nIzkyNDAwZScvPjx0ZXh0IHg9JzEyJyB5PScxNicgZm9udC1zaXplPSc4JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9J2JvbGQnIGZpbGw9J3doaXRlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5OSU08L3RleHQ+PC9zdmc+" alt="" onerror="this.style.display='none'">Proficiency in Management — NIM (Chartered)</span>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="collapsible-section" id="platform-wrapper">
+  <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+    <div class="section-toggle-inner">
+      <span class="section-toggle-label">Live GRC Platform</span>
+      <span class="section-toggle-title">What's Inside</span>
+    </div>
+    <span class="section-toggle-chevron">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </button>
+  <div class="section-collapsible">
+    <!-- WHAT'S INSIDE -->
+<section id="platform">
+  <div class="plat-inner">
+    <div class="section-label">Live GRC Platform</div>
+    <h2 class="section-title">What's Inside<br>the Platform</h2>
+    <p class="plat-intro">The GRC Platform is a fully interactive demonstration environment — not a mock-up. Every module simulates real enterprise GRC workflows: data-driven, framework-aligned, and built to production design patterns.</p>
+
+    <div class="plat-grid">
+
+      <div class="plat-card fu">
+        <div class="plat-icon">⚠️</div>
+        <h3>Risk Register</h3>
+        <p>14 pre-loaded risks with FAIR quantification, likelihood × impact scoring, treatment decisions, justifications, owner assignment, and remediation due dates. Fully editable.</p>
+        <div class="plat-tags"><span class="plat-tag">FAIR</span><span class="plat-tag">ISO 27001</span><span class="plat-tag">NIST CSF</span></div>
+      </div>
+
+      <div class="plat-card fu">
+        <div class="plat-icon">📊</div>
+        <h3>Risk Heatmap & KPI Dashboard</h3>
+        <p>Live Chart.js risk matrix, trend graphs, ROSI calculator, MTTD/MTTR tracking, and board-ready KPI metrics. All calculated dynamically from your register data.</p>
+        <div class="plat-tags"><span class="plat-tag">Chart.js</span><span class="plat-tag">ROSI</span><span class="plat-tag">KPI</span></div>
+      </div>
+
+      <div class="plat-card fu">
+        <div class="plat-icon">🔍</div>
+        <h3>6 Framework Assessments</h3>
+        <p>Full gap assessments for ISO 27001, NIST CSF, SOC 2, GDPR, CIS Controls, and HIPAA — each with control-by-control scoring, notes, and exportable PDF reports.</p>
+        <div class="plat-tags"><span class="plat-tag">ISO 27001</span><span class="plat-tag">SOC 2</span><span class="plat-tag">GDPR</span><span class="plat-tag">HIPAA</span></div>
+      </div>
+
+      <div class="plat-card fu">
+        <div class="plat-icon">🛡️</div>
+        <h3>Controls Library</h3>
+        <p>Implemented, in-progress, and planned controls with framework references, effectiveness ratings, test dates, owner assignment, and linked risk mapping.</p>
+        <div class="plat-tags"><span class="plat-tag">CIS</span><span class="plat-tag">NIST CSF</span><span class="plat-tag">Evidence</span></div>
+      </div>
+
+      <div class="plat-card fu">
+        <div class="plat-icon">📋</div>
+        <h3>Evidence & Asset Register</h3>
+        <p>Evidence repository linked to controls, asset inventory with classification and criticality ratings, and a statement of applicability for ISO 27001 Annex A.</p>
+        <div class="plat-tags"><span class="plat-tag">ISO 27001 Annex A</span><span class="plat-tag">SoA</span></div>
+      </div>
+
+      <div class="plat-card fu">
+        <div class="plat-icon">🎓</div>
+        <h3>GRC Learning Lab</h3>
+        <p>10 guided missions and 6 enterprise-scale practice projects — each in an isolated workspace with progress tracking, JSON export, and PDF completion report generation.</p>
+        <div class="plat-tags"><span class="plat-tag">Projects</span><span class="plat-tag">Guided Missions</span></div>
+      </div>
+
+    </div>
+
+    <div class="plat-cta-row">
+      <a href="grc-platform.html" class="btn btn-p btn-hero">🚀 Launch GRC Platform →</a>
+      <span class="plat-cta-note">No login required · All data stays in your browser · Demo mode clearly labelled</span>
+      <span class="plat-cta-note" style="margin-top:6px;color:var(--dim)">The platform is architected as a single-tenant browser environment — intentionally, to keep it accessible without a login. The <a href="#security-wrapper" style="color:var(--blue);text-decoration:none" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Production Equivalence table</a> in the Security section documents what each component maps to in a real enterprise deployment.</span>
+      <span class="plat-cta-note" style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)">The platform includes an AI-powered <a href="grc-platform.html#consultingbrief" style="color:var(--blue);text-decoration:none" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Consulting Brief Generator</a> that transforms GRC data into structured Big 4 engagement briefs — demonstrating AI integration as a consulting workflow capability.</span>
+    </div>
+  </div>
+</section>
+  </div>
+</div>
+<div class="collapsible-section" id="security-wrapper">
+  <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+    <div class="section-toggle-inner">
+      <span class="section-toggle-label">Security Architecture</span>
+      <span class="section-toggle-title">Security Architecture</span>
+    </div>
+    <span class="section-toggle-chevron">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </button>
+  <div class="section-collapsible">
+    <!-- SECURITY ARCHITECTURE -->
+<section id="security">
+  <div class="sec-inner">
+    <div class="section-label">Security Architecture</div>
+    <h2 class="section-title">Security Architecture.<br>By Design.</h2>
+
+    <div class="sec-badge-row">
+      <span class="sec-badge green">✓ OWASP Top 10 Assessed</span>
+      <span class="sec-badge blue">✓ Static Secure Hosting</span>
+      <span class="sec-badge blue">✓ CSP Enforced</span>
+      <span class="sec-badge gold">✓ No Backend Attack Surface</span>
+      <span class="sec-badge green">✓ SRI on External Scripts</span>
+      <span class="sec-badge blue">✓ Responsible Disclosure Policy</span>
+    </div>
+
+    <p style="font-size:14px;color:var(--mid);line-height:1.75;max-width:680px;margin:0 0 32px;">Security controls on this platform are implemented where the static architecture permits and documented honestly where they are not — including known limitations and accepted risks.</p>
+
+    <div class="sec-grid">
+
+      <div class="sec-card fu">
+        <div class="sec-icon">🛡️</div>
+        <h3>Secure Static Hosting</h3>
+        <p>Deployed on Cloudflare Pages with HTTPS enforced. No server-side runtime eliminates the infrastructure-layer attack surface — no SQL injection, no RCE, no auth bypass possible at the server level.</p>
+        <div class="sec-tags">
+          <span class="sec-tag">Cloudflare Pages</span>
+          <span class="sec-tag">HTTPS Only</span>
+          <span class="sec-tag">No Backend</span>
+          <span class="sec-tag">TLS 1.3</span>
+        </div>
+      </div>
+
+      <div class="sec-card fu">
+        <div class="sec-icon">📋</div>
+        <h3>Content Security Policy</h3>
+        <p>A Content Security Policy is enforced on every page via Cloudflare Pages HTTP response headers — not meta tags. Restricts script execution to self and trusted CDNs only. Inline styles are scoped; connect-src is locked to <code style="font-family:var(--fm);font-size:11px;color:var(--blue)">'none'</code> on the portfolio page.</p>
+        <div class="sec-tags">
+          <span class="sec-tag">CSP Level 3</span>
+          <span class="sec-tag">frame-ancestors: none</span>
+          <span class="sec-tag">base-uri: self</span>
+        </div>
+      </div>
+
+      <div class="sec-card fu">
+        <div class="sec-icon">🔗</div>
+        <h3>Dependency Security</h3>
+        <p>All external scripts (Chart.js) are loaded from cdnjs with Subresource Integrity (SRI) hashes, ensuring tampered CDN files are blocked by the browser before execution.</p>
+        <div class="sec-tags">
+          <span class="sec-tag">SRI Hashes</span>
+          <span class="sec-tag">Pinned Versions</span>
+          <span class="sec-tag">CDN Integrity</span>
+        </div>
+      </div>
+
+      <div class="sec-card fu">
+        <div class="sec-icon">🔒</div>
+        <h3>XSS Prevention</h3>
+        <p>All user-supplied data is HTML-encoded via a purpose-built <code style="font-family:var(--fm);font-size:11px;color:var(--blue)">esc()</code> sanitizer before any DOM insertion. URL inputs are validated to block <code style="font-family:var(--fm);font-size:11px;color:var(--blue)">javascript:</code> and <code style="font-family:var(--fm);font-size:11px;color:var(--blue)">data:</code> URI injection.</p>
+        <div class="sec-tags">
+          <span class="sec-tag">HTML Encoding</span>
+          <span class="sec-tag">URL Validation</span>
+          <span class="sec-tag">OWASP A03</span>
+        </div>
+      </div>
+
+      <div class="sec-card fu">
+        <div class="sec-icon">📦</div>
+        <h3>Data Protection</h3>
+        <p>The GRC Platform stores all data in browser localStorage only — scoped entirely to the user's own session. Exports are rate-limited (5/min) and audit-logged. Internal platform datasets are never included in user exports.</p>
+        <div class="sec-tags">
+          <span class="sec-tag">Client-Scoped Data</span>
+          <span class="sec-tag">Rate Limiting</span>
+          <span class="sec-tag">Audit Logging</span>
+        </div>
+      </div>
+
+      <div class="sec-card fu">
+        <div class="sec-icon">🔍</div>
+        <h3>DevSecOps Practices</h3>
+        <p>Repository is configured for secret scanning (GitHub Advanced Security). All commits are reviewed for accidental credential exposure. Security headers, responsible disclosure policy (security.txt), and clickjacking prevention (X-Frame-Options: DENY) are implemented.</p>
+        <div class="sec-tags">
+          <span class="sec-tag">Secret Scanning</span>
+          <span class="sec-tag">security.txt</span>
+          <span class="sec-tag">X-Frame-Options</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- STRIDE THREAT MODEL -->
+    <div class="stride-wrap fu">
+      <div class="stride-heading">⚔️ STRIDE Threat Model</div>
+      <p class="stride-sub">
+        Methodology: STRIDE (Microsoft SDL) · Assets in scope: portfolio source code, GitHub repository,
+        CDN dependencies, client browser session · Review date: March 2026
+      </p>
+
+      <div class="stride-grid">
+
+        <div class="stride-card">
+          <div class="stride-letter sc-s">S</div>
+          <div class="stride-name">Spoofing</div>
+          <div class="stride-threat">Identity spoofing / impersonation of portfolio owner</div>
+          <div class="stride-mitigation">No authentication surface exists. LinkedIn/GitHub accounts protected with 2FA. OSINT exposure is intentional and managed.</div>
+          <span class="stride-status stride-accepted">Accepted · Monitored</span>
+        </div>
+
+        <div class="stride-card">
+          <div class="stride-letter sc-t">T</div>
+          <div class="stride-name">Tampering</div>
+          <div class="stride-threat">CDN script replacement / supply chain compromise</div>
+          <div class="stride-mitigation">Subresource Integrity (SRI) hashes on all CDN scripts. Tampered files are rejected by the browser before execution.</div>
+          <span class="stride-status stride-mitigated">Mitigated · SRI</span>
+        </div>
+
+        <div class="stride-card">
+          <div class="stride-letter sc-r">R</div>
+          <div class="stride-name">Repudiation</div>
+          <div class="stride-threat">Denial of data export actions in GRC platform</div>
+          <div class="stride-mitigation">Client-side audit log records export events with timestamps within the session. Controls are localStorage-scoped and cannot prevent a determined user from clearing them — accepted as a limitation of static architecture with no server-side enforcement available.</div>
+          <span class="stride-status stride-accepted">Accepted · Client-scoped</span>
+        </div>
+
+        <div class="stride-card">
+          <div class="stride-letter sc-i">I</div>
+          <div class="stride-name">Information Disclosure</div>
+          <div class="stride-threat">Source code exposure / console data leakage / OSINT</div>
+          <div class="stride-mitigation">No secrets or credentials in source. console.warn() calls removed. No backend = no server-side data to leak. Public OSINT is intentional portfolio exposure.</div>
+          <span class="stride-status stride-mitigated">Mitigated · Reviewed</span>
+        </div>
+
+        <div class="stride-card">
+          <div class="stride-letter sc-d">D</div>
+          <div class="stride-name">Denial of Service</div>
+          <div class="stride-threat">GitHub Pages availability disruption</div>
+          <div class="stride-mitigation">GitHub Pages infrastructure handles availability — static files have no compute layer to exhaust. DoS risk accepted; mitigated by GitHub's platform SLA.</div>
+          <span class="stride-status stride-accepted">Accepted · GitHub SLA</span>
+        </div>
+
+        <div class="stride-card">
+          <div class="stride-letter sc-e">E</div>
+          <div class="stride-name">Elevation of Privilege</div>
+          <div class="stride-threat">XSS → session hijack / privilege escalation</div>
+          <div class="stride-mitigation">CSP blocks inline script injection. All user input HTML-encoded via esc(). URL inputs validated to block javascript: injection. No privilege levels exist to escalate to.</div>
+          <span class="stride-status stride-mitigated">Mitigated · CSP + esc()</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GRC CONTROL MAPPING TABLE -->
+    <div class="fu" style="margin-top:0">
+      <div class="stride-heading" style="margin-bottom:6px">🗂️ GRC Control Mapping</div>
+      <p class="stride-sub">Portfolio security controls mapped to NIST Cybersecurity Framework and ISO/IEC 27001:2022 Annex A. Methodology aligns with NIST SP 800-30.</p>
+
+      <div class="ctrl-table-wrap">
+        <table class="ctrl-table">
+          <thead>
+            <tr>
+              <th>Control</th>
+              <th>NIST CSF Ref</th>
+              <th>ISO 27001 Ref</th>
+              <th>Implementation</th>
+              <th>Evidence</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="ctrl-desc">HTTPS Enforcement</div></td>
+              <td><span class="ctrl-id">PR.DS-02</span></td>
+              <td><span class="ctrl-id">A.8.24</span></td>
+              <td>GitHub Pages HTTPS enforced (infrastructure level) · Cloudflare Always Use HTTPS enabled · HSTS header set by GitHub Pages infrastructure</td>
+              <td class="ctrl-evidence">Browser padlock · HSTS header</td>
+              <td><span class="ctrl-badge ctrl-impl">Implemented</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">XSS Prevention</div></td>
+              <td><span class="ctrl-id">PR.DS-02</span></td>
+              <td><span class="ctrl-id">A.8.28</span></td>
+              <td>HTML encoding via esc() · URL validation via escUrl() · CSP script-src</td>
+              <td class="ctrl-evidence">Source code review · HTTP response header via Cloudflare Pages</td>
+              <td><span class="ctrl-badge ctrl-impl">Implemented</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Clickjacking Prevention</div></td>
+              <td><span class="ctrl-id">PR.AC-04</span></td>
+              <td><span class="ctrl-id">A.8.28</span></td>
+              <td>X-Frame-Options: DENY · CSP frame-ancestors: none</td>
+              <td class="ctrl-evidence">X-Frame-Options: DENY + CSP frame-ancestors: 'none' delivered as HTTP response headers via Cloudflare Pages _headers file · Verified: securityheaders.com Grade A · DevTools Network tab</td>
+              <td><span class="ctrl-badge ctrl-impl">Implemented</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Dependency Integrity</div></td>
+              <td><span class="ctrl-id">ID.SC-04</span></td>
+              <td><span class="ctrl-id">A.12.6</span></td>
+              <td>SRI sha512 hash on Chart.js CDN · Version pinned to 4.4.4</td>
+              <td class="ctrl-evidence">integrity= attribute in source</td>
+              <td><span class="ctrl-badge ctrl-impl">Implemented</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Content Security Policy</div></td>
+              <td><span class="ctrl-id">PR.AC-04</span></td>
+              <td><span class="ctrl-id">A.8.28</span></td>
+              <td>CSP Level 3 · script-src, style-src, connect-src: none, base-uri, form-action</td>
+              <td class="ctrl-evidence">HTTP response header via Cloudflare Pages _headers file · DevTools verification · securityheaders.com Grade A</td>
+              <td><span class="ctrl-badge ctrl-impl">Implemented</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Secure External Links</div></td>
+              <td><span class="ctrl-id">PR.AC-04</span></td>
+              <td><span class="ctrl-id">A.8.28</span></td>
+              <td>All target=_blank links include rel="noopener noreferrer"</td>
+              <td class="ctrl-evidence">Source code audit · tab-nabbing test</td>
+              <td><span class="ctrl-badge ctrl-impl">Implemented</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Secret Scanning</div></td>
+              <td><span class="ctrl-id">ID.SC-04</span></td>
+              <td><span class="ctrl-id">A.12.6</span></td>
+              <td>GitHub Advanced Security secret scanning enabled on repository</td>
+              <td class="ctrl-evidence">GitHub Security tab · gitleaks recommended</td>
+              <td><span class="ctrl-badge ctrl-partial">Partial</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Responsible Disclosure</div></td>
+              <td><span class="ctrl-id">RS.CO-01</span></td>
+              <td><span class="ctrl-id">A.6.8</span></td>
+              <td>RFC 9116 security.txt published at /.well-known/security.txt</td>
+              <td class="ctrl-evidence">security.txt file · LinkedIn contact</td>
+              <td><span class="ctrl-badge ctrl-impl">Implemented</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Export Rate Limiting</div></td>
+              <td><span class="ctrl-id">PR.AC-04</span></td>
+              <td><span class="ctrl-id">A.8.20</span></td>
+              <td>5 exports per 60s enforced client-side · Excess blocked with user notice · localStorage-scoped; bypassable via DevTools — acceptable given no server-side attack surface</td>
+              <td class="ctrl-evidence">Source code · checkExportRateLimit()</td>
+              <td><span class="ctrl-badge ctrl-partial">Implemented (client-scoped)</span></td>
+            </tr>
+            <tr>
+              <td><div class="ctrl-desc">Audit Logging</div></td>
+              <td><span class="ctrl-id">DE.CM-03</span></td>
+              <td><span class="ctrl-id">A.8.15</span></td>
+              <td>All data export events timestamped and stored in grc_export_log · localStorage-scoped; bypassable via DevTools — accepted limitation of static client-only architecture</td>
+              <td class="ctrl-evidence">localStorage audit trail · export functions</td>
+              <td><span class="ctrl-badge ctrl-partial">Implemented (client-scoped)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DEVSECOPS CONTROLS -->
+    <div class="devsec-wrap fu">
+      <div class="stride-heading" style="margin-bottom:6px">⚙️ DevSecOps Controls</div>
+      <p class="stride-sub">Repository-level and pipeline security controls in effect for this portfolio.</p>
+      <div class="devsec-grid">
+        <div class="devsec-card">
+          <h4>Repository Security</h4>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>GitHub Secret Scanning</strong> — automatic detection of credentials in commits</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>Branch Protection</strong> — main branch protected against force-push</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>No Runtime Dependencies</strong> — zero npm packages, zero supply chain risk at build time</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>gitleaks recommended</strong> — run against full commit history to verify no historical secret exposure</div></div>
+        </div>
+        <div class="devsec-card">
+          <h4>Dependency Security</h4>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>SRI Hashes</strong> — all CDN scripts pinned with sha512 integrity attributes</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>Version Pinning</strong> — Chart.js 4.4.4 explicitly versioned, not loaded via "latest"</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>No eval()</strong> — no dynamic code execution in any script block</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>CDN Fallback</strong> — Chart.js stub prevents crash if CDN is unavailable</div></div>
+        </div>
+        <div class="devsec-card">
+          <h4>Static Security Testing</h4>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>Manual code review</strong> — full HTML/CSS/JS audit performed against OWASP Top 10</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>OWASP ZAP</strong> — recommended passive scan against live Cloudflare Pages URL</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>CSP Evaluator</strong> — Google CSP Evaluator tool used to validate policy strength</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>securityheaders.com</strong> — header analysis recommended post-deployment</div></div>
+        </div>
+        <div class="devsec-card">
+          <h4>Infrastructure Security</h4>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>Cloudflare Pages HTTPS</strong> — TLS enforced, HSTS supported, Cloudflare enterprise DDoS protection</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>Zero server attack surface</strong> — static files only, no compute layer to exploit</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>security.txt (RFC 9116)</strong> — responsible disclosure policy published</div></div>
+          <div class="devsec-item"><div class="devsec-dot"></div><div><strong>X-Frame-Options: DENY</strong> — clickjacking prevention via HTTP response header (Cloudflare Pages _headers file)</div></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- OWASP Top 10 Mapping -->
+    <div class="sec-owasp fu">
+      <h3>🔟 OWASP Top 10 — Mitigation Map</h3>
+      <div class="owasp-grid">
+        <div class="owasp-item">
+          <span class="owasp-num">A01</span>
+          <div class="owasp-text"><h4>Broken Access Control</h4><p>No backend = no access control layer to break. All data is user-scoped to localStorage.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A02</span>
+          <div class="owasp-text"><h4>Cryptographic Failures</h4><p>HTTPS enforced on all pages. No sensitive data transmitted or stored server-side.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A03</span>
+          <div class="owasp-text"><h4>Injection (XSS)</h4><p>All user input is HTML-encoded via <code style="font-family:var(--fm);color:var(--blue)">esc()</code>. URL inputs validated to block protocol injection.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A04</span>
+          <div class="owasp-text"><h4>Insecure Design</h4><p>Threat-modelled as a static portfolio — minimal attack surface by architecture. Demo banner prevents misrepresentation of capabilities.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A05</span>
+          <div class="owasp-text"><h4>Security Misconfiguration</h4><p>CSP, X-Frame-Options, X-Content-Type-Options, and Referrer-Policy headers applied. HTTPS enforced.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A06</span>
+          <div class="owasp-text"><h4>Vulnerable Components</h4><p>Chart.js pinned to version 4.4.4 with sha512 SRI hash — not tracking latest. No npm runtime dependencies.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A07</span>
+          <div class="owasp-text"><h4>Auth &amp; Session Failures</h4><p>No authentication system = no session tokens to hijack. Portfolio is intentionally public-read-only.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A08</span>
+          <div class="owasp-text"><h4>Software &amp; Data Integrity</h4><p>SRI hashes on all CDN scripts. GitHub secret scanning enabled. No CI/CD pipelines with unverified dependencies.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A09</span>
+          <div class="owasp-text"><h4>Logging &amp; Monitoring</h4><p>Client-side export audit log maintained. All data export events are timestamped and stored in localStorage.</p></div>
+        </div>
+        <div class="owasp-item">
+          <span class="owasp-num">A10</span>
+          <div class="owasp-text"><h4>SSRF</h4><p>No server-side requests possible — static hosting eliminates SSRF attack surface entirely.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTION EQUIVALENT TABLE -->
+    <div class="collapsible-section" style="margin-top:48px">
+      <div class="section-label" style="margin-bottom:12px">Demo vs. Production</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Architecture Equivalence</h3>
+      <p style="font-size:14px;color:var(--mid);line-height:1.75;max-width:680px;margin-bottom:28px;">Every design decision in this platform maps to a production-grade equivalent. The table below documents those mappings — showing architectural awareness beyond what the demo itself can enforce.</p>
+      <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--edge);">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:var(--surf);border-bottom:1px solid var(--edge2);">
+              <th style="padding:12px 16px;text-align:left;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:600;">This Platform</th>
+              <th style="padding:12px 16px;text-align:left;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:600;">Production Equivalent</th>
+              <th style="padding:12px 16px;text-align:left;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:600;">GRC Consideration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--edge);">
+              <td style="padding:12px 16px;color:var(--text);font-weight:500;">localStorage data storage</td>
+              <td style="padding:12px 16px;color:var(--mid);">Encrypted backend database with RBAC and access logging</td>
+              <td style="padding:12px 16px;color:var(--dim);font-size:12px;">Data classification · A.8.3 ISO 27001 · NIST PR.DS-01</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--edge);background:rgba(255,255,255,.02);">
+              <td style="padding:12px 16px;color:var(--text);font-weight:500;">Client-side activity trace</td>
+              <td style="padding:12px 16px;color:var(--mid);">Tamper-evident SIEM ingestion (Splunk / Microsoft Sentinel)</td>
+              <td style="padding:12px 16px;color:var(--dim);font-size:12px;">Log integrity · A.8.15 ISO 27001 · NIST DE.CM-03</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--edge);">
+              <td style="padding:12px 16px;color:var(--text);font-weight:500;">Client-side rate limiting</td>
+              <td style="padding:12px 16px;color:var(--mid);">API gateway throttling / WAF rate rules (server-enforced)</td>
+              <td style="padding:12px 16px;color:var(--dim);font-size:12px;">Access control · A.8.20 ISO 27001 · NIST PR.AC-04</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--edge);background:rgba(255,255,255,.02);">
+              <td style="padding:12px 16px;color:var(--text);font-weight:500;">Static hosting + CDN headers</td>
+              <td style="padding:12px 16px;color:var(--mid);">Secure cloud architecture with WAF, runtime protection, and IDS</td>
+              <td style="padding:12px 16px;color:var(--dim);font-size:12px;">Network security · A.8.20–22 ISO 27001 · NIST PR.AC</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--edge);">
+              <td style="padding:12px 16px;color:var(--text);font-weight:500;">No authentication layer</td>
+              <td style="padding:12px 16px;color:var(--mid);">Identity provider (Okta / Entra ID) with MFA and RBAC</td>
+              <td style="padding:12px 16px;color:var(--dim);font-size:12px;">IAM design · A.5.15–18 ISO 27001 · NIST PR.AC-01</td>
+            </tr>
+            <tr style="background:rgba(255,255,255,.02);">
+              <td style="padding:12px 16px;color:var(--text);font-weight:500;">SRI on CDN scripts</td>
+              <td style="padding:12px 16px;color:var(--mid);">Software composition analysis (Snyk / Dependabot) + verified build pipeline</td>
+              <td style="padding:12px 16px;color:var(--dim);font-size:12px;">Supply chain · A.12.6 ISO 27001 · NIST ID.SC-04</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+  </div>
+</div>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="ct fu">
+      <div class="section-label" style="margin-bottom:20px">Contact</div>
+      <h2>Let's<br>Build<br>Something.</h2>
+      <p>Looking to stand up a GRC function, strengthen a security program, or bring structured delivery to a compliance initiative? I'd like to hear about the challenge.</p>
+      <a href="grc-platform.html" class="btn btn-p">Explore the GRC Platform →</a>
+    </div>
+    <div class="ct-cards fu">
+      <a href="https://www.linkedin.com/in/chris-o-742316135" target="_blank" class="cc li" rel="noopener noreferrer">
+        <div class="hico it">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" stroke="#2dd4a0" stroke-width="1.5" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="#2dd4a0" stroke-width="1.5"/><circle cx="4" cy="4" r="2" stroke="#2dd4a0" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <div class="ccl">LinkedIn</div>
+          <div class="ccv">Chris Olowo, PMP® — /in/chris-o-742316135</div>
+        </div>
+      </a>
+      <a href="https://github.com/chrisolowolafe-sys" target="_blank" class="cc gh" rel="noopener noreferrer">
+        <div class="hico ib">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="#5294ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="ccl">GitHub</div>
+          <div class="ccv">chrisolowolafe-sys</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" style="display:none;position:fixed;bottom:28px;right:24px;z-index:999;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#5294ff,#8b5cf6);border:none;cursor:pointer;box-shadow:0 4px 20px rgba(82,148,255,.4);align-items:center;justify-content:center;transition:opacity .2s,transform .2s">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="disc">
+      <span style="font-size:13px;flex-shrink:0;margin-top:1px">⚠️</span>
+      <p><strong style="color:var(--mid)">Educational &amp; Portfolio Use Only.</strong> The GRC Platform is a learning and demonstration tool — not a certified compliance platform, legal service, or audit authority. All framework references are paraphrased for educational purposes. Platform content is the intellectual property of Christian Olowolafe. <a href="terms.html">Terms &amp; Disclaimer →</a></p>
+    </div>
+    <div class="foot-bot">
+      <span>© <span id="yr"></span> Christian Olowolafe (Chris Olowo, PMP®). All rights reserved.</span>
+      <div class="flinks">
+        <a href="#hero">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="grc-platform.html">GRC Platform</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://www.linkedin.com/in/chris-o-742316135" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/chrisolowolafe-sys" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // HTTPS enforcement — redirect HTTP to HTTPS (Cloudflare Pages also enforces this server-side)
+  if (location.protocol === 'http:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    location.replace('https:' + location.href.slice(5));
+  }
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Collapsible sections
+  function toggleSection(btn) {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    const panel = btn.nextElementSibling;
+    panel.classList.toggle('open', !expanded);
+  }
+  // Open all sections on mobile for better UX
+  if (window.innerWidth < 700) {
+    document.querySelectorAll('.section-collapsible').forEach(p => p.classList.add('open'));
+    document.querySelectorAll('.section-toggle').forEach(b => b.setAttribute('aria-expanded','true'));
+  }
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('on', scrollY > 30), { passive:true });
+
+  // Smart nav scroll: opens collapsed section then scrolls to it
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (!href || href === '#' || !/^#[a-zA-Z][a-zA-Z0-9\-_]*$/.test(href)) return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+
+      // If this is a collapsible-section wrapper, open its panel then scroll
+      var panel = target.classList.contains('collapsible-section')
+        ? target.querySelector('.section-collapsible')
+        : target.closest('.section-collapsible');
+
+      if (panel && !panel.classList.contains('open')) {
+        var btn = panel.previousElementSibling;
+        panel.classList.add('open');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+      }
+
+      // Scroll to the target — its position is now stable because
+      // nav links point to the outer wrapper divs, not hidden inner elements
+      setTimeout(function() {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 30);
+    });
+  });
+  const io = new IntersectionObserver(e => {
+    e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('v'); io.unobserve(x.target); } });
+  }, { threshold:0.08 });
+  document.querySelectorAll('.fu').forEach(el => io.observe(el));
+
+  // Scroll to top button visibility
+  const scrollTopBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    if (scrollY > 400) {
+      scrollTopBtn.style.display = 'flex';
+      scrollTopBtn.style.opacity = '1';
+    } else {
+      scrollTopBtn.style.opacity = '0';
+      setTimeout(() => { if (scrollY <= 400) scrollTopBtn.style.display = 'none'; }, 200);
+    }
+  }, { passive:true });
+</script>
+</body>
+</html>
