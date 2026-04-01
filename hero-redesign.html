@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ShomriTech — Hero Redesign Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void:    #06080e;
+    --base:    #0b0f1a;
+    --surface: #111827;
+    --border:  rgba(255,255,255,.07);
+    --text:    #e8edf5;
+    --dim:     #5a6478;
+    --muted:   #8795b0;
+    --blue:    #4f8ef7;
+    --green:   #2ecc8a;
+    --amber:   #f0c040;
+    --red:     #f05060;
+    --mono:    'IBM Plex Mono', monospace;
+    --display: 'Syne', sans-serif;
+    --body:    'DM Sans', sans-serif;
+  }
+
+  html { background: var(--void); }
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 56px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(6,8,14,.8);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--blue);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(.7); }
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 32px;
+  }
+  .nav-links a {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--dim); text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--blue) !important;
+    border: 1px solid rgba(79,142,247,.3);
+    padding: 6px 14px; border-radius: 4px;
+    transition: all .2s !important;
+  }
+  .nav-cta:hover { background: rgba(79,142,247,.1) !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    padding: 56px 0 0;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background atmosphere */
+  .atm-number {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--display);
+    font-size: clamp(160px, 22vw, 320px);
+    font-weight: 800;
+    color: rgba(79,142,247,.03);
+    letter-spacing: -.05em;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* Diagonal accent line */
+  .diag {
+    position: absolute;
+    top: 0; right: 28%;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(79,142,247,.15) 30%, rgba(79,142,247,.15) 70%, transparent);
+    transform: skewX(-8deg);
+    pointer-events: none;
+  }
+  .diag2 {
+    position: absolute;
+    top: 0; right: 27.5%;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,.03) 30%, rgba(255,255,255,.03) 70%, transparent);
+    transform: skewX(-8deg);
+    pointer-events: none;
+  }
+
+  /* ── MAIN HERO CONTENT ── */
+  .hero-main {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 0;
+    padding: 80px 48px 0;
+    align-items: start;
+    position: relative; z-index: 2;
+  }
+
+  /* LEFT — Statement block */
+  .hero-left {
+    padding-right: 64px;
+    border-right: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--blue);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 32px;
+    opacity: 0; animation: fadeUp .6s ease .1s forwards;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block; width: 32px; height: 1px;
+    background: var(--blue);
+  }
+
+  .hero-statement {
+    font-family: var(--display);
+    font-size: clamp(44px, 5.5vw, 78px);
+    font-weight: 800;
+    line-height: .95;
+    letter-spacing: -.03em;
+    color: var(--text);
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp .7s ease .2s forwards;
+  }
+  .hero-statement em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(79,142,247,.6);
+  }
+
+  .hero-line {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, var(--blue), transparent);
+    margin-bottom: 24px;
+    opacity: 0; animation: fadeUp .6s ease .3s forwards;
+  }
+
+  .hero-sub {
+    font-size: 15px; font-weight: 300;
+    color: var(--muted); line-height: 1.75;
+    max-width: 520px; margin-bottom: 48px;
+    opacity: 0; animation: fadeUp .7s ease .35s forwards;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .hero-actions {
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0; animation: fadeUp .6s ease .45s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue); color: #fff;
+    font-family: var(--mono); font-size: 11px;
+    font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 12px 24px; border-radius: 4px;
+    transition: all .2s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--muted);
+    font-family: var(--mono); font-size: 11px;
+    font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 12px 24px; border-radius: 4px;
+    border: 1px solid var(--border);
+    transition: all .2s; cursor: pointer;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,.15); }
+
+  /* RIGHT — Identity card */
+  .hero-right {
+    padding-left: 48px;
+    display: flex; flex-direction: column;
+    gap: 32px;
+    opacity: 0; animation: fadeUp .8s ease .3s forwards;
+  }
+
+  /* Photo / initials */
+  .identity {
+    display: flex; flex-direction: column;
+    align-items: flex-start; gap: 16px;
+  }
+  .avatar-wrap {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(79,142,247,.3);
+    background: linear-gradient(135deg, var(--surface), var(--base));
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .avatar-wrap img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+  }
+  .avatar-fallback {
+    font-family: var(--display);
+    font-size: 22px; font-weight: 800;
+    color: var(--blue);
+  }
+  .id-name {
+    font-family: var(--display);
+    font-size: 18px; font-weight: 700;
+    color: var(--text); line-height: 1.2;
+  }
+  .id-cred {
+    font-family: var(--mono);
+    font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--blue);
+    margin-top: 2px;
+  }
+
+  /* Framework tags — vertical stack */
+  .fw-stack {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .fw-label {
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 4px;
+  }
+  .fw-tag {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: .06em;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color .15s;
+  }
+  .fw-tag:last-child { border-bottom: none; }
+  .fw-tag::before {
+    content: '—';
+    color: var(--blue); font-size: 9px;
+    flex-shrink: 0;
+  }
+  .fw-tag:hover { color: var(--text); }
+
+  /* Location */
+  .id-location {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--dim);
+    display: flex; align-items: center; gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .id-location::before {
+    content: '◎';
+    color: var(--green); font-size: 9px;
+  }
+
+  /* ── BOTTOM TICKER — stat bar ── */
+  .hero-ticker {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    position: relative; z-index: 2;
+    opacity: 0; animation: fadeUp .7s ease .55s forwards;
+  }
+  .ticker-item {
+    padding: 24px 48px;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 6px;
+    transition: background .2s;
+    cursor: default;
+  }
+  .ticker-item:last-child { border-right: none; }
+  .ticker-item:hover { background: rgba(255,255,255,.02); }
+  .ticker-num {
+    font-family: var(--display);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 800; line-height: 1;
+    color: var(--text);
+    letter-spacing: -.02em;
+  }
+  .ticker-num span {
+    font-size: .55em;
+    color: var(--blue);
+    margin-left: 2px;
+  }
+  .ticker-label {
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--dim);
+  }
+  .ticker-sub {
+    font-size: 11px; color: var(--muted);
+    font-weight: 300; margin-top: 2px;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── BELOW FOLD NOTE ── */
+  .note {
+    text-align: center;
+    padding: 48px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: .1em;
+    border-top: 1px solid var(--border);
+    background: var(--base);
+  }
+  .note strong { color: var(--muted); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero-main { grid-template-columns: 1fr; padding: 48px 24px 0; }
+    .hero-left { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 40px; }
+    .hero-right { padding-left: 0; flex-direction: row; flex-wrap: wrap; gap: 24px; }
+    .diag, .diag2 { display: none; }
+    .hero-ticker { grid-template-columns: 1fr 1fr; }
+    nav { padding: 0 24px; }
+    .ticker-item { padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo"><div class="nav-dot"></div>ShomriTech</a>
+  <div class="nav-links">
+    <a href="#">Projects</a>
+    <a href="#">Credentials</a>
+    <a href="#">Platform</a>
+    <a href="#">Security</a>
+    <a href="#">Contact</a>
+    <a href="#" class="nav-cta">GRC Platform →</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="atm-number">GRC</div>
+  <div class="diag"></div>
+  <div class="diag2"></div>
+
+  <div class="hero-main">
+
+    <!-- LEFT: Statement -->
+    <div class="hero-left">
+      <div class="eyebrow">Canada · Available for GRC Advisory</div>
+
+      <h1 class="hero-statement">
+        Risk seen<br>
+        <em>before</em> it<br>
+        arrives.
+      </h1>
+
+      <div class="hero-line"></div>
+
+      <p class="hero-sub">
+        Five years governing safety and compliance in regulated operational sectors.
+        <strong>Healthcare. Environmental regulation. H2Safety.</strong>
+        Now applied to cybersecurity GRC — with the frameworks, the platform, and the field-tested judgment to match.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Launch ShomriTech Platform
+        </a>
+        <a href="#" class="btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Identity -->
+    <div class="hero-right">
+      <div class="identity">
+        <div class="avatar-wrap">
+          <img src="Media.jpg" alt="Chris Olowo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="avatar-fallback" style="display:none">CO</div>
+        </div>
+        <div>
+          <div class="id-name">Chris Olowo</div>
+          <div class="id-cred">PMP® · GRC Leader</div>
+        </div>
+      </div>
+
+      <div class="fw-stack">
+        <div class="fw-label">Frameworks</div>
+        <div class="fw-tag">ISO 27001</div>
+        <div class="fw-tag">NIST CSF</div>
+        <div class="fw-tag">SOC 2</div>
+        <div class="fw-tag">ISO 42001 · AI</div>
+        <div class="fw-tag">FAIR · OSFI B-13</div>
+        <div class="fw-tag">ICS 100–300</div>
+      </div>
+
+      <div class="id-location">Canada · Remote & Hybrid</div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM STAT TICKER -->
+  <div class="hero-ticker">
+    <div class="ticker-item">
+      <div class="ticker-num">5<span>+</span></div>
+      <div class="ticker-label">Years GRC Experience</div>
+      <div class="ticker-sub">Healthcare · Environmental · Safety</div>
+    </div>
+    <div class="ticker-item">
+      <div class="ticker-num">7</div>
+      <div class="ticker-label">Frameworks Assessed</div>
+      <div class="ticker-sub">ISO · NIST · SOC · GDPR · CIS · HIPAA · AI</div>
+    </div>
+    <div class="ticker-item">
+      <div class="ticker-num">25</div>
+      <div class="ticker-label">Active Credentials</div>
+      <div class="ticker-sub">PMP® · GRC · AI Governance · Agile</div>
+    </div>
+    <div class="ticker-item">
+      <div class="ticker-num">1</div>
+      <div class="ticker-label">Live GRC Platform</div>
+      <div class="ticker-sub">ShomriTech · Built from first principles</div>
+    </div>
+  </div>
+</section>
+
+<div class="note">
+  <strong>This is a hero redesign preview only.</strong> · Scroll stops here · Full page continues below in the live site.
+</div>
+
+</body>
+</html>
