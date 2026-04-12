@@ -1,7 +1,0 @@
-/*
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=()
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://www.google-analytics.com; connect-src 'self' https://api.anthropic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://rrlgicswsemajfyerrwr.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://rrlgicswsemajfyerrwr.supabase.co https://github.com https://accounts.google.com
